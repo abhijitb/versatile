@@ -204,7 +204,7 @@ get_header('landing'); // Custom header for landing pages ?>
                     }
                     
                     foreach ($features as $feature) : ?>
-                        <div class="feature-item" data-aos="fade-up">
+                        <div class="feature-item" data-aos="zoom-in">
                             <div class="feature-icon">
                                 <i class="<?php echo esc_attr($feature['icon']); ?>"></i>
                             </div>
@@ -383,7 +383,7 @@ get_header('landing'); // Custom header for landing pages ?>
                     }
                     
                     foreach ($pricing_plans as $plan) : ?>
-                        <div class="pricing-card <?php echo $plan['popular'] ? 'popular' : ''; ?>" data-aos="fade-up">
+                        <div class="pricing-card <?php echo $plan['popular'] ? 'popular' : ''; ?>" data-aos="zoom-in">
                             <?php if ($plan['popular']) : ?>
                                 <div class="popular-badge">
                                     <i class="fas fa-crown"></i>
@@ -554,6 +554,17 @@ get_header('landing'); // Custom header for landing pages ?>
     overflow: hidden;
 }
 
+.landing-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="1"/></g></svg>') repeat;
+    z-index: 1;
+}
+
 .hero-background {
     position: absolute;
     top: 0;
@@ -581,6 +592,18 @@ get_header('landing'); // Custom header for landing pages ?>
 .hero-content {
     position: relative;
     z-index: 2;
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-badge {
@@ -594,10 +617,12 @@ get_header('landing'); // Custom header for landing pages ?>
 }
 
 .hero-title {
-    font-size: 3.5rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
     margin-bottom: 20px;
     line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.02em;
 }
 
 .hero-subtitle {
@@ -626,6 +651,7 @@ get_header('landing'); // Custom header for landing pages ?>
     gap: 20px;
     margin-bottom: 50px;
     flex-wrap: wrap;
+    animation: fadeInUp 1s ease-out 0.3s both;
 }
 
 .hero-cta .btn {
@@ -639,14 +665,31 @@ get_header('landing'); // Custom header for landing pages ?>
 }
 
 .cta-primary {
-    background: #ff6b6b;
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
     border-color: #ff6b6b;
     box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.cta-primary:hover::before {
+    left: 100%;
 }
 
 .cta-primary:hover {
-    background: #ff5252;
-    transform: translateY(-2px);
+    background: linear-gradient(45deg, #ff5252, #ff7575);
+    transform: translateY(-3px);
     box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
 }
 
@@ -792,36 +835,82 @@ get_header('landing'); // Custom header for landing pages ?>
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 40px;
+    margin-top: 20px;
 }
 
 .features-grid .feature-item {
     text-align: center;
-    padding: 40px 30px;
-    background: #f7fafc;
-    border-radius: 15px;
-    transition: all 0.3s ease;
+    padding: 50px 40px;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid #e2e8f0;
+    position: relative;
+    overflow: hidden;
+}
+
+.features-grid .feature-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.features-grid .feature-item:hover::before {
+    opacity: 1;
 }
 
 .features-grid .feature-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.1);
-    border-color: #667eea;
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
 }
 
 .feature-icon {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     background: linear-gradient(135deg, #667eea, #764ba2);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 20px;
+    margin: 0 auto 25px;
     color: white;
-    font-size: 2rem;
+    font-size: 2.2rem;
+    position: relative;
+    z-index: 1;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.feature-icon::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.features-grid .feature-item:hover .feature-icon::before {
+    opacity: 0.3;
+}
+
+.features-grid .feature-item:hover .feature-icon {
+    transform: scale(1.1) rotateY(15deg);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
 }
 
 .feature-title {
@@ -876,11 +965,31 @@ get_header('landing'); // Custom header for landing pages ?>
 .testimonial-item {
     display: none;
     text-align: center;
-    padding: 40px;
+    padding: 50px 40px;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    transition: all 0.5s ease;
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .testimonial-item.active {
     display: block;
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .testimonial-stars {
@@ -1060,28 +1169,65 @@ input:checked + .toggle-slider:before {
 }
 
 .pricing-card {
-    background: white;
-    border-radius: 20px;
-    padding: 40px 30px;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border-radius: 25px;
+    padding: 50px 40px;
     text-align: center;
     border: 2px solid #e2e8f0;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(102, 126, 234, 0.02), rgba(118, 75, 162, 0.02));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.pricing-card:hover::before {
+    opacity: 1;
 }
 
 .pricing-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.1);
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
 }
 
 .pricing-card.popular {
     border-color: #667eea;
-    transform: scale(1.05);
+    transform: scale(1.08);
+    background: linear-gradient(145deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+}
+
+.pricing-card.popular::before {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
 }
 
 .pricing-card.popular:hover {
-    transform: scale(1.05) translateY(-10px);
+    transform: scale(1.08) translateY(-20px);
+    box-shadow: 0 35px 70px rgba(102, 126, 234, 0.4);
+}
+
+.pricing-card.popular .plan-name,
+.pricing-card.popular .price,
+.pricing-card.popular .plan-description {
+    color: white;
+}
+
+.pricing-card.popular .features-list .feature-item {
+    color: rgba(255, 255, 255, 0.9);
+    border-bottom-color: rgba(255, 255, 255, 0.2);
 }
 
 .popular-badge {
@@ -1279,17 +1425,31 @@ input:checked + .toggle-slider:before {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .landing-hero {
+        min-height: 90vh;
+        padding: 60px 0;
+    }
+    
     .hero-title {
-        font-size: 2.5rem;
+        font-size: clamp(2rem, 6vw, 2.5rem);
+        margin-bottom: 15px;
     }
     
     .hero-subtitle {
         font-size: 1.1rem;
+        margin-bottom: 25px;
     }
     
     .hero-cta {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
+        margin-bottom: 40px;
+    }
+    
+    .hero-cta .btn {
+        width: 100%;
+        max-width: 280px;
     }
     
     .hero-social-proof {
@@ -1300,46 +1460,93 @@ input:checked + .toggle-slider:before {
     .mockup-device {
         transform: none;
         animation: none;
+        margin-top: 40px;
     }
     
     .section-title {
         font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    
+    .section-subtitle {
+        font-size: 1.1rem;
     }
     
     .features-grid {
         grid-template-columns: 1fr;
         gap: 30px;
+        margin-top: 30px;
+    }
+    
+    .features-grid .feature-item {
+        padding: 40px 30px;
+    }
+    
+    .feature-icon {
+        width: 75px;
+        height: 75px;
+        font-size: 2rem;
     }
     
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
     }
     
     .pricing-grid {
         grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .pricing-card {
+        padding: 40px 30px;
     }
     
     .pricing-card.popular {
         transform: none;
+        margin: 20px 0;
+    }
+    
+    .pricing-card.popular:hover {
+        transform: translateY(-10px);
+    }
+    
+    .testimonial-item {
+        padding: 40px 30px;
     }
     
     .form-group-inline {
         flex-direction: column;
+        gap: 12px;
     }
     
     .trust-badges {
         gap: 20px;
+        flex-direction: column;
     }
     
     .cta-title {
         font-size: 2rem;
+    }
+    
+    .faq-question {
+        padding: 20px 25px;
+        font-size: 1rem;
+    }
+    
+    .faq-answer {
+        padding: 0 25px;
+    }
+    
+    .faq-answer.active {
+        padding: 0 25px 20px;
     }
 }
 
 /* Animation on Scroll */
 [data-aos] {
     opacity: 0;
-    transition: all 0.6s ease;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-aos].aos-animate {
@@ -1347,11 +1554,51 @@ input:checked + .toggle-slider:before {
 }
 
 [data-aos="fade-up"] {
-    transform: translateY(50px);
+    transform: translateY(60px);
 }
 
 [data-aos="fade-up"].aos-animate {
     transform: translateY(0);
+}
+
+[data-aos="fade-in"] {
+    opacity: 0;
+}
+
+[data-aos="fade-in"].aos-animate {
+    opacity: 1;
+}
+
+[data-aos="zoom-in"] {
+    transform: scale(0.8);
+    opacity: 0;
+}
+
+[data-aos="zoom-in"].aos-animate {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Enhanced bounce animation */
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+    40%, 43% {
+        transform: translate3d(-50%, -8px, 0);
+    }
+    70% {
+        transform: translate3d(-50%, -4px, 0);
+    }
+    90% {
+        transform: translate3d(-50%, -2px, 0);
+    }
+}
+
+/* Smooth section transitions */
+section {
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 </style>
 
@@ -1390,16 +1637,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Simple AOS (Animate on Scroll) implementation
+    // Enhanced AOS (Animate on Scroll) implementation
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.15,
+        rootMargin: '0px 0px -80px 0px'
     };
     
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('aos-animate');
+                // Add staggered animation delay for grid items
+                if (entry.target.parentElement && entry.target.parentElement.classList.contains('features-grid')) {
+                    const index = Array.from(entry.target.parentElement.children).indexOf(entry.target);
+                    entry.target.style.transitionDelay = `${index * 0.1}s`;
+                }
             }
         });
     }, observerOptions);

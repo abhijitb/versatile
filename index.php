@@ -21,44 +21,106 @@ get_header(); ?>
                         </header>
                     <?php endif; ?>
                     
-                    <div class="posts-container">
+                    <div class="posts-container posts-grid">
                         <?php while (have_posts()) : the_post(); ?>
                             
-                            <article id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
+                            <article id="post-<?php the_ID(); ?>" <?php post_class('post-item post-card'); ?>>
                                 
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <div class="post-thumbnail">
-                                        <a href="<?php the_permalink(); ?>">
+                                <div class="post-thumbnail">
+                                    <a href="<?php the_permalink(); ?>">
+                                        <?php if (has_post_thumbnail()) : ?>
                                             <?php the_post_thumbnail('large', array('class' => 'img-fluid')); ?>
-                                        </a>
+                                        <?php else : ?>
+                                            <div class="post-placeholder-image">
+                                                <svg viewBox="0 0 400 250" class="placeholder-svg">
+                                                    <!-- Background gradient -->
+                                                    <defs>
+                                                        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                            <stop offset="0%" style="stop-color:#f7fafc;stop-opacity:1" />
+                                                            <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+                                                        </linearGradient>
+                                                        <linearGradient id="vGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.4" />
+                                                            <stop offset="50%" style="stop-color:#764ba2;stop-opacity:0.6" />
+                                                            <stop offset="100%" style="stop-color:#667eea;stop-opacity:0.4" />
+                                                        </linearGradient>
+                                                        <filter id="blur">
+                                                            <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+                                                        </filter>
+                                                    </defs>
+                                                    
+                                                    <!-- Background -->
+                                                    <rect width="400" height="250" fill="url(#bgGradient)"/>
+                                                    
+                                                    <!-- Decorative circles -->
+                                                    <circle cx="80" cy="60" r="3" fill="#cbd5e0" opacity="0.4"/>
+                                                    <circle cx="320" cy="40" r="2" fill="#cbd5e0" opacity="0.3"/>
+                                                    <circle cx="350" cy="200" r="4" fill="#cbd5e0" opacity="0.3"/>
+                                                    <circle cx="50" cy="180" r="2.5" fill="#cbd5e0" opacity="0.4"/>
+                                                    
+                                                    <!-- Main "V" design -->
+                                                    <g transform="translate(200, 125)">
+                                                        <!-- Outer V (larger, background effect) -->
+                                                        <path d="M -80 -50 L 0 70 L 80 -50" 
+                                                              stroke="url(#vGradient)" 
+                                                              stroke-width="24" 
+                                                              fill="none" 
+                                                              stroke-linecap="round" 
+                                                              stroke-linejoin="round" 
+                                                              opacity="0.5" 
+                                                              filter="url(#blur)"/>
+                                                        
+                                                        <!-- Inner V (main design) -->
+                                                        <path d="M -60 -35 L 0 50 L 60 -35" 
+                                                              stroke="url(#vGradient)" 
+                                                              stroke-width="12" 
+                                                              fill="none" 
+                                                              stroke-linecap="round" 
+                                                              stroke-linejoin="round" 
+                                                              opacity="0.8"/>
+                                                        
+                                                        <!-- Central accent -->
+                                                        <circle cx="0" cy="50" r="4" fill="#667eea" opacity="0.7"/>
+                                                    </g>
+                                                    
+                                                    <!-- Theme text -->
+                                                    <text x="200" y="210" 
+                                                          text-anchor="middle" 
+                                                          fill="#718096" 
+                                                          font-family="Arial, sans-serif" 
+                                                          font-size="14" 
+                                                          font-weight="600" 
+                                                          opacity="0.8">
+                                                        Versatile
+                                                    </text>
+                                                </svg>
+                                            </div>
+                                        <?php endif; ?>
+                                    </a>
+                                    <div class="post-overlay">
+                                        <div class="post-categories">
+                                            <?php if (has_category()) : ?>
+                                                <?php the_category(' '); ?>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
-                                <?php endif; ?>
+                                </div>
                                 
                                 <div class="post-content">
                                     <header class="entry-header">
                                         <div class="post-meta">
                                             <span class="post-date">
                                                 <i class="fas fa-calendar-alt"></i>
-                                                <a href="<?php echo esc_url(get_permalink()); ?>"><?php echo get_the_date(); ?></a>
+                                                <?php echo get_the_date(); ?>
                                             </span>
                                             <span class="post-author">
                                                 <i class="fas fa-user"></i>
-                                                <a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>">
-                                                    <?php the_author(); ?>
-                                                </a>
+                                                <?php the_author(); ?>
                                             </span>
-                                            <?php if (has_category()) : ?>
-                                                <span class="post-categories">
-                                                    <i class="fas fa-folder"></i>
-                                                    <?php the_category(', '); ?>
-                                                </span>
-                                            <?php endif; ?>
                                             <?php if (comments_open() || get_comments_number()) : ?>
                                                 <span class="post-comments">
                                                     <i class="fas fa-comments"></i>
-                                                    <a href="<?php comments_link(); ?>">
-                                                        <?php comments_number('0 Comments', '1 Comment', '% Comments'); ?>
-                                                    </a>
+                                                    <?php comments_number('0', '1', '%'); ?>
                                                 </span>
                                             <?php endif; ?>
                                         </div>
@@ -101,7 +163,7 @@ get_header(); ?>
                                             if (has_excerpt()) {
                                                 the_excerpt();
                                             } else {
-                                                echo '<p>' . wp_trim_words(get_the_content(), 25, '...') . '</p>';
+                                                echo '<p>' . wp_trim_words(get_the_content(), 20, '...') . '</p>';
                                             }
                                             
                                             echo '<a href="' . esc_url(get_permalink()) . '" class="read-more-btn">';
@@ -206,7 +268,7 @@ get_header(); ?>
 </main><!-- #main -->
 
 <style>
-/* Basic Index Page Styles */
+/* Modern Tiled Blog Layout */
 .site-main {
     padding: 40px 0;
 }
@@ -215,51 +277,130 @@ get_header(); ?>
     margin-bottom: 40px;
 }
 
-.post-item {
-    background: #fff;
-    border-radius: 10px;
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
     margin-bottom: 40px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.post-item {
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    position: relative;
 }
 
 .post-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
 }
 
 .post-thumbnail {
+    position: relative;
+    height: 250px;
     overflow: hidden;
+    background: #f7fafc;
 }
 
 .post-thumbnail img {
     width: 100%;
-    height: auto;
-    transition: transform 0.3s ease;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
 }
 
 .post-item:hover .post-thumbnail img {
+    transform: scale(1.08);
+}
+
+.post-placeholder-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f7fafc, #edf2f7);
+}
+
+.placeholder-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.post-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 20px;
+}
+
+.post-item:hover .post-overlay {
+    opacity: 1;
+}
+
+.post-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.post-categories a {
+    background: rgba(255, 255, 255, 0.9);
+    color: #2d3748;
+    padding: 4px 12px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.post-categories a:hover {
+    background: var(--primary-color);
+    color: white;
     transform: scale(1.05);
 }
 
 .post-content {
-    padding: 30px;
+    padding: 25px;
 }
 
 .post-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 15px;
-    font-size: 14px;
-    color: #666;
+    font-size: 13px;
+    color: #718096;
 }
 
 .post-meta span {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    background: #f7fafc;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.post-meta i {
+    font-size: 12px;
+    color: var(--primary-color);
 }
 
 .post-meta a {
@@ -268,46 +409,66 @@ get_header(); ?>
 }
 
 .post-meta a:hover {
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 .entry-title {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     line-height: 1.3;
+    font-size: 1.25rem;
+    font-weight: 700;
 }
 
 .entry-title a {
     color: #2d3748;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .entry-title a:hover {
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 .entry-content {
     line-height: 1.6;
     margin-bottom: 20px;
+    color: #4a5568;
+}
+
+.entry-content p {
+    margin-bottom: 12px;
+    font-size: 14px;
 }
 
 .read-more-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--primary-color);
+    background: linear-gradient(45deg, var(--primary-color), #764ba2);
     color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 10px 18px;
+    border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
+    font-size: 14px;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .read-more-btn:hover {
-    background: var(--primary-hover);
+    background: linear-gradient(45deg, var(--primary-hover), #6b46c1);
     color: white;
     text-decoration: none;
-    transform: translateX(5px);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.read-more-btn i {
+    transition: transform 0.3s ease;
+}
+
+.read-more-btn:hover i {
+    transform: translateX(3px);
 }
 
 .post-tags {
@@ -413,15 +574,65 @@ get_header(); ?>
     margin-bottom: 20px;
 }
 
-/* Responsive */
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+}
+
+@media (max-width: 900px) {
+    .posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
 @media (max-width: 768px) {
+    .site-main {
+        padding: 30px 0;
+    }
+    
+    .posts-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .post-item {
+        border-radius: 15px;
+    }
+    
+    .post-thumbnail {
+        height: 220px;
+    }
+    
+    .post-content {
+        padding: 20px;
+    }
+    
     .post-meta {
-        flex-direction: column;
-        gap: 10px;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+    
+    .post-meta span {
+        padding: 3px 8px;
+        font-size: 12px;
     }
     
     .entry-title {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    .entry-content p {
+        font-size: 13px;
+    }
+    
+    .read-more-btn {
+        padding: 8px 16px;
+        font-size: 13px;
     }
     
     .nav-links {
@@ -432,6 +643,45 @@ get_header(); ?>
     .nav-links a {
         width: 100%;
         text-align: center;
+        padding: 15px 20px;
+    }
+    
+    .post-overlay {
+        padding: 15px;
+    }
+    
+    .post-categories a {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .posts-grid {
+        gap: 15px;
+    }
+    
+    .post-thumbnail {
+        height: 200px;
+    }
+    
+    .post-content {
+        padding: 18px;
+    }
+    
+    .entry-title {
+        font-size: 1.1rem;
+    }
+    
+    .read-more-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px;
+    }
+    
+    .placeholder-svg {
+        width: 100%;
+        height: 100%;
     }
 }
 </style>
