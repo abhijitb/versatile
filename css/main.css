@@ -160,6 +160,117 @@ img {
     padding: 0 15px;
 }
 
+/* Large breakpoint grid classes */
+.col-lg-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    padding: 0 15px;
+}
+
+.col-lg-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+    padding: 0 15px;
+}
+
+.col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 15px;
+}
+
+.col-lg-12,
+.col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0 15px;
+}
+
+/* Page Layout Styles */
+.page-main {
+    background: var(--background-color);
+}
+
+.page-content-section {
+    padding: 40px 0;
+}
+
+.page-content-section .container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.page-content-section .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.page-article {
+    background: var(--background-color);
+    padding: 0;
+}
+
+.page-content {
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.page-content h1,
+.page-content h2,
+.page-content h3,
+.page-content h4,
+.page-content h5,
+.page-content h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.page-content p {
+    margin-bottom: 1.5rem;
+}
+
+.page-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+}
+
+/* Page Hero Section */
+.page-hero {
+    background: var(--background-alt);
+    padding: 60px 0 40px;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.page-excerpt {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+.page-featured-image {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.page-featured-image img {
+    max-height: 400px;
+    width: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
 /* ===================================
    HEADER STYLES
    =================================== */
@@ -483,18 +594,19 @@ img {
 /* Posts Grid */
 .posts-grid {
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     margin-bottom: 40px;
 }
 
 /* Personal/Blog Layout */
 .site-type-personal .posts-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 /* Business Layout */
 .site-type-business .posts-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
 }
 
 /* Post Cards */
@@ -574,6 +686,38 @@ img {
     display: block !important;
 }
 
+/* Placeholder Image Styles */
+.post-placeholder-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f7fafc, #edf2f7);
+}
+
+.placeholder-svg {
+    width: 100%;
+    height: 100%;
+    max-width: 400px;
+    max-height: 250px;
+}
+
+.post-placeholder-thumb {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f7fafc;
+    border-radius: 4px;
+}
+
+.placeholder-svg-small {
+    width: 100%;
+    height: 100%;
+}
+
 .read-more {
     display: inline-flex;
     align-items: center;
@@ -590,12 +734,23 @@ img {
    SIDEBAR
    =================================== */
 
+.sidebar {
+    margin-top: 40px;
+    padding: 0;
+}
+
 .widget {
-    background: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    padding: 25px;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
     margin-bottom: 30px;
+    box-shadow: none;
+    width: 100%;
+}
+
+.widget:hover {
+    box-shadow: none;
 }
 
 .widget-title {
@@ -626,6 +781,47 @@ img {
 
 .widget a:hover {
     color: var(--primary-color);
+}
+
+/* Search widget styling to match archive/search templates */
+.sidebar .widget_search .search-form {
+    margin: 0;
+    display: flex;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.sidebar .widget_search .search-field {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
+    color: var(--text-color);
+}
+
+.sidebar .widget_search .search-submit,
+.sidebar .widget_search button[type="submit"],
+.sidebar .widget_search input[type="submit"] {
+    padding: 12px 15px !important;
+    background: var(--primary-color) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer;
+    font-size: 14px !important;
+    transition: var(--transition);
+    font-weight: var(--font-weight-bold) !important;
+}
+
+.sidebar .widget_search .search-submit:hover,
+.sidebar .widget_search button[type="submit"]:hover,
+.sidebar .widget_search input[type="submit"]:hover {
+    background: var(--primary-hover) !important;
+    color: white !important;
 }
 
 /* ===================================
@@ -811,20 +1007,27 @@ select:focus {
 .nav-links {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     gap: 20px;
 }
 
 .nav-links a {
     background: var(--primary-color);
     color: white;
-    padding: 12px 24px;
+    padding: 15px 20px;
     border-radius: 5px;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
-    min-width: 120px;
+    min-width: 200px;
+    max-width: 300px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .nav-links a:hover {
@@ -833,6 +1036,24 @@ select:focus {
     text-decoration: none;
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Post Navigation Specific Styles */
+.post-navigation .nav-direction {
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.post-navigation .nav-title {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+    display: block;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Distinct styles for previous and next buttons */
@@ -964,7 +1185,12 @@ select:focus {
     .col-md-4,
     .col-md-6,
     .col-md-8,
-    .col-md-12 {
+    .col-md-12,
+    .col-lg-4,
+    .col-lg-6,
+    .col-lg-8,
+    .col-lg-12,
+    .col-12 {
         flex: 0 0 100%;
         max-width: 100%;
     }
@@ -1004,7 +1230,7 @@ select:focus {
     
     /* Posts grid mobile */
     .posts-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
     
@@ -1016,6 +1242,35 @@ select:focus {
     .footer-widgets {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+    
+    /* Page mobile responsive */
+    .page-hero {
+        padding: 40px 0 30px;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .page-content-section {
+        padding: 30px 0;
+    }
+    
+    .page-content-section .col-lg-8,
+    .page-content-section .col-lg-4 {
+        padding: 0 15px;
+    }
+    
+    /* Navigation responsive */
+    .nav-links {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-links a {
+        min-width: 100%;
+        max-width: 100%;
     }
 }
 
@@ -1038,6 +1293,12 @@ select:focus {
     
     .post-content {
         padding: 15px;
+    }
+    
+    /* Posts grid single column on small mobile */
+    .posts-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
     
     .cart-toggle {

@@ -141,19 +141,6 @@
                 border-color: ${colors.primary_hover} !important;
             }
             
-            
-            /* Update pagination and widget borders */
-            .page-numbers a:hover,
-            .page-numbers .current,
-            .widget-title {
-                background-color: ${colors.primary} !important;
-                border-color: ${colors.primary} !important;
-            }
-            
-            .widget-title {
-                border-bottom-color: ${colors.primary} !important;
-            }
-            
             /* Update link colors */
             a {
                 color: ${colors.primary};

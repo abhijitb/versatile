@@ -28,74 +28,7 @@ get_header(); ?>
                                 
                                 <div class="post-thumbnail">
                                     <a href="<?php the_permalink(); ?>">
-                                        <?php if (has_post_thumbnail()) : ?>
-                                            <?php the_post_thumbnail('large', array('class' => 'img-fluid')); ?>
-                                        <?php else : ?>
-                                            <div class="post-placeholder-image">
-                                                <svg viewBox="0 0 400 250" class="placeholder-svg">
-                                                    <!-- Background gradient -->
-                                                    <defs>
-                                                        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                            <stop offset="0%" style="stop-color:#f7fafc;stop-opacity:1" />
-                                                            <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
-                                                        </linearGradient>
-                                                        <linearGradient id="vGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.4" />
-                                                            <stop offset="50%" style="stop-color:#764ba2;stop-opacity:0.6" />
-                                                            <stop offset="100%" style="stop-color:#667eea;stop-opacity:0.4" />
-                                                        </linearGradient>
-                                                        <filter id="blur">
-                                                            <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
-                                                        </filter>
-                                                    </defs>
-                                                    
-                                                    <!-- Background -->
-                                                    <rect width="400" height="250" fill="url(#bgGradient)"/>
-                                                    
-                                                    <!-- Decorative circles -->
-                                                    <circle cx="80" cy="60" r="3" fill="#cbd5e0" opacity="0.4"/>
-                                                    <circle cx="320" cy="40" r="2" fill="#cbd5e0" opacity="0.3"/>
-                                                    <circle cx="350" cy="200" r="4" fill="#cbd5e0" opacity="0.3"/>
-                                                    <circle cx="50" cy="180" r="2.5" fill="#cbd5e0" opacity="0.4"/>
-                                                    
-                                                    <!-- Main "V" design -->
-                                                    <g transform="translate(200, 125)">
-                                                        <!-- Outer V (larger, background effect) -->
-                                                        <path d="M -80 -50 L 0 70 L 80 -50" 
-                                                              stroke="url(#vGradient)" 
-                                                              stroke-width="24" 
-                                                              fill="none" 
-                                                              stroke-linecap="round" 
-                                                              stroke-linejoin="round" 
-                                                              opacity="0.5" 
-                                                              filter="url(#blur)"/>
-                                                        
-                                                        <!-- Inner V (main design) -->
-                                                        <path d="M -60 -35 L 0 50 L 60 -35" 
-                                                              stroke="url(#vGradient)" 
-                                                              stroke-width="12" 
-                                                              fill="none" 
-                                                              stroke-linecap="round" 
-                                                              stroke-linejoin="round" 
-                                                              opacity="0.8"/>
-                                                        
-                                                        <!-- Central accent -->
-                                                        <circle cx="0" cy="50" r="4" fill="#667eea" opacity="0.7"/>
-                                                    </g>
-                                                    
-                                                    <!-- Theme text -->
-                                                    <text x="200" y="210" 
-                                                          text-anchor="middle" 
-                                                          fill="#718096" 
-                                                          font-family="Arial, sans-serif" 
-                                                          font-size="14" 
-                                                          font-weight="600" 
-                                                          opacity="0.8">
-                                                        Versatile
-                                                    </text>
-                                                </svg>
-                                            </div>
-                                        <?php endif; ?>
+                                        <?php echo versatile_get_post_image(get_the_ID(), 'large', array('class' => 'img-fluid')); ?>
                                     </a>
                                     <div class="post-overlay">
                                         <div class="post-categories">

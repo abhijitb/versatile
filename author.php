@@ -4,6 +4,10 @@
  * Versatile WordPress Theme
  */
 
+// Enqueue author-specific styles and scripts
+wp_enqueue_style('versatile-author', get_template_directory_uri() . '/css/author.css', array(), _S_VERSION);
+wp_enqueue_script('versatile-author-filter', get_template_directory_uri() . '/js/author-filter.js', array(), filemtime(get_template_directory() . '/js/author-filter.js'), true);
+
 get_header(); ?>
 
 <main class="site-main author-main">
@@ -136,13 +140,11 @@ get_header(); ?>
                             <?php while (have_posts()) : the_post(); ?>
                                 <article id="post-<?php the_ID(); ?>" <?php post_class('author-post-item'); ?> data-categories="<?php echo esc_attr(implode(',', wp_get_post_categories(get_the_ID(), array('fields' => 'slugs')))); ?>">
                                     
-                                    <?php if (has_post_thumbnail()) : ?>
-                                        <div class="post-thumbnail">
-                                            <a href="<?php the_permalink(); ?>">
-                                                <?php the_post_thumbnail('medium', array('class' => 'img-fluid')); ?>
-                                            </a>
-                                        </div>
-                                    <?php endif; ?>
+                                    <div class="post-thumbnail">
+                                        <a href="<?php the_permalink(); ?>">
+                                            <?php echo versatile_get_post_image(get_the_ID(), 'medium', array('class' => 'img-fluid')); ?>
+                                        </a>
+                                    </div>
                                     
                                     <div class="post-content">
                                         <div class="post-meta">
@@ -312,7 +314,7 @@ get_header(); ?>
                                                 </div>
                                             <?php endif; ?>
                                             <div class="popular-post-content">
-                                                <h5><a href="<?php echo get_permalink($popular_post->ID); ?>"><?php echo get_the_title($popular_post->ID); ?></a></h5>
+                                                <h5><a href="<?php echo get_permalink($popular_post->ID); ?>"><?php echo wp_trim_words(get_the_title($popular_post->ID), 6, '...'); ?></a></h5>
                                                 <div class="popular-post-meta">
                                                     <span class="post-date"><?php echo get_the_date('M j, Y', $popular_post->ID); ?></span>
                                                     <span class="post-comments"><?php echo get_comments_number($popular_post->ID); ?> comments</span>
@@ -368,22 +370,5 @@ get_header(); ?>
         </div>
     </section>
 </main>
-
-<script>
-// Filter author posts by category
-function filterAuthorPosts(category) {
-    const posts = document.querySelectorAll('.author-post-item');
-    
-    posts.forEach(post => {
-        const postCategories = post.getAttribute('data-categories').split(',');
-        
-        if (category === 'all' || postCategories.includes(category)) {
-            post.style.display = 'block';
-        } else {
-            post.style.display = 'none';
-        }
-    });
-}
-</script>
 
 <?php get_footer(); ?>

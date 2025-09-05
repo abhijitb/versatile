@@ -65,13 +65,11 @@ get_header(); ?>
                 if ($recent_posts->have_posts()) :
                     while ($recent_posts->have_posts()) : $recent_posts->the_post(); ?>
                         <article class="post-card">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <div class="post-thumbnail">
-                                    <a href="<?php the_permalink(); ?>">
-                                        <?php the_post_thumbnail('versatile-featured', array('class' => 'img-fluid')); ?>
-                                    </a>
-                                </div>
-                            <?php endif; ?>
+                            <div class="post-thumbnail">
+                                <a href="<?php the_permalink(); ?>">
+                                    <?php echo versatile_get_post_image(get_the_ID(), 'versatile-featured', array('class' => 'img-fluid')); ?>
+                                </a>
+                            </div>
                             
                             <div class="post-content">
                                 <h3 class="post-title">

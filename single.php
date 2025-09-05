@@ -96,7 +96,7 @@ get_header(); ?>
                                         <div class="nav-previous">
                                             <a href="<?php echo get_permalink($prev_post); ?>" class="nav-link">
                                                 <span class="nav-direction"><?php esc_html_e('Previous', 'versatile'); ?></span>
-                                                <span class="nav-title"><?php echo get_the_title($prev_post); ?></span>
+                                                <span class="nav-title"><?php echo wp_trim_words(get_the_title($prev_post), 6, '...'); ?></span>
                                             </a>
                                         </div>
                                     <?php endif;
@@ -105,7 +105,7 @@ get_header(); ?>
                                         <div class="nav-next">
                                             <a href="<?php echo get_permalink($next_post); ?>" class="nav-link">
                                                 <span class="nav-direction"><?php esc_html_e('Next', 'versatile'); ?></span>
-                                                <span class="nav-title"><?php echo get_the_title($next_post); ?></span>
+                                                <span class="nav-title"><?php echo wp_trim_words(get_the_title($next_post), 6, '...'); ?></span>
                                             </a>
                                         </div>
                                     <?php endif; ?>

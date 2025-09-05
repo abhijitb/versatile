@@ -4,6 +4,9 @@
  * Versatile WordPress Theme
  */
 
+// Ensure main CSS is loaded (contains grid system)
+wp_enqueue_style('versatile-main', get_template_directory_uri() . '/css/main.css', array(), _S_VERSION);
+
 get_header(); ?>
 
 <main class="site-main page-main">

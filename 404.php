@@ -88,13 +88,11 @@ get_header(); ?>
                             <div class="popular-posts-list">
                                 <?php foreach ($popular_posts as $post) : ?>
                                     <div class="popular-post-item">
-                                        <?php if (has_post_thumbnail($post->ID)) : ?>
-                                            <div class="post-thumb">
-                                                <a href="<?php echo get_permalink($post->ID); ?>">
-                                                    <?php echo get_the_post_thumbnail($post->ID, array(60, 60)); ?>
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
+                                        <div class="post-thumb">
+                                            <a href="<?php echo get_permalink($post->ID); ?>">
+                                                <?php echo versatile_get_small_post_image($post->ID, array(60, 60)); ?>
+                                            </a>
+                                        </div>
                                         <div class="post-content">
                                             <h5><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_title($post->ID); ?></a></h5>
                                             <span class="post-date"><?php echo get_the_date('M j, Y', $post->ID); ?></span>
@@ -152,13 +150,11 @@ get_header(); ?>
                             <div class="recent-posts-list">
                                 <?php foreach ($recent_posts as $post) : ?>
                                     <div class="recent-post-item">
-                                        <?php if (has_post_thumbnail($post->ID)) : ?>
-                                            <div class="post-thumb">
-                                                <a href="<?php echo get_permalink($post->ID); ?>">
-                                                    <?php echo get_the_post_thumbnail($post->ID, array(60, 60)); ?>
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
+                                        <div class="post-thumb">
+                                            <a href="<?php echo get_permalink($post->ID); ?>">
+                                                <?php echo versatile_get_small_post_image($post->ID, array(60, 60)); ?>
+                                            </a>
+                                        </div>
                                         <div class="post-content">
                                             <h5><a href="<?php echo get_permalink($post->ID); ?>"><?php echo get_the_title($post->ID); ?></a></h5>
                                             <div class="post-meta">
