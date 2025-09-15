@@ -1,0 +1,64 @@
+name: PHP Linting
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  php-lint:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        php-version: [7.4, 8.0, 8.1, 8.2]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo
+        tools: composer
+        
+    - name: Install dependencies
+      run: composer install --no-dev --optimize-autoloader
+      
+    - name: Install dev dependencies
+      run: composer install --dev
+      
+    - name: Run PHPCS
+      run: |
+        ./vendor/bin/phpcs --report=checkstyle --report-file=phpcs-report.xml
+        
+    - name: Run PHPCS with summary
+      run: |
+        ./vendor/bin/phpcs --report=summary
+        
+    - name: Upload PHPCS results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: phpcs-report-${{ matrix.php-version }}
+        path: phpcs-report.xml
+        
+    - name: Comment PR with PHPCS results
+      if: github.event_name == 'pull_request'
+      uses: romeovs/lcov-reporter-action@v0.3.1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        lcov-file: phpcs-report.xml
+        delete-old-comments: true
+        name: PHP CodeSniffer Report
+        
+    - name: Check for PHPCS errors
+      if: failure()
+      run: |
+        echo "❌ PHP CodeSniffer found issues in your code."
+        echo "Please review the output above and fix the reported issues."
+        echo "You can run 'composer run lint:php:fix' locally to automatically fix some issues."

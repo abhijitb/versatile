@@ -33,12 +33,20 @@ This theme uses modern development tools:
 ```bash
 # Install dependencies
 npm install
+composer install
 
 # Build assets
 npm run build
 
 # Watch for changes
 npm run watch
+
+# Lint code
+npm run lint          # Lint CSS, JS, and PHP
+npm run lint:php      # Lint PHP only
+npm run lint:php:fix  # Auto-fix PHP issues
+composer run lint     # Alternative PHP linting
+composer run lint:fix # Alternative PHP auto-fix
 ```
 
 ## License

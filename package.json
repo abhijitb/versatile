@@ -13,7 +13,9 @@
     "dev": "npm run watch",
     "lint:css": "stylelint 'assets/css/src/**/*.scss'",
     "lint:js": "eslint 'assets/js/src/**/*.js'",
-    "lint": "npm run lint:css && npm run lint:js",
+    "lint:php": "phpcs",
+    "lint:php:fix": "phpcbf",
+    "lint": "npm run lint:css && npm run lint:js && npm run lint:php",
     "format:css": "stylelint 'assets/css/src/**/*.scss' --fix",
     "format:js": "eslint 'assets/js/src/**/*.js' --fix",
     "format": "npm run format:css && npm run format:js"
