@@ -27,12 +27,6 @@
     <!-- Use WordPress coding standards -->
     <rule ref="WordPress"/>
     
-    <!-- Use WordPress extra rules -->
-    <rule ref="WordPressExtra"/>
-    
-    <!-- Use WordPress VIP rules (optional, can be strict) -->
-    <!-- <rule ref="WordPressVIPMinimum"/> -->
-    
     <!-- PHP Compatibility rules -->
     <rule ref="PHPCompatibility"/>
     
@@ -43,9 +37,8 @@
         </properties>
     </rule>
     
-    <!-- Allow short array syntax -->
-    <rule ref="Generic.Arrays.DisallowShortArraySyntax"/>
-    
-    <!-- Allow short ternary operator -->
-    <rule ref="WordPress.PHP.DisallowShortTernary"/>
+    <!-- Disable short array syntax rule (WordPress allows both) -->
+    <rule ref="Generic.Arrays.DisallowShortArraySyntax">
+        <severity>0</severity>
+    </rule>
 </ruleset>
