@@ -28,48 +28,10 @@
                 <div class="header-content">
                     
                     <!-- Site Branding -->
-                    <div class="site-branding">
-                        <?php
-                        the_custom_logo();
-                        if (is_front_page() && is_home()) :
-                            ?>
-                            <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></h1>
-                            <?php
-                        else :
-                            ?>
-                            <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></p>
-                            <?php
-                        endif;
-                        $versatile_description = get_bloginfo('description', 'display');
-                        if ($versatile_description || is_customize_preview()) :
-                            ?>
-                            <p class="site-description"><?php echo $versatile_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-                        <?php endif; ?>
-                    </div><!-- .site-branding -->
+                    <?php get_template_part('template-parts/header/site-branding'); ?>
 
                     <!-- Primary Navigation -->
-                    <nav id="site-navigation" class="main-navigation">
-                        <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                            <span class="menu-toggle-icon">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </span>
-                            <span class="menu-toggle-text"><?php esc_html_e('Menu', 'versatile'); ?></span>
-                        </button>
-                        
-                        <?php
-                        wp_nav_menu(
-                            array(
-                                'theme_location' => 'menu-1',
-                                'menu_id'        => 'primary-menu',
-                                'menu_class'     => 'primary-menu',
-                                'container'      => false,
-                                'fallback_cb'    => 'versatilefallback_menu',
-                            )
-                        );
-                        ?>
-                    </nav><!-- #site-navigation -->
+                    <?php get_template_part('template-parts/header/site-navigation'); ?>
 
                     <!-- Header Actions -->
                     <div class="header-actions">
@@ -158,7 +120,7 @@
                             'theme_location' => 'menu-1',
                             'menu_class'     => 'mobile-menu',
                             'container'      => false,
-                            'fallback_cb'    => 'versatilefallback_menu',
+                            'fallback_cb'    => 'versatile_fallback_menu',
                         )
                     );
                     ?>
@@ -236,7 +198,8 @@
     text-decoration: none;
 }
 
-.primary-menu {
+.nav-menu,
+#primary-menu {
     display: flex;
     list-style: none;
     margin: 0;
@@ -244,14 +207,16 @@
     gap: 30px;
 }
 
-.primary-menu a {
+.nav-menu a,
+#primary-menu a {
     color: #2d3748;
     text-decoration: none;
     font-weight: 500;
     padding: 10px 0;
 }
 
-.primary-menu a:hover {
+.nav-menu a:hover,
+#primary-menu a:hover {
     color: #667eea;
 }
 
@@ -287,7 +252,8 @@
 }
 
 @media (max-width: 991px) {
-    .primary-menu {
+    .nav-menu,
+    #primary-menu {
         display: none;
     }
     

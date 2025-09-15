@@ -7,7 +7,7 @@
  * @package Versatile
  */
 
-if (!function_exists('versatileposted_on')) :
+if (!function_exists('versatile_posted_on')) :
     /**
      * Prints HTML with meta information for the current post-date/time.
      */
@@ -35,7 +35,7 @@ if (!function_exists('versatileposted_on')) :
     }
 endif;
 
-if (!function_exists('versatileposted_by')) :
+if (!function_exists('versatile_posted_by')) :
     /**
      * Prints HTML with meta information for the current author.
      */
@@ -50,7 +50,7 @@ if (!function_exists('versatileposted_by')) :
     }
 endif;
 
-if (!function_exists('versatileentry_footer')) :
+if (!function_exists('versatile_entry_footer')) :
     /**
      * Prints HTML with meta information for the categories, tags and comments.
      */
@@ -110,7 +110,7 @@ if (!function_exists('versatileentry_footer')) :
     }
 endif;
 
-if (!function_exists('versatilepost_thumbnail')) :
+if (!function_exists('versatile_post_thumbnail')) :
     /**
      * Displays an optional post thumbnail.
      *

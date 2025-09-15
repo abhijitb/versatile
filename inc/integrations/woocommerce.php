@@ -44,7 +44,7 @@ add_action('after_setup_theme', 'versatile_woocommerce_setup');
  * @return void
  */
 function versatile_woocommerce_scripts() {
-	wp_enqueue_style('versatile-woocommerce-style', get_template_directory_uri() . '/css/woocommerce.css', array(), _S_VERSION);
+	wp_enqueue_style('versatile-woocommerce-style', get_template_directory_uri() . '/assets/css/src/woocommerce.css', array(), _S_VERSION);
 
 	$font_path   = WC()->plugin_url() . '/assets/fonts/';
 	$inline_font = '@font-face {

@@ -1,0 +1,40 @@
+// =============================================================================
+// Functions
+// =============================================================================
+
+// Map deep get function
+@function map-deep-get($map, $keys...) {
+    @each $key in $keys {
+        $map: map-get($map, $key);
+    }
+    @return $map;
+}
+
+// Strip unit from number
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return $number / ($number * 0 + 1);
+    }
+    @return $number;
+}
+
+// Convert px to rem
+@function rem($pixels, $context: $font-size-base) {
+    @if unitless($pixels) {
+        $pixels: $pixels * 1px;
+    }
+    @if unitless($context) {
+        $context: $context * 1px;
+    }
+    @return $pixels / $context * 1rem;
+}
+
+// Get spacing value
+@function spacer($key) {
+    @return map-get($spacers, $key);
+}
+
+// Get breakpoint value
+@function breakpoint($name) {
+    @return map-get($breakpoints, $name);
+}

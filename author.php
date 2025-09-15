@@ -5,8 +5,8 @@
  */
 
 // Enqueue author-specific styles and scripts
-wp_enqueue_style('versatile-author', get_template_directory_uri() . '/css/author.css', array(), _S_VERSION);
-wp_enqueue_script('versatile-author-filter', get_template_directory_uri() . '/js/author-filter.js', array(), filemtime(get_template_directory() . '/js/author-filter.js'), true);
+wp_enqueue_style('versatile-author', get_template_directory_uri() . '/assets/css/src/author.css', array(), _S_VERSION);
+wp_enqueue_script('versatile-author-filter', get_template_directory_uri() . '/assets/js/src/author-filter.js', array(), filemtime(get_template_directory() . '/assets/js/src/author-filter.js'), true);
 
 get_header(); ?>
 

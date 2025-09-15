@@ -7,6 +7,39 @@
  * @package Versatile
  */
 
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+// Theme version
+if (!defined('VERSATILE_VERSION')) {
+    define('VERSATILE_VERSION', '1.0.0');
+}
+
+// Theme directory path
+if (!defined('VERSATILE_THEME_DIR')) {
+    define('VERSATILE_THEME_DIR', get_template_directory());
+}
+
+// Theme directory URI
+if (!defined('VERSATILE_THEME_URI')) {
+    define('VERSATILE_THEME_URI', get_template_directory_uri());
+}
+
+/**
+ * Load theme includes
+ */
+require_once VERSATILE_THEME_DIR . '/inc/theme-support.php';
+require_once VERSATILE_THEME_DIR . '/inc/enqueue-scripts.php';
+require_once VERSATILE_THEME_DIR . '/inc/template-functions.php';
+require_once VERSATILE_THEME_DIR . '/inc/template-tags.php';
+require_once VERSATILE_THEME_DIR . '/inc/customizer/customizer-setup.php';
+
+// Load integration files
+require_once VERSATILE_THEME_DIR . '/inc/integrations/woocommerce.php';
+
+// Load existing functions (these can be gradually moved to appropriate inc files)
 if (!defined('_S_VERSION')) {
     // Replace the version number of the theme on each release.
     define('_S_VERSION', '1.0.0');
@@ -14,8 +47,9 @@ if (!defined('_S_VERSION')) {
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.
+ * Legacy function - most features now handled in inc/theme-support.php
  */
-function versatile_setup() {
+function versatile_legacy_setup() {
     /*
      * Make theme available for translation.
      */
@@ -155,15 +189,7 @@ function versatile_setup() {
     add_theme_support('wc-product-gallery-lightbox');
     add_theme_support('wc-product-gallery-slider');
 }
-add_action('after_setup_theme', 'versatile_setup');
-
-/**
- * Set the content width in pixels, based on the theme's design and stylesheet.
- */
-function versatile_content_width() {
-    $GLOBALS['content_width'] = apply_filters('versatile_content_width', 640);
-}
-add_action('after_setup_theme', 'versatile_content_width', 0);
+add_action('after_setup_theme', 'versatile_legacy_setup');
 
 /**
  * Register widget area.
@@ -212,45 +238,6 @@ function versatile_widgets_init() {
     }
 }
 add_action('widgets_init', 'versatile_widgets_init');
-
-/**
- * Enqueue scripts and styles.
- */
-function versatile_scripts() {
-    wp_enqueue_style('versatile-style', get_stylesheet_uri(), array(), _S_VERSION);
-    wp_style_add_data('versatile-style', 'rtl', 'replace');
-
-    // Font Awesome
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0');
-
-    // Google Fonts
-    wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap', array(), null);
-
-    // Header & Footer CSS
-    wp_enqueue_style('versatile-header-footer', get_template_directory_uri() . '/css/header-footer.css', array('versatile-style'), _S_VERSION);
-
-    // Check if JS files exist before enqueueing
-    if (file_exists(get_template_directory() . '/js/navigation.js')) {
-        wp_enqueue_script('versatile-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
-    }
-
-    if (file_exists(get_template_directory() . '/js/main.js')) {
-        wp_enqueue_script('versatile-main', get_template_directory_uri() . '/js/main.js', array('jquery'), _S_VERSION, true);
-    }
-
-    if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply');
-    }
-
-    // Localize script for AJAX
-    if (file_exists(get_template_directory() . '/js/main.js')) {
-        wp_localize_script('versatile-main', 'versatile_ajax', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('versatile_nonce'),
-        ));
-    }
-}
-add_action('wp_enqueue_scripts', 'versatile_scripts');
 
 /**
  * Social Links Function
@@ -304,16 +291,6 @@ if (!function_exists('versatilefallback_menu')) {
         echo '</ul>';
     }
 }
-
-/**
- * Custom template tags for this theme.
- */
-require get_template_directory() . '/inc/template-tags.php';
-
-/**
- * Functions which enhance the theme by hooking into WordPress.
- */
-require get_template_directory() . '/inc/template-functions.php';
 
 /**
  * Generate placeholder image for posts without featured images
@@ -771,28 +748,6 @@ if (!function_exists('versatile_get_small_post_image')) {
                         <text x="30" y="35" text-anchor="middle" fill="#718096" font-size="8" font-weight="600">V</text>
                     </svg>
                 </div>';
-    }
-}
-
-/**
- * Customizer additions.
- */
-require get_template_directory() . '/inc/customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-if (defined('JETPACK__VERSION')) {
-    require get_template_directory() . '/inc/jetpack.php';
-}
-
-/**
- * Load WooCommerce compatibility file.
- */
-if (class_exists('WooCommerce')) {
-    $woocommerce_file = get_template_directory() . '/inc/woocommerce.php';
-    if (file_exists($woocommerce_file)) {
-        require $woocommerce_file;
     }
 }
 

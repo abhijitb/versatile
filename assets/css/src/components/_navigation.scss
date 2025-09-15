@@ -1,0 +1,136 @@
+// Navigation styles for header main menu
+
+#site-navigation,
+.site-header .main-navigation {
+    background: var(--header-bg);
+
+    .menu-toggle {
+        display: none;
+        @media (max-width: 991px) {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background: #fff;
+            cursor: pointer;
+        }
+    }
+
+    .nav-menu,
+    #primary-menu {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 24px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        @media (max-width: 991px) {
+            display: none;
+            flex-direction: column;
+            gap: 0;
+            &.is-open { display: block; }
+        }
+    }
+
+    .nav-menu > li,
+    #primary-menu > li { position: relative; }
+
+    .nav-menu > li > a,
+    #primary-menu > li > a {
+        display: inline-block;
+        padding: 12px 8px;
+        color: var(--text-color);
+        font-weight: 500;
+        font-size: 14px;
+        text-decoration: none;
+        transition: color .2s ease;
+    }
+
+    .nav-menu > li > a:hover,
+    .nav-menu > li.current-menu-item > a,
+    .nav-menu > li.current_page_item > a,
+    #primary-menu > li > a:hover,
+    #primary-menu > li.current-menu-item > a,
+    #primary-menu > li.current_page_item > a { color: var(--primary-color); }
+
+    /* Dropdowns */
+    .nav-menu .sub-menu,
+    #primary-menu .sub-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 220px;
+        background: #fff;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        list-style: none;
+        padding: 8px 0;
+        margin: 8px 0 0 0;
+        display: none;
+        z-index: 1000;
+    }
+
+    .nav-menu li:hover > .sub-menu,
+    #primary-menu li:hover > .sub-menu { display: block; }
+
+    .nav-menu .sub-menu li a,
+    #primary-menu .sub-menu li a {
+        display: block;
+        padding: 10px 14px;
+        color: var(--text-color);
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .nav-menu .sub-menu li a:hover,
+    #primary-menu .sub-menu li a:hover { background: var(--secondary-color); }
+
+    /* Mobile: show dropdowns as nested lists */
+    @media (max-width: 991px) {
+        .nav-menu .sub-menu,
+        #primary-menu .sub-menu {
+            position: static;
+            border: none;
+            box-shadow: none;
+            padding-left: 16px;
+            display: block;
+        }
+    }
+}
+
+/* High-specificity overrides to ensure header nav styles apply */
+#masthead #site-navigation .nav-menu,
+#masthead #site-navigation #primary-menu {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 24px;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#masthead #site-navigation .nav-menu > li,
+#masthead #site-navigation #primary-menu > li {
+    display: inline-block !important;
+    float: none !important;
+    width: auto !important;
+}
+
+#masthead #site-navigation .nav-menu > li > a,
+#masthead #site-navigation #primary-menu > li > a {
+    display: inline-block !important;
+    padding: 12px 8px;
+    text-decoration: none;
+}
+
+@media (max-width: 991px) {
+    #masthead #site-navigation .nav-menu,
+    #masthead #site-navigation #primary-menu { display: none !important; flex-direction: column !important; gap: 0; }
+    #masthead #site-navigation .nav-menu.is-open,
+    #masthead #site-navigation #primary-menu.is-open { display: block !important; }
+}

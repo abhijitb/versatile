@@ -1,0 +1,66 @@
+graph TD
+    A[WordPress Theme Root] --> B[Core Templates]
+    A --> C[Template Parts]
+    A --> D[Assets]
+    A --> E[Includes]
+    A --> F[Documentation]
+    A --> G[Build Tools]
+    
+    B --> B1[index.php]
+    B --> B2[single.php]
+    B --> B3[archive.php]
+    B --> B4[page.php]
+    B --> B5[search.php]
+    B --> B6[header.php]
+    B --> B7[footer.php]
+    B --> B8[functions.php]
+    
+    C --> C1[Header Parts]
+    C --> C2[Footer Parts]
+    C --> C3[Content Parts]
+    C --> C4[Navigation Parts]
+    
+    C1 --> C1A[site-branding.php]
+    C1 --> C1B[site-navigation.php]
+    
+    C2 --> C2A[footer-widgets.php]
+    C2 --> C2B[site-info.php]
+    
+    C3 --> C3A[content-single.php]
+    C3 --> C3B[content-archive.php]
+    C3 --> C3C[content-search.php]
+    C3 --> C3D[content-none.php]
+    C3 --> C3E[author-bio.php]
+    
+    C4 --> C4A[pagination.php]
+    C4 --> C4B[post-navigation.php]
+    
+    D --> D1[CSS/SCSS]
+    D --> D2[JavaScript]
+    D --> D3[Images]
+    D --> D4[Fonts]
+    
+    D1 --> D1A[Source Files]
+    D1 --> D1B[Compiled Files]
+    
+    D1A --> D1A1[abstracts/_variables.scss]
+    D1A --> D1A2[abstracts/_mixins.scss]
+    D1A --> D1A3[base/typography.scss]
+    D1A --> D1A4[components/buttons.scss]
+    D1A --> D1A5[layout/header.scss]
+    
+    E --> E1[Theme Support]
+    E --> E2[Enqueue Scripts]
+    E --> E3[Template Functions]
+    E --> E4[Customizer]
+    E --> E5[Integrations]
+    
+    F --> F1[README.md]
+    F --> F2[Installation Guide]
+    F --> F3[Customization Guide]
+    F --> F4[Changelog]
+    
+    G --> G1[package.json]
+    G --> G2[webpack.config.js]
+    G --> G3[Linting Rules]
+    G --> G4[Editor Config]

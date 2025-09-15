@@ -362,9 +362,9 @@ function versatile_customize_partial_css() {
  */
 function versatile_customize_preview_js() {
     // Only enqueue if the file exists
-    $customizer_js_path = get_template_directory() . '/js/customizer.js';
+    $customizer_js_path = get_template_directory() . '/assets/js/src/customizer.js';
     if (file_exists($customizer_js_path)) {
-        wp_enqueue_script('versatile-customizer', get_template_directory_uri() . '/js/customizer.js', array('customize-preview'), _S_VERSION, true);
+        wp_enqueue_script('versatile-customizer', get_template_directory_uri() . '/assets/js/src/customizer.js', array('customize-preview'), _S_VERSION, true);
     }
 }
 add_action('customize_preview_init', 'versatile_customize_preview_js');

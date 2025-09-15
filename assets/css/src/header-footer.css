@@ -41,10 +41,18 @@
     width: auto;
 }
 
+/* Site title and description container */
+.site-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
 .site-title {
     margin: 0;
     font-size: 1.8rem;
     font-weight: 700;
+    line-height: 1.2;
 }
 
 .site-title a {
@@ -58,8 +66,9 @@
 
 .site-description {
     margin: 0;
-    font-size: 14px;
+    font-size: 13px;
     color: #718096;
+    line-height: 1.3;
 }
 
 /* Main Navigation */

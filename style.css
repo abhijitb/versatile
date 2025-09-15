@@ -19,19 +19,14 @@ Versatile is distributed under the terms of the GNU GPL
 
 /* 
    This file serves as the main stylesheet identifier for WordPress.
-   All actual styles are in assets/css/main.css to keep the code organized.
+   All actual styles are compiled to assets/css/dist/main.css.
    
-   The theme uses a modular CSS approach:
-   - main.css: Core styles and layout
-   - woocommerce.css: E-commerce specific styles
+   The theme uses a modular CSS approach (compiled via SCSS):
+   - assets/css/dist/main.css: Core + components + pages + vendors
    - Inline CSS: Dynamic customizer options
 */
 
-/* Import main theme styles */
-@import url('css/main.css');
-
-/* Import WooCommerce styles if plugin is active */
-@import url('css/woocommerce.css');
+/* Styles are enqueued via PHP from assets/css/dist/main.css */
 
 /* Additional theme-specific overrides can be added here */
 

@@ -12,7 +12,7 @@ if (!is_active_sidebar('sidebar-1')) {
 }
 
 // Enqueue sidebar-specific CSS
-wp_enqueue_style('versatile-sidebar', get_template_directory_uri() . '/css/sidebar.css', array(), _S_VERSION);
+wp_enqueue_style('versatile-sidebar', get_template_directory_uri() . '/assets/css/src/sidebar.css', array(), _S_VERSION);
 ?>
 
 <aside id="secondary" class="widget-area sidebar">

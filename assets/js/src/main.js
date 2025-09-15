@@ -317,6 +317,23 @@
         initFormEnhancements();
         initAjaxComments();
         
+        // Initialize header nav mobile toggle
+        function initHeaderNavToggle() {
+            const $toggle = $('.menu-toggle');
+            const $menu = $('#site-navigation .nav-menu');
+            if (!$toggle.length || !$menu.length) return;
+
+            $toggle.on('click', function(e) {
+                e.preventDefault();
+                const isOpen = $menu.hasClass('is-open');
+                $menu.toggleClass('is-open', !isOpen);
+                $(this).attr('aria-expanded', String(!isOpen));
+            });
+        }
+
+        // Call initializers
+        initHeaderNavToggle();
+        
         // Window resize handler
         $(window).on('resize', function() {
             // Close mobile menu on resize

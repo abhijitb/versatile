@@ -1,0 +1,45 @@
+/*!
+ * Versatile WordPress Theme
+ * Main stylesheet
+ */
+
+// Import existing theme styles first (these contain the actual styles)
+// Note: We need to import main.css as 'main-styles' to avoid circular import
+@import 'main-styles';
+@import 'header-footer';
+@import 'sidebar';
+@import 'archive';
+@import 'author';
+@import 'search';
+@import 'woocommerce';
+
+// Future SCSS architecture (currently placeholder files)
+// Abstracts
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+@import 'abstracts/functions';
+
+// Base
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/base';
+
+// Layout
+@import 'layout/grid';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/sidebar';
+
+// Components
+@import 'components/buttons';
+@import 'components/forms';
+@import 'components/navigation';
+@import 'components/cards';
+
+// Pages
+@import 'pages/home';
+@import 'pages/archive';
+@import 'pages/single';
+
+// Vendors (additional styles can be added here)
+@import 'vendors/woocommerce';
