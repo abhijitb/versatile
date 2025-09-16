@@ -18,17 +18,17 @@ if ( $GLOBALS['wp_query']->max_num_pages < 2 ) {
 	
 	<div class="nav-links">
 		<?php
-		echo esc_html(
-			paginate_links(
-				array(
-					'mid_size'           => 2,
-					'prev_text'          => '<i class="fas fa-chevron-left"></i> ' . esc_html__( 'Previous', 'versatile' ),
-					'next_text'          => esc_html__( 'Next', 'versatile' ) . ' <i class="fas fa-chevron-right"></i>',
-					'before_page_number' => '<span class="meta-nav screen-reader-text">' . esc_html__( 'Page', 'versatile' ) . ' </span>',
-					'type'               => 'list',
+			echo wp_kses_post(
+				paginate_links(
+					array(
+						'mid_size'           => 2,
+						'prev_text'          => '<i class="fas fa-chevron-left"></i> ' . esc_html__( 'Previous', 'versatile' ),
+						'next_text'          => esc_html__( 'Next', 'versatile' ) . ' <i class="fas fa-chevron-right"></i>',
+						'before_page_number' => '<span class="meta-nav screen-reader-text">' . esc_html__( 'Page', 'versatile' ) . ' </span>',
+						'type'               => 'list',
+					)
 				)
-			)
-		);
-		?>
+			);
+			?>
 	</div><!-- .nav-links -->
 </nav><!-- .navigation -->
