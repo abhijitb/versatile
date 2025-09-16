@@ -2,9 +2,11 @@
 /**
  * Template for displaying author archive pages
  * Versatile WordPress Theme
+ *
+ * @package Versatile
  */
 
-// Enqueue author-specific styles and scripts
+// Enqueue author-specific styles and scripts.
 wp_enqueue_style( 'versatile-author', get_template_directory_uri() . '/assets/css/src/author.css', array(), _S_VERSION );
 wp_enqueue_script( 'versatile-author-filter', get_template_directory_uri() . '/assets/js/src/author-filter.js', array(), filemtime( get_template_directory() . '/assets/js/src/author-filter.js' ), true );
 
@@ -23,12 +25,12 @@ get_header(); ?>
 				<div class="author-details">
 					<h1 class="author-name">
 						<i class="fas fa-user"></i>
-						<?php echo get_the_author(); ?>
+						<?php echo esc_html( get_the_author() ); ?>
 					</h1>
 					
 					<?php if ( get_the_author_meta( 'description' ) ) : ?>
 						<div class="author-bio">
-							<?php echo get_the_author_meta( 'description' ); ?>
+							<?php echo esc_html( get_the_author_meta( 'description' ) ); ?>
 						</div>
 					<?php endif; ?>
 					
@@ -38,13 +40,14 @@ get_header(); ?>
 								<i class="fas fa-file-alt"></i>
 								<?php
 								$post_count = count_user_posts( get_the_author_meta( 'ID' ) );
-								printf( _n( '%s Post', '%s Posts', $post_count, 'versatile' ), number_format_i18n( $post_count ) );
+								// translators: %s is the number of posts.
+								printf( esc_html( _n( '%s Post', '%s Posts', $post_count, 'versatile' ) ), esc_html( number_format_i18n( $post_count ) ) );
 								?>
 							</span>
 							<span class="member-since">
 								<i class="fas fa-calendar-plus"></i>
 								<?php
-								echo esc_html__( 'Member since', 'versatile' ) . ' ' . date( 'F Y', strtotime( get_the_author_meta( 'user_registered' ) ) );
+								echo esc_html__( 'Member since', 'versatile' ) . ' ' . esc_html( gmdate( 'F Y', strtotime( get_the_author_meta( 'user_registered' ) ) ) );
 								?>
 							</span>
 						</div>
@@ -82,12 +85,12 @@ get_header(); ?>
 							foreach ( $social_fields as $field => $data ) {
 								$value = get_the_author_meta( $field );
 								if ( $value ) {
-									// Add protocol if missing for website
-									if ( $field === 'url' && ! preg_match( '/^https?:\/\//', $value ) ) {
+									// Add protocol if missing for website.
+									if ( 'url' === $field && ! preg_match( '/^https?:\/\//', $value ) ) {
 										$value = 'http://' . $value;
 									}
 									echo '<a href="' . esc_url( $value ) . '" target="_blank" rel="noopener" title="' . esc_attr( $data['label'] ) . '">';
-									echo '<i class="' . $data['icon'] . '"></i>';
+									echo '<i class="' . esc_attr( $data['icon'] ) . '"></i>';
 									echo '</a>';
 								}
 							}
@@ -106,7 +109,12 @@ get_header(); ?>
 				<div class="col-lg-8">
 					
 					<div class="section-header">
-						<h2><?php printf( esc_html__( 'Posts by %s', 'versatile' ), get_the_author() ); ?></h2>
+<h2>
+							<?php
+							// translators: %s is the author name.
+							printf( esc_html__( 'Posts by %s', 'versatile' ), esc_html( get_the_author() ) );
+							?>
+						</h2>
 						
 						<!-- Post Filters -->
 						<div class="author-post-filters">
@@ -115,7 +123,7 @@ get_header(); ?>
 								<select id="author-post-filter" onchange="filterAuthorPosts(this.value)">
 									<option value="all"><?php esc_html_e( 'All Categories', 'versatile' ); ?></option>
 									<?php
-									// Get categories used by this author
+									// Get categories used by this author.
 									$author_categories = get_categories(
 										array(
 											'hide_empty' => true,
@@ -123,7 +131,7 @@ get_header(); ?>
 									);
 
 									foreach ( $author_categories as $category ) {
-										// Check if author has posts in this category
+										// Check if author has posts in this category.
 										$cat_posts = get_posts(
 											array(
 												'author'   => get_the_author_meta( 'ID' ),
@@ -133,7 +141,7 @@ get_header(); ?>
 										);
 
 										if ( $cat_posts ) {
-											echo '<option value="' . $category->slug . '">' . $category->name . '</option>';
+											echo '<option value="' . esc_attr( $category->slug ) . '">' . esc_html( $category->name ) . '</option>';
 										}
 									}
 									?>
@@ -143,13 +151,13 @@ get_header(); ?>
 							<div class="sort-group">
 								<label for="author-post-sort"><?php esc_html_e( 'Sort by:', 'versatile' ); ?></label>
 								<select id="author-post-sort" onchange="location = this.value;">
-									<option value="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>?orderby=date">
+									<option value="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>?orderby=date">
 										<?php esc_html_e( 'Newest First', 'versatile' ); ?>
 									</option>
-									<option value="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>?orderby=title">
+									<option value="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>?orderby=title">
 										<?php esc_html_e( 'Title A-Z', 'versatile' ); ?>
 									</option>
-									<option value="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>?orderby=comment_count">
+									<option value="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>?orderby=comment_count">
 										<?php esc_html_e( 'Most Comments', 'versatile' ); ?>
 									</option>
 								</select>
@@ -167,7 +175,7 @@ get_header(); ?>
 									
 									<div class="post-thumbnail">
 										<a href="<?php the_permalink(); ?>">
-											<?php echo versatile_get_post_image( get_the_ID(), 'medium', array( 'class' => 'img-fluid' ) ); ?>
+											<?php echo wp_kses_post( versatile_get_post_image( get_the_ID(), 'medium', array( 'class' => 'img-fluid' ) ) ); ?>
 										</a>
 									</div>
 									
@@ -200,7 +208,7 @@ get_header(); ?>
 											if ( has_excerpt() ) {
 												the_excerpt();
 											} else {
-												echo wp_trim_words( get_the_content(), 20, '...' );
+												echo wp_kses_post( wp_trim_words( get_the_content(), 20, '...' ) );
 											}
 											?>
 										</div>
@@ -217,11 +225,11 @@ get_header(); ?>
 													$tags = get_the_tags();
 													if ( $tags ) {
 														$tag_count = 0;
-														foreach ( $tags as $tag ) {
+														foreach ( $tags as $tag_item ) {
 															if ( $tag_count >= 2 ) {
 																break;
 															}
-															echo '<a href="' . get_tag_link( $tag->term_id ) . '" class="tag-link">' . $tag->name . '</a>';
+															echo '<a href="' . esc_url( get_tag_link( $tag_item->term_id ) ) . '" class="tag-link">' . esc_html( $tag_item->name ) . '</a>';
 															++$tag_count;
 														}
 													}
@@ -247,8 +255,8 @@ get_header(); ?>
 
 							if ( $pagination ) {
 								echo '<ul class="pagination">';
-								foreach ( $pagination as $page ) {
-									echo '<li class="page-item">' . $page . '</li>';
+								foreach ( $pagination as $page_item ) {
+									echo '<li class="page-item">' . wp_kses_post( $page_item ) . '</li>';
 								}
 								echo '</ul>';
 							}
@@ -260,7 +268,12 @@ get_header(); ?>
 							<div class="no-posts-content">
 								<i class="fas fa-file-alt fa-3x"></i>
 								<h3><?php esc_html_e( 'No Posts Yet', 'versatile' ); ?></h3>
-								<p><?php printf( esc_html__( '%s hasn\'t published any posts yet.', 'versatile' ), get_the_author() ); ?></p>
+<p>
+									<?php
+									// translators: %s is the author name.
+									printf( esc_html__( '%s hasn\'t published any posts yet.', 'versatile' ), esc_html( get_the_author() ) );
+									?>
+								</p>
 							</div>
 						</div>
 					<?php endif; ?>
@@ -275,13 +288,13 @@ get_header(); ?>
 							<h3 class="widget-title"><?php esc_html_e( 'Author Statistics', 'versatile' ); ?></h3>
 							<div class="author-stats-grid">
 								<div class="stat-item">
-									<div class="stat-number"><?php echo count_user_posts( get_the_author_meta( 'ID' ) ); ?></div>
+									<div class="stat-number"><?php echo esc_html( count_user_posts( get_the_author_meta( 'ID' ) ) ); ?></div>
 									<div class="stat-label"><?php esc_html_e( 'Total Posts', 'versatile' ); ?></div>
 								</div>
 								<div class="stat-item">
 									<div class="stat-number">
 										<?php
-										// Count total comments on author's posts
+										// Count total comments on author's posts.
 										$author_posts   = get_posts(
 											array(
 												'author' => get_the_author_meta( 'ID' ),
@@ -290,10 +303,10 @@ get_header(); ?>
 											)
 										);
 										$total_comments = 0;
-										foreach ( $author_posts as $post_id ) {
-											$total_comments += get_comments_number( $post_id );
+										foreach ( $author_posts as $post_item_id ) {
+											$total_comments += get_comments_number( $post_item_id );
 										}
-										echo number_format_i18n( $total_comments );
+										echo esc_html( number_format_i18n( $total_comments ) );
 										?>
 									</div>
 									<div class="stat-label"><?php esc_html_e( 'Comments Received', 'versatile' ); ?></div>
@@ -301,7 +314,7 @@ get_header(); ?>
 								<div class="stat-item">
 									<div class="stat-number">
 										<?php
-										// Count categories author has posted in
+										// Count categories author has posted in.
 										$author_categories = get_categories(
 											array(
 												'hide_empty' => true,
@@ -320,7 +333,7 @@ get_header(); ?>
 												++$categories_count;
 											}
 										}
-										echo $categories_count;
+										echo esc_html( $categories_count );
 										?>
 									</div>
 									<div class="stat-label"><?php esc_html_e( 'Categories', 'versatile' ); ?></div>
@@ -348,16 +361,16 @@ get_header(); ?>
 										<div class="popular-post-item">
 											<?php if ( has_post_thumbnail( $popular_post->ID ) ) : ?>
 												<div class="popular-post-thumb">
-													<a href="<?php echo get_permalink( $popular_post->ID ); ?>">
-														<?php echo get_the_post_thumbnail( $popular_post->ID, array( 60, 60 ) ); ?>
+													<a href="<?php echo esc_url( get_permalink( $popular_post->ID ) ); ?>">
+														<?php echo wp_kses_post( get_the_post_thumbnail( $popular_post->ID, array( 60, 60 ) ) ); ?>
 													</a>
 												</div>
 											<?php endif; ?>
 											<div class="popular-post-content">
-												<h5><a href="<?php echo get_permalink( $popular_post->ID ); ?>"><?php echo wp_trim_words( get_the_title( $popular_post->ID ), 6, '...' ); ?></a></h5>
+												<h5><a href="<?php echo esc_url( get_permalink( $popular_post->ID ) ); ?>"><?php echo esc_html( wp_trim_words( get_the_title( $popular_post->ID ), 6, '...' ) ); ?></a></h5>
 												<div class="popular-post-meta">
-													<span class="post-date"><?php echo get_the_date( 'M j, Y', $popular_post->ID ); ?></span>
-													<span class="post-comments"><?php echo get_comments_number( $popular_post->ID ); ?> comments</span>
+													<span class="post-date"><?php echo esc_html( get_the_date( 'M j, Y', $popular_post->ID ) ); ?></span>
+													<span class="post-comments"><?php echo esc_html( get_comments_number( $popular_post->ID ) ); ?> comments</span>
 												</div>
 											</div>
 										</div>
@@ -393,9 +406,9 @@ get_header(); ?>
 								?>
 								<div class="author-categories-list">
 									<?php foreach ( $author_categories_with_posts as $cat_data ) : ?>
-										<a href="<?php echo get_category_link( $cat_data['category']->term_id ); ?>" class="author-category-link">
-											<?php echo $cat_data['category']->name; ?>
-											<span class="category-count">(<?php echo $cat_data['count']; ?>)</span>
+										<a href="<?php echo esc_url( get_category_link( $cat_data['category']->term_id ) ); ?>" class="author-category-link">
+											<?php echo esc_html( $cat_data['category']->name ); ?>
+											<span class="category-count">(<?php echo esc_html( $cat_data['count'] ); ?>)</span>
 										</a>
 									<?php endforeach; ?>
 								</div>

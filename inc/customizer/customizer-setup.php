@@ -31,7 +31,7 @@ function versatile_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Add partial for color scheme changes
+		// Add partial for color scheme changes.
 		$wp_customize->selective_refresh->add_partial(
 			'versatile_color_scheme_css',
 			array(
@@ -42,7 +42,7 @@ function versatile_customize_register( $wp_customize ) {
 		);
 	}
 
-	// Social Media Section
+	// Social Media Section.
 	$wp_customize->add_section(
 		'versatile_social_media',
 		array(
@@ -51,7 +51,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Facebook URL
+	// Facebook URL.
 	$wp_customize->add_setting(
 		'versatile_facebook_url',
 		array(
@@ -68,7 +68,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Twitter URL
+	// Twitter URL.
 	$wp_customize->add_setting(
 		'versatile_twitter_url',
 		array(
@@ -85,7 +85,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Instagram URL
+	// Instagram URL.
 	$wp_customize->add_setting(
 		'versatile_instagram_url',
 		array(
@@ -102,7 +102,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// LinkedIn URL
+	// LinkedIn URL.
 	$wp_customize->add_setting(
 		'versatile_linkedin_url',
 		array(
@@ -119,7 +119,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// YouTube URL
+	// YouTube URL.
 	$wp_customize->add_setting(
 		'versatile_youtube_url',
 		array(
@@ -136,7 +136,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Contact Information Section
+	// Contact Information Section.
 	$wp_customize->add_section(
 		'versatile_contact_info',
 		array(
@@ -145,7 +145,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Phone Number
+	// Phone Number.
 	$wp_customize->add_setting(
 		'versatile_contact_phone',
 		array(
@@ -162,7 +162,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Email Address
+	// Email Address.
 	$wp_customize->add_setting(
 		'versatile_contact_email',
 		array(
@@ -179,7 +179,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Address
+	// Address.
 	$wp_customize->add_setting(
 		'versatile_contact_address',
 		array(
@@ -196,7 +196,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Color Schemes Section
+	// Color Schemes Section.
 	$wp_customize->add_section(
 		'versatile_color_schemes',
 		array(
@@ -205,7 +205,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Predefined Color Schemes
+	// Predefined Color Schemes.
 	$wp_customize->add_setting(
 		'versatile_color_scheme',
 		array(
@@ -232,7 +232,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Custom Primary Color
+	// Custom Primary Color.
 	$wp_customize->add_setting(
 		'versatile_primary_color',
 		array(
@@ -254,7 +254,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Custom Secondary Color
+	// Custom Secondary Color.
 	$wp_customize->add_setting(
 		'versatile_secondary_color',
 		array(
@@ -276,7 +276,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Header Options Section
+	// Header Options Section.
 	$wp_customize->add_section(
 		'versatile_header_options',
 		array(
@@ -285,7 +285,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Header CTA Button Text
+	// Header CTA Button Text.
 	$wp_customize->add_setting(
 		'versatile_header_cta_text',
 		array(
@@ -302,7 +302,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Header CTA Button URL
+	// Header CTA Button URL.
 	$wp_customize->add_setting(
 		'versatile_header_cta_url',
 		array(
@@ -319,7 +319,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Show Social Links in Header
+	// Show Social Links in Header.
 	$wp_customize->add_setting(
 		'versatile_social_links_header',
 		array(
@@ -336,7 +336,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Footer Options Section
+	// Footer Options Section.
 	$wp_customize->add_section(
 		'versatile_footer_options',
 		array(
@@ -345,7 +345,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Copyright Text
+	// Copyright Text.
 	$wp_customize->add_setting(
 		'versatile_copyright_text',
 		array(
@@ -362,7 +362,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Show Theme Credit
+	// Show Theme Credit.
 	$wp_customize->add_setting(
 		'versatile_show_theme_credit',
 		array(
@@ -379,7 +379,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Newsletter Section
+	// Newsletter Section.
 	$wp_customize->add_setting(
 		'versatile_newsletter_enable',
 		array(
@@ -396,7 +396,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Newsletter Title
+	// Newsletter Title.
 	$wp_customize->add_setting(
 		'versatile_newsletter_title',
 		array(
@@ -414,7 +414,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Newsletter Description
+	// Newsletter Description.
 	$wp_customize->add_setting(
 		'versatile_newsletter_description',
 		array(
@@ -432,7 +432,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Show Social Links in Mobile Menu
+	// Show Social Links in Mobile Menu.
 	$wp_customize->add_setting(
 		'versatile_social_links_mobile',
 		array(
@@ -449,7 +449,7 @@ function versatile_customize_register( $wp_customize ) {
 		)
 	);
 
-	// WooCommerce Options (if WooCommerce is active)
+	// WooCommerce Options (if WooCommerce is active).
 	if ( class_exists( 'WooCommerce' ) ) {
 		$wp_customize->add_section(
 			'versatile_woocommerce_options',
@@ -459,7 +459,7 @@ function versatile_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Show Payment Methods
+		// Show Payment Methods.
 		$wp_customize->add_setting(
 			'versatile_payment_methods',
 			array(
@@ -504,14 +504,14 @@ function versatile_customize_partial_blogdescription() {
  */
 function versatile_customize_partial_css() {
 	$css = versatile_color_scheme_css();
-	echo '<style type="text/css" id="versatile-color-scheme">' . $css . '</style>';
+	echo '<style type="text/css" id="versatile-color-scheme">' . esc_html( $css ) . '</style>';
 }
 
 /**
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function versatile_customize_preview_js() {
-	// Only enqueue if the file exists
+	// Only enqueue if the file exists.
 	$customizer_js_path = get_template_directory() . '/assets/js/src/customizer.js';
 	if ( file_exists( $customizer_js_path ) ) {
 		wp_enqueue_script( 'versatile-customizer', get_template_directory_uri() . '/assets/js/src/customizer.js', array( 'customize-preview' ), _S_VERSION, true );
@@ -521,13 +521,18 @@ add_action( 'customize_preview_init', 'versatile_customize_preview_js' );
 
 /**
  * Sanitize checkbox values.
+ *
+ * @param bool $checked The checkbox value.
+ * @return bool The sanitized checkbox value.
  */
 function versatile_sanitize_checkbox( $checked ) {
-	return ( ( isset( $checked ) && true == $checked ) ? true : false );
+	return ( ( isset( $checked ) && true === $checked ) ? true : false );
 }
 
 /**
  * Active callback for newsletter settings.
+ *
+ * @return bool The newsletter enabled value.
  */
 function versatile_is_newsletter_enabled() {
 	return get_theme_mod( 'versatile_newsletter_enable', false );
@@ -535,6 +540,8 @@ function versatile_is_newsletter_enabled() {
 
 /**
  * Get available color schemes.
+ *
+ * @return array The available color schemes.
  */
 function versatile_get_color_schemes() {
 	return array(
@@ -624,6 +631,9 @@ function versatile_get_color_schemes() {
 
 /**
  * Sanitize color scheme choice.
+ *
+ * @param string $input The color scheme input.
+ * @return string The sanitized color scheme.
  */
 function versatile_sanitize_color_scheme( $input ) {
 	$valid_schemes = array_keys( versatile_get_color_schemes() );
@@ -632,6 +642,8 @@ function versatile_sanitize_color_scheme( $input ) {
 
 /**
  * Active callback for custom color controls.
+ *
+ * @return bool The custom color scheme value.
  */
 function versatile_is_custom_color_scheme() {
 	return 'custom' === get_theme_mod( 'versatile_color_scheme', 'default' );
@@ -639,6 +651,8 @@ function versatile_is_custom_color_scheme() {
 
 /**
  * Get the current color scheme colors.
+ *
+ * @return array The current color scheme colors.
  */
 function versatile_get_current_color_scheme() {
 	$schemes        = versatile_get_color_schemes();
@@ -658,22 +672,26 @@ function versatile_get_current_color_scheme() {
 
 /**
  * Adjust color brightness.
+ *
+ * @param string $hex The hex color.
+ * @param int    $steps The number of steps to adjust the brightness.
+ * @return string The adjusted color.
  */
 function versatile_adjust_color_brightness( $hex, $steps ) {
-	// Remove # if present
+	// Remove # if present.
 	$hex = str_replace( '#', '', $hex );
 
-	// Convert to decimal
+	// Convert to decimal.
 	$r = hexdec( substr( $hex, 0, 2 ) );
 	$g = hexdec( substr( $hex, 2, 2 ) );
 	$b = hexdec( substr( $hex, 4, 2 ) );
 
-	// Adjust brightness
+	// Adjust brightness.
 	$r = max( 0, min( 255, $r + $steps ) );
 	$g = max( 0, min( 255, $g + $steps ) );
 	$b = max( 0, min( 255, $b + $steps ) );
 
-	// Convert back to hex
+	// Convert back to hex.
 	return '#' . str_pad( dechex( $r ), 2, '0', STR_PAD_LEFT ) .
 				str_pad( dechex( $g ), 2, '0', STR_PAD_LEFT ) .
 				str_pad( dechex( $b ), 2, '0', STR_PAD_LEFT );

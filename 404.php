@@ -2,6 +2,8 @@
 /**
  * Template for displaying 404 error pages
  * Versatile WordPress Theme
+ *
+ * @package Versatile
  */
 
 get_header(); ?>
@@ -89,16 +91,16 @@ get_header(); ?>
 						if ( $popular_posts ) :
 							?>
 							<div class="popular-posts-list">
-								<?php foreach ( $popular_posts as $post ) : ?>
+								<?php foreach ( $popular_posts as $post_object ) : ?>
 									<div class="popular-post-item">
 										<div class="post-thumb">
-											<a href="<?php echo get_permalink( $post->ID ); ?>">
-												<?php echo versatile_get_small_post_image( $post->ID, array( 60, 60 ) ); ?>
+											<a href="<?php echo esc_html( get_permalink( $post_object->ID ) ); ?>">
+												<?php echo esc_html( versatile_get_small_post_image( $post_object->ID, array( 60, 60 ) ) ); ?>
 											</a>
 										</div>
 										<div class="post-content">
-											<h5><a href="<?php echo get_permalink( $post->ID ); ?>"><?php echo get_the_title( $post->ID ); ?></a></h5>
-											<span class="post-date"><?php echo get_the_date( 'M j, Y', $post->ID ); ?></span>
+											<h5><a href="<?php echo esc_html( get_permalink( $post_object->ID ) ); ?>"><?php echo esc_html( get_the_title( $post_object->ID ) ); ?></a></h5>
+											<span class="post-date"><?php echo esc_html( get_the_date( 'M j, Y', $post_object->ID ) ); ?></span>
 										</div>
 									</div>
 								<?php endforeach; ?>
@@ -126,11 +128,11 @@ get_header(); ?>
 						if ( $categories ) :
 							?>
 							<div class="categories-grid">
-								<?php foreach ( $categories as $category ) : ?>
-									<a href="<?php echo get_category_link( $category->term_id ); ?>" class="category-item">
+								<?php foreach ( $categories as $category_object ) : ?>
+									<a href="<?php echo esc_html( get_category_link( $category_object->term_id ) ); ?>" class="category-item">
 										<div class="category-info">
-											<span class="category-name"><?php echo $category->name; ?></span>
-											<span class="category-count"><?php echo $category->count; ?> <?php echo _n( 'post', 'posts', $category->count, 'versatile' ); ?></span>
+											<span class="category-name"><?php echo esc_html( $category_object->name ); ?></span>
+											<span class="category-count"><?php echo esc_html( $category_object->count ); ?> <?php echo esc_html( _n( 'post', 'posts', $category_object->count, 'versatile' ) ); ?></span>
 										</div>
 										<i class="fas fa-arrow-right"></i>
 									</a>
@@ -157,18 +159,18 @@ get_header(); ?>
 						if ( $recent_posts ) :
 							?>
 							<div class="recent-posts-list">
-								<?php foreach ( $recent_posts as $post ) : ?>
+								<?php foreach ( $recent_posts as $post_object ) : ?>
 									<div class="recent-post-item">
 										<div class="post-thumb">
-											<a href="<?php echo get_permalink( $post->ID ); ?>">
-												<?php echo versatile_get_small_post_image( $post->ID, array( 60, 60 ) ); ?>
+											<a href="<?php echo esc_html( get_permalink( $post_object->ID ) ); ?>">
+												<?php echo esc_html( versatile_get_small_post_image( $post_object->ID, array( 60, 60 ) ) ); ?>
 											</a>
 										</div>
 										<div class="post-content">
-											<h5><a href="<?php echo get_permalink( $post->ID ); ?>"><?php echo get_the_title( $post->ID ); ?></a></h5>
+											<h5><a href="<?php echo esc_html( get_permalink( $post_object->ID ) ); ?>"><?php echo esc_html( get_the_title( $post_object->ID ) ); ?></a></h5>
 											<div class="post-meta">
-												<span class="post-date"><?php echo get_the_date( 'M j, Y', $post->ID ); ?></span>
-												<span class="post-author"><?php echo get_the_author_meta( 'display_name', $post->post_author ); ?></span>
+												<span class="post-date"><?php echo esc_html( get_the_date( 'M j, Y', $post_object->ID ) ); ?></span>
+												<span class="post-author"><?php echo esc_html( get_the_author_meta( 'display_name', $post_object->post_author ) ); ?></span>
 											</div>
 										</div>
 									</div>
@@ -199,11 +201,11 @@ get_header(); ?>
 				if ( $tags ) :
 					?>
 					<div class="tags-cloud">
-						<?php foreach ( $tags as $tag ) : ?>
-							<a href="<?php echo get_tag_link( $tag->term_id ); ?>" 
+						<?php foreach ( $tags as $tag_object ) : ?>
+							<a href="<?php echo esc_html( get_tag_link( $tag_object->term_id ) ); ?>" 
 								class="tag-link" 
-								style="font-size: <?php echo min( 20, 12 + ( $tag->count * 2 ) ); ?>px;">
-								<?php echo $tag->name; ?>
+								style="font-size: <?php echo esc_html( min( 20, 12 + ( $tag_object->count * 2 ) ) ); ?>px;">
+								<?php echo esc_html( $tag_object->name ); ?>
 							</a>
 						<?php endforeach; ?>
 					</div>
@@ -224,7 +226,7 @@ get_header(); ?>
 							
 							<div class="help-options">
 								<?php
-								// Get contact page URL
+								// Get contact page URL.
 								$contact_page = get_page_by_path( 'contact' );
 								if ( ! $contact_page ) {
 									$contact_page = get_page_by_path( 'contact-us' );
@@ -232,14 +234,14 @@ get_header(); ?>
 
 								if ( $contact_page ) :
 									?>
-									<a href="<?php echo get_permalink( $contact_page->ID ); ?>" class="btn btn-outline-primary">
+									<a href="<?php echo esc_html( get_permalink( $contact_page->ID ) ); ?>" class="btn btn-outline-primary">
 										<i class="fas fa-envelope"></i>
 										<?php esc_html_e( 'Contact Us', 'versatile' ); ?>
 									</a>
 								<?php endif; ?>
 								
 								<?php
-								// Check if there's a support or FAQ page
+								// Check if there's a support or FAQ page.
 								$faq_page = get_page_by_path( 'faq' );
 								if ( ! $faq_page ) {
 									$faq_page = get_page_by_path( 'frequently-asked-questions' );
@@ -247,7 +249,7 @@ get_header(); ?>
 
 								if ( $faq_page ) :
 									?>
-									<a href="<?php echo get_permalink( $faq_page->ID ); ?>" class="btn btn-outline-secondary">
+									<a href="<?php echo esc_html( get_permalink( $faq_page->ID ) ); ?>" class="btn btn-outline-secondary">
 										<i class="fas fa-question-circle"></i>
 										<?php esc_html_e( 'FAQ', 'versatile' ); ?>
 									</a>

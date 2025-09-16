@@ -48,7 +48,7 @@
 			if ( has_excerpt() ) {
 				the_excerpt();
 			} else {
-				echo wp_trim_words( get_the_content(), 30, '...' );
+				echo esc_html( wp_trim_words( get_the_content(), 30, '...' ) );
 			}
 			?>
 		</div>

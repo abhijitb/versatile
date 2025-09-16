@@ -3,9 +3,12 @@
  * Template Name: Landing Page
  * Template for creating conversion-focused landing pages
  * Versatile WordPress Theme
+ *
+ * @package Versatile
  */
 
-get_header( 'landing' ); // Custom header for landing pages ?>
+get_header( 'landing' ); // Custom header for landing pages.
+?>
 
 <main class="site-main landing-main">
 	
@@ -32,21 +35,21 @@ get_header( 'landing' ); // Custom header for landing pages ?>
 							<div class="hero-badge">
 								<?php
 								$hero_badge = get_post_meta( get_the_ID(), '_landing_hero_badge', true );
-								echo $hero_badge ?: esc_html__( '🚀 New Launch', 'versatile' );
+								echo esc_html( ! empty( $hero_badge ) ? $hero_badge : esc_html__( '🚀 New Launch', 'versatile' ) );
 								?>
 							</div>
 							
 							<h1 class="hero-title">
 								<?php
 								$hero_title = get_post_meta( get_the_ID(), '_landing_hero_title', true );
-								echo $hero_title ?: get_the_title();
+								echo esc_html( ! empty( $hero_title ) ? $hero_title : get_the_title() );
 								?>
 							</h1>
 							
 							<p class="hero-subtitle">
 								<?php
 								$hero_subtitle = get_post_meta( get_the_ID(), '_landing_hero_subtitle', true );
-								echo $hero_subtitle ?: get_the_excerpt();
+								echo esc_html( ! empty( $hero_subtitle ) ? $hero_subtitle : get_the_excerpt() );
 								?>
 							</p>
 							
@@ -69,10 +72,10 @@ get_header( 'landing' ); // Custom header for landing pages ?>
 							
 							<div class="hero-cta">
 								<?php
-								$cta_text           = get_post_meta( get_the_ID(), '_landing_cta_text', true ) ?: esc_html__( 'Get Started Now', 'versatile' );
-								$cta_url            = get_post_meta( get_the_ID(), '_landing_cta_url', true ) ?: '#signup';
-								$cta_secondary_text = get_post_meta( get_the_ID(), '_landing_cta_secondary_text', true ) ?: esc_html__( 'Learn More', 'versatile' );
-								$cta_secondary_url  = get_post_meta( get_the_ID(), '_landing_cta_secondary_url', true ) ?: '#features';
+								$cta_text           = ! empty( get_post_meta( get_the_ID(), '_landing_cta_text', true ) ) ? get_post_meta( get_the_ID(), '_landing_cta_text', true ) : esc_html__( 'Get Started Now', 'versatile' );
+								$cta_url            = ! empty( get_post_meta( get_the_ID(), '_landing_cta_url', true ) ) ? get_post_meta( get_the_ID(), '_landing_cta_url', true ) : '#signup';
+								$cta_secondary_text = ! empty( get_post_meta( get_the_ID(), '_landing_cta_secondary_text', true ) ) ? get_post_meta( get_the_ID(), '_landing_cta_secondary_text', true ) : esc_html__( 'Learn More', 'versatile' );
+								$cta_secondary_url  = ! empty( get_post_meta( get_the_ID(), '_landing_cta_secondary_url', true ) ) ? get_post_meta( get_the_ID(), '_landing_cta_secondary_url', true ) : '#features';
 								?>
 								<a href="<?php echo esc_url( $cta_url ); ?>" class="btn btn-primary btn-lg cta-primary">
 									<i class="fas fa-rocket"></i>
@@ -87,17 +90,17 @@ get_header( 'landing' ); // Custom header for landing pages ?>
 							<div class="hero-social-proof">
 								<div class="social-proof-item">
 									<i class="fas fa-users"></i>
-									<span><?php echo get_post_meta( get_the_ID(), '_landing_users_count', true ) ?: '10,000+'; ?></span>
+							<span><?php echo ! empty( get_post_meta( get_the_ID(), '_landing_users_count', true ) ) ? esc_html( get_post_meta( get_the_ID(), '_landing_users_count', true ) ) : '10,000+'; ?></span>
 									<small><?php esc_html_e( 'Happy Users', 'versatile' ); ?></small>
 								</div>
 								<div class="social-proof-item">
 									<i class="fas fa-star"></i>
-									<span><?php echo get_post_meta( get_the_ID(), '_landing_rating', true ) ?: '4.9'; ?></span>
+<span><?php echo ! empty( get_post_meta( get_the_ID(), '_landing_rating', true ) ) ? esc_html( get_post_meta( get_the_ID(), '_landing_rating', true ) ) : '4.9'; ?></span>
 									<small><?php esc_html_e( 'Star Rating', 'versatile' ); ?></small>
 								</div>
 								<div class="social-proof-item">
 									<i class="fas fa-award"></i>
-									<span><?php echo get_post_meta( get_the_ID(), '_landing_awards', true ) ?: '15+'; ?></span>
+<span><?php echo ! empty( get_post_meta( get_the_ID(), '_landing_awards', true ) ) ? esc_html( get_post_meta( get_the_ID(), '_landing_awards', true ) ) : '15+'; ?></span>
 									<small><?php esc_html_e( 'Awards Won', 'versatile' ); ?></small>
 								</div>
 							</div>
@@ -156,20 +159,20 @@ get_header( 'landing' ); // Custom header for landing pages ?>
 					<h2 class="section-title">
 						<?php
 						$features_title = get_post_meta( get_the_ID(), '_landing_features_title', true );
-						echo $features_title ?: esc_html__( 'Why Choose Us?', 'versatile' );
+						echo esc_html( ! empty( $features_title ) ? $features_title : esc_html__( 'Why Choose Us?', 'versatile' ) );
 						?>
 					</h2>
 					<p class="section-subtitle">
 						<?php
 						$features_subtitle = get_post_meta( get_the_ID(), '_landing_features_subtitle', true );
-						echo $features_subtitle ?: esc_html__( 'Discover the features that make us different', 'versatile' );
+						echo esc_html( ! empty( $features_subtitle ) ? $features_subtitle : esc_html__( 'Discover the features that make us different', 'versatile' ) );
 						?>
 					</p>
 				</div>
 				
 				<div class="features-grid">
 					<?php
-					// Get features from custom fields or use defaults
+					// Get features from custom fields or use defaults.
 					$features = get_post_meta( get_the_ID(), '_landing_features', true );
 
 					if ( ! $features ) {
@@ -299,7 +302,7 @@ get_header( 'landing' ); // Custom header for landing pages ?>
 
 					foreach ( $testimonials as $index => $testimonial ) :
 						?>
-						<div class="testimonial-item <?php echo $index === 0 ? 'active' : ''; ?>" data-aos="fade-up">
+						<div class="testimonial-item <?php echo 0 === $index ? 'active' : ''; ?>" data-aos="fade-up">
 							<div class="testimonial-content">
 								<div class="testimonial-stars">
 									<i class="fas fa-star"></i>
@@ -334,8 +337,11 @@ get_header( 'landing' ); // Custom header for landing pages ?>
 						<i class="fas fa-chevron-left"></i>
 					</button>
 					<div class="testimonial-dots">
-						<?php for ( $i = 0; $i < count( $testimonials ); $i++ ) : ?>
-							<button class="dot <?php echo $i === 0 ? 'active' : ''; ?>" onclick="showTestimonial(<?php echo $i; ?>)"></button>
+						<?php
+							$testimonials_count = count( $testimonials );
+						for ( $i = 0; $i < $testimonials_count; $i++ ) :
+							?>
+							<button class="dot <?php echo 0 === $i ? 'active' : ''; ?>" onclick="showTestimonial(<?php echo esc_attr( $i ); ?>)"></button>
 						<?php endfor; ?>
 					</div>
 					<button class="testimonial-nav-btn next-btn" onclick="changeTestimonial(1)">
@@ -486,11 +492,11 @@ get_header( 'landing' ); // Custom header for landing pages ?>
 					foreach ( $faqs as $index => $faq ) :
 						?>
 						<div class="faq-item" data-aos="fade-up">
-							<button class="faq-question" onclick="toggleFAQ(<?php echo $index; ?>)">
+							<button class="faq-question" onclick="toggleFAQ(<?php echo esc_attr( $index ); ?>)">
 								<span><?php echo esc_html( $faq['question'] ); ?></span>
 								<i class="fas fa-chevron-down"></i>
 							</button>
-							<div class="faq-answer" id="faq-<?php echo $index; ?>">
+							<div class="faq-answer" id="faq-<?php echo esc_attr( $index ); ?>">
 								<p><?php echo esc_html( $faq['answer'] ); ?></p>
 							</div>
 						</div>
@@ -506,13 +512,13 @@ get_header( 'landing' ); // Custom header for landing pages ?>
 					<h2 class="cta-title">
 						<?php
 						$cta_title = get_post_meta( get_the_ID(), '_landing_final_cta_title', true );
-						echo $cta_title ?: esc_html__( 'Ready to Get Started?', 'versatile' );
+						echo ! empty( $cta_title ) ? esc_html( $cta_title ) : esc_html__( 'Ready to Get Started?', 'versatile' );
 						?>
 					</h2>
 					<p class="cta-subtitle">
 						<?php
 						$cta_subtitle = get_post_meta( get_the_ID(), '_landing_final_cta_subtitle', true );
-						echo $cta_subtitle ?: esc_html__( 'Join thousands of satisfied customers today', 'versatile' );
+						echo ! empty( $cta_subtitle ) ? esc_html( $cta_subtitle ) : esc_html__( 'Join thousands of satisfied customers today', 'versatile' );
 						?>
 					</p>
 					
@@ -1792,4 +1798,4 @@ function handleSignup(event) {
 }
 </script>
 
-<?php get_footer( 'landing' ); // Custom footer for landing pages ?>
+<?php get_footer( 'landing' ); // Custom footer for landing pages. ?>

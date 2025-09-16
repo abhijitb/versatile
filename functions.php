@@ -7,28 +7,28 @@
  * @package Versatile
  */
 
-// Prevent direct access
+// Prevent direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Theme version
+// Theme version.
 if ( ! defined( 'VERSATILE_VERSION' ) ) {
 	define( 'VERSATILE_VERSION', '1.0.0' );
 }
 
-// Theme directory path
+// Theme directory path.
 if ( ! defined( 'VERSATILE_THEME_DIR' ) ) {
 	define( 'VERSATILE_THEME_DIR', get_template_directory() );
 }
 
-// Theme directory URI
+// Theme directory URI.
 if ( ! defined( 'VERSATILE_THEME_URI' ) ) {
 	define( 'VERSATILE_THEME_URI', get_template_directory_uri() );
 }
 
 /**
- * Load theme includes
+ * Load theme includes.
  */
 require_once VERSATILE_THEME_DIR . '/inc/theme-support.php';
 require_once VERSATILE_THEME_DIR . '/inc/enqueue-scripts.php';
@@ -36,10 +36,10 @@ require_once VERSATILE_THEME_DIR . '/inc/template-functions.php';
 require_once VERSATILE_THEME_DIR . '/inc/template-tags.php';
 require_once VERSATILE_THEME_DIR . '/inc/customizer/customizer-setup.php';
 
-// Load integration files
+// Load integration files.
 require_once VERSATILE_THEME_DIR . '/inc/integrations/woocommerce.php';
 
-// Load existing functions (these can be gradually moved to appropriate inc files)
+// Load existing functions (these can be gradually moved to appropriate inc files).
 if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
 	define( '_S_VERSION', '1.0.0' );
@@ -47,7 +47,7 @@ if ( ! defined( '_S_VERSION' ) ) {
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.
- * Legacy function - most features now handled in inc/theme-support.php
+ * Legacy function - most features now handled in inc/theme-support.php.
  */
 function versatile_legacy_setup() {
 	/*
@@ -78,8 +78,7 @@ function versatile_legacy_setup() {
 	);
 
 	/*
-	 * Switch default core markup for search form, comment form, and comments
-	 * to output valid HTML5.
+	 * Switch default core markup for search form, comment form, and comments to output valid HTML5.
 	 */
 	add_theme_support(
 		'html5',
@@ -183,7 +182,7 @@ function versatile_legacy_setup() {
 	// Add support for custom padding.
 	add_theme_support( 'custom-padding' );
 
-	// WooCommerce support
+	// WooCommerce support.
 	add_theme_support( 'woocommerce' );
 	add_theme_support( 'wc-product-gallery-zoom' );
 	add_theme_support( 'wc-product-gallery-lightbox' );
@@ -207,12 +206,14 @@ function versatile_widgets_init() {
 		)
 	);
 
-	// Footer widget areas
+	// Footer widget areas.
 	for ( $i = 1; $i <= 4; $i++ ) {
 		register_sidebar(
 			array(
+				// translators: %d is the footer column number.
 				'name'          => sprintf( esc_html__( 'Footer %d', 'versatile' ), $i ),
 				'id'            => 'footer-' . $i,
+				// translators: %d is the footer column number.
 				'description'   => sprintf( esc_html__( 'Add widgets here to appear in footer column %d.', 'versatile' ), $i ),
 				'before_widget' => '<section id="%1$s" class="widget %2$s">',
 				'after_widget'  => '</section>',
@@ -222,7 +223,7 @@ function versatile_widgets_init() {
 		);
 	}
 
-	// Shop sidebar for WooCommerce
+	// Shop sidebar for WooCommerce.
 	if ( class_exists( 'WooCommerce' ) ) {
 		register_sidebar(
 			array(
@@ -239,10 +240,12 @@ function versatile_widgets_init() {
 }
 add_action( 'widgets_init', 'versatile_widgets_init' );
 
-/**
- * Social Links Function
- */
 if ( ! function_exists( 'versatilesocial_links' ) ) {
+	/**
+	 * Social Links Function.
+	 *
+	 * @return void
+	 */
 	function versatile_social_links() {
 		$social_links = array(
 			'facebook'  => get_theme_mod( 'versatile_facebook_url', '' ),
@@ -271,15 +274,17 @@ if ( ! function_exists( 'versatilesocial_links' ) ) {
 	}
 }
 
-/**
- * Fallback Menu Function
- */
 if ( ! function_exists( 'versatilefallback_menu' ) ) {
+	/**
+	 * Fallback Menu Function.
+	 *
+	 * @return void
+	 */
 	function versatile_fallback_menu() {
 		echo '<ul id="primary-menu" class="primary-menu">';
 		echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'Home', 'versatile' ) . '</a></li>';
 
-		// Add some default pages
+		// Add some default pages.
 		$pages = get_pages(
 			array(
 				'sort_column' => 'menu_order',
@@ -297,11 +302,14 @@ if ( ! function_exists( 'versatilefallback_menu' ) ) {
 	}
 }
 
-/**
- * Generate placeholder image for posts without featured images
- */
 if ( ! function_exists( 'versatile_get_placeholder_image' ) ) {
-	function versatile_get_placeholder_image( $post_id = null, $size = 'large' ) {
+	/**
+	 * Generate placeholder image for posts without featured images.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return string
+	 */
+	function versatile_get_placeholder_image( $post_id = null ) {
 		if ( ! $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -379,36 +387,39 @@ if ( ! function_exists( 'versatile_get_placeholder_image' ) ) {
 	}
 }
 
-/**
- * Validate if featured image is actually a valid image
- */
 if ( ! function_exists( 'versatile_has_valid_featured_image' ) ) {
+	/**
+	 * Validate if featured image is actually a valid image
+	 *
+	 * @param int $post_id Post ID.
+	 * @return bool
+	 */
 	function versatile_has_valid_featured_image( $post_id = null ) {
 		if ( ! $post_id ) {
 			$post_id = get_the_ID();
 		}
 
-		// First check if post has a thumbnail
+		// First check if post has a thumbnail.
 		if ( ! has_post_thumbnail( $post_id ) ) {
 			return false;
 		}
 
-		// Get the attachment ID
+		// Get the attachment ID.
 		$attachment_id = get_post_thumbnail_id( $post_id );
 		if ( ! $attachment_id ) {
 			return false;
 		}
 
-		// Get the attachment URL
+		// Get the attachment URL.
 		$image_url = wp_get_attachment_image_url( $attachment_id, 'full' );
 		if ( ! $image_url ) {
 			return false;
 		}
 
-		// Check if the URL points to a post on the same site (common issue)
+		// Check if the URL points to a post on the same site (common issue).
 		$site_url = get_site_url();
 		if ( strpos( $image_url, $site_url ) !== false ) {
-			// Check if it's pointing to a post URL pattern
+			// Check if it's pointing to a post URL pattern.
 			if ( preg_match( '#' . preg_quote( $site_url, '#' ) . '/[^/]+/?$#', $image_url ) ||
 				preg_match( '#' . preg_quote( $site_url, '#' ) . '/\d{4}/\d{2}/\d{2}/[^/]+/?$#', $image_url ) ||
 				strpos( $image_url, '/?p=' ) !== false ||
@@ -417,54 +428,47 @@ if ( ! function_exists( 'versatile_has_valid_featured_image' ) ) {
 			}
 		}
 
-		// Get attachment metadata
+		// Get attachment metadata.
 		$attachment_meta = wp_get_attachment_metadata( $attachment_id );
 
-		// Check if it's a valid image by checking for width/height
+		// Check if it's a valid image by checking for width/height.
 		if ( empty( $attachment_meta ) || ! isset( $attachment_meta['width'] ) || ! isset( $attachment_meta['height'] ) ) {
 			return false;
 		}
 
-		// Check if the URL is actually an image file
+		// Check if the URL is actually an image file.
 		$image_info       = pathinfo( $image_url );
 		$valid_extensions = array( 'jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp' );
 
-		if ( ! isset( $image_info['extension'] ) || ! in_array( strtolower( $image_info['extension'] ), $valid_extensions ) ) {
+		if ( ! isset( $image_info['extension'] ) || ! in_array( strtolower( $image_info['extension'] ), $valid_extensions, true ) ) {
 			return false;
 		}
 
-		// Additional check: Ensure the attachment is actually an image post type
+		// Additional check: Ensure the attachment is actually an image post type.
 		$attachment_post = get_post( $attachment_id );
-		if ( ! $attachment_post || $attachment_post->post_type !== 'attachment' ) {
+		if ( ! $attachment_post || 'attachment' !== $attachment_post->post_type ) {
 			return false;
 		}
 
-		// Check MIME type
+		// Check MIME type.
 		$mime_type = get_post_mime_type( $attachment_id );
-		if ( ! $mime_type || strpos( $mime_type, 'image/' ) !== 0 ) {
+		if ( ! $mime_type || 0 !== strpos( $mime_type, 'image/' ) ) {
 			return false;
 		}
-
-		// Optional: Check if the file actually exists (can be resource intensive)
-		// Uncomment the following lines if you want to verify file existence
-		/*
-		$headers = @get_headers($image_url, 1);
-		if (!$headers || strpos($headers[0], '200') === false) {
-			return false;
-		}
-		*/
 
 		return true;
 	}
 }
 
-/**
- * Admin utility function to clean up invalid featured images
- * This function can be called from admin area to clean up bad data
- */
 if ( ! function_exists( 'versatile_cleanup_invalid_featured_images' ) ) {
+	/**
+	 * Admin utility function to clean up invalid featured images.
+	 * This function can be called from admin area to clean up bad data.
+	 *
+	 * @return array
+	 */
 	function versatile_cleanup_invalid_featured_images() {
-		// Only allow this for admin users
+		// Only allow this for admin users.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return false;
 		}
@@ -473,7 +477,13 @@ if ( ! function_exists( 'versatile_cleanup_invalid_featured_images' ) ) {
 			array(
 				'numberposts' => -1,
 				'post_type'   => 'post',
-				'meta_key'    => '_thumbnail_id',
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				'meta_query'  => array(
+					array(
+						'key'     => '_thumbnail_id',
+						'compare' => 'EXISTS',
+					),
+				),
 				'post_status' => 'any',
 			)
 		);
@@ -488,7 +498,7 @@ if ( ! function_exists( 'versatile_cleanup_invalid_featured_images' ) ) {
 
 		foreach ( $posts as $post ) {
 			if ( ! versatile_has_valid_featured_image( $post->ID ) ) {
-				// Get more details about why it's invalid for logging
+				// Get more details about why it's invalid for logging.
 				$attachment_id = get_post_thumbnail_id( $post->ID );
 				if ( $attachment_id ) {
 					$image_url = wp_get_attachment_image_url( $attachment_id, 'full' );
@@ -513,16 +523,10 @@ if ( ! function_exists( 'versatile_cleanup_invalid_featured_images' ) ) {
 					}
 				}
 
-				// Remove invalid featured image
+				// Remove invalid featured image.
 				delete_post_meta( $post->ID, '_thumbnail_id' );
 				++$cleaned_count;
 			}
-		}
-
-		// Log the cleanup results (for debugging)
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			error_log( 'Versatile Theme: Cleaned up ' . $cleaned_count . ' invalid featured images.' );
-			error_log( 'Invalid types found: ' . print_r( $invalid_types, true ) );
 		}
 
 		return array(
@@ -533,24 +537,32 @@ if ( ! function_exists( 'versatile_cleanup_invalid_featured_images' ) ) {
 }
 
 /**
- * Add admin notice if there are posts with invalid featured images
+ * Add admin notice if there are posts with invalid featured images.
+ *
+ * @return void
  */
 function versatile_check_invalid_featured_images() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
 
-	// Only check on admin dashboard
+	// Only check on admin dashboard.
 	$screen = get_current_screen();
-	if ( ! $screen || $screen->id !== 'dashboard' ) {
+	if ( ! $screen || 'dashboard' !== $screen->id ) {
 		return;
 	}
 
 	$posts_with_invalid_images = get_posts(
 		array(
-			'numberposts' => 5, // Check only first 5 to avoid performance issues
+			'numberposts' => 5, // Check only first 5 to avoid performance issues.
 			'post_type'   => 'post',
-			'meta_key'    => '_thumbnail_id',
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			'meta_query'  => array(
+				array(
+					'key'     => '_thumbnail_id',
+					'compare' => 'EXISTS',
+				),
+			),
 			'post_status' => 'publish',
 		)
 	);
@@ -562,7 +574,7 @@ function versatile_check_invalid_featured_images() {
 		if ( ! versatile_has_valid_featured_image( $post->ID ) ) {
 			++$invalid_count;
 
-			// Check if it's a URL pointing to a post issue
+			// Check if it's a URL pointing to a post issue.
 			$attachment_id = get_post_thumbnail_id( $post->ID );
 			if ( $attachment_id ) {
 				$image_url = wp_get_attachment_image_url( $attachment_id, 'full' );
@@ -587,14 +599,16 @@ function versatile_check_invalid_featured_images() {
 		$message .= '<a href="' . admin_url( 'tools.php?page=versatile-cleanup' ) . '">Click here to clean them up</a>.';
 
 		echo '<div class="notice notice-warning is-dismissible">';
-		echo '<p>' . $message . '</p>';
+		echo '<p>' . esc_html( $message ) . '</p>';
 		echo '</div>';
 	}
 }
 add_action( 'admin_notices', 'versatile_check_invalid_featured_images' );
 
 /**
- * Add admin menu for cleanup tools
+ * Add admin menu for cleanup tools.
+ *
+ * @return void
  */
 function versatile_add_admin_menu() {
 	add_management_page(
@@ -608,17 +622,19 @@ function versatile_add_admin_menu() {
 add_action( 'admin_menu', 'versatile_add_admin_menu' );
 
 /**
- * Admin cleanup page
+ * Admin cleanup page.
+ *
+ * @return void
  */
 function versatile_admin_cleanup_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 	}
 
 	$message      = '';
 	$message_type = '';
 
-	// Handle cleanup action
+	// Handle cleanup action.
 	if ( isset( $_POST['cleanup_images'] ) && check_admin_referer( 'versatile_cleanup_nonce' ) ) {
 		$result = versatile_cleanup_invalid_featured_images();
 		if ( $result ) {
@@ -633,12 +649,18 @@ function versatile_admin_cleanup_page() {
 		}
 	}
 
-	// Count current invalid images
+	// Count current invalid images.
 	$posts_with_thumbnails = get_posts(
 		array(
 			'numberposts' => 50,
 			'post_type'   => 'post',
-			'meta_key'    => '_thumbnail_id',
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			'meta_query'  => array(
+				array(
+					'key'     => '_thumbnail_id',
+					'compare' => 'EXISTS',
+				),
+			),
 			'post_status' => 'publish',
 		)
 	);
@@ -686,11 +708,11 @@ function versatile_admin_cleanup_page() {
 				</tr>
 				<tr>
 					<td><strong>Invalid featured images found:</strong></td>
-					<td><?php echo $invalid_count; ?></td>
+					<td><?php echo esc_html( $invalid_count ); ?></td>
 				</tr>
 				<tr>
 					<td><strong>Post URLs set as images:</strong></td>
-					<td><?php echo $url_issues; ?></td>
+					<td><?php echo esc_html( $url_issues ); ?></td>
 				</tr>
 			</table>
 			
@@ -723,36 +745,45 @@ function versatile_admin_cleanup_page() {
 	<?php
 }
 
-/**
- * Enhanced function to get post thumbnail or placeholder
- */
 if ( ! function_exists( 'versatile_get_post_image' ) ) {
+	/**
+	 * Enhanced function to get post thumbnail or placeholder.
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $size Image size.
+	 * @param array  $attr Image attributes.
+	 * @return string
+	 */
 	function versatile_get_post_image( $post_id = null, $size = 'large', $attr = array() ) {
 		if ( ! $post_id ) {
 			$post_id = get_the_ID();
 		}
 
-		// Check if post has a valid featured image
+		// Check if post has a valid featured image.
 		if ( versatile_has_valid_featured_image( $post_id ) ) {
 			return get_the_post_thumbnail( $post_id, $size, $attr );
 		}
 
-		// Return placeholder if no valid image
-		return versatile_get_placeholder_image( $post_id, $size );
+		// Return placeholder if no valid image.
+		return versatile_get_placeholder_image( $post_id );
 	}
 }
 
-/**
- * Get small thumbnail for post listings (like in 404 page)
- */
 if ( ! function_exists( 'versatile_get_small_post_image' ) ) {
+	/**
+	 * Get small thumbnail for post listings (like in 404 page).
+	 *
+	 * @param int   $post_id Post ID.
+	 * @param array $size Image size.
+	 * @return string
+	 */
 	function versatile_get_small_post_image( $post_id, $size = array( 60, 60 ) ) {
-		// Check if post has a valid featured image
+		// Check if post has a valid featured image.
 		if ( versatile_has_valid_featured_image( $post_id ) ) {
 			return get_the_post_thumbnail( $post_id, $size );
 		}
 
-		// Return small placeholder if no valid image
+		// Return small placeholder if no valid image.
 		return '<div class="post-placeholder-thumb">
                     <svg viewBox="0 0 60 60" class="placeholder-svg-small">
                         <rect width="60" height="60" fill="#f7fafc"/>
@@ -763,21 +794,19 @@ if ( ! function_exists( 'versatile_get_small_post_image' ) ) {
 }
 
 /**
- * Detect site type and apply appropriate settings
+ * Detect site type and apply appropriate settings.
+ *
+ * @return string
  */
 function versatile_detect_site_type() {
-	$site_type = 'personal'; // default
+	$site_type = 'personal'; // default.
 
-	// Check for WooCommerce
+	// Check for WooCommerce.
 	if ( class_exists( 'WooCommerce' ) ) {
 		$site_type = 'ecommerce';
-	}
-	// Check for business indicators
-	elseif ( get_option( 'show_on_front' ) == 'page' && get_option( 'page_on_front' ) ) {
+	} elseif ( 'page' === get_option( 'show_on_front' ) && get_option( 'page_on_front' ) ) { // Check for business indicators.
 		$site_type = 'business';
-	}
-	// Check for blog
-	elseif ( get_option( 'show_on_front' ) == 'posts' ) {
+	} elseif ( 'posts' === get_option( 'show_on_front' ) ) { // Check for blog.
 		$site_type = 'blog';
 	}
 
@@ -785,13 +814,16 @@ function versatile_detect_site_type() {
 }
 
 /**
- * Add body classes based on site type
+ * Add body classes based on site type.
+ *
+ * @param array $classes Classes for the body element.
+ * @return array
  */
 function versatile_body_classes( $classes ) {
 	$site_type = versatile_detect_site_type();
 	$classes[] = 'site-type-' . $site_type;
 
-	// Add class for sidebar
+	// Add class for sidebar.
 	if ( is_active_sidebar( 'sidebar-1' ) && ! is_page_template( 'page-landing.php' ) ) {
 		$classes[] = 'has-sidebar';
 	} else {
@@ -803,7 +835,10 @@ function versatile_body_classes( $classes ) {
 add_filter( 'body_class', 'versatile_body_classes' );
 
 /**
- * Custom excerpt length
+ * Custom excerpt length.
+ *
+ * @param int $length Excerpt length.
+ * @return int
  */
 function versatile_excerpt_length( $length ) {
 	return $length ?? 25;
@@ -811,7 +846,10 @@ function versatile_excerpt_length( $length ) {
 add_filter( 'excerpt_length', 'versatile_excerpt_length', 999 );
 
 /**
- * Custom excerpt more string
+ * Custom excerpt more string.
+ *
+ * @param string $more Excerpt more string.
+ * @return string
  */
 function versatile_excerpt_more( $more ) {
 	return $more ?? '...';
@@ -819,7 +857,9 @@ function versatile_excerpt_more( $more ) {
 add_filter( 'excerpt_more', 'versatile_excerpt_more' );
 
 /**
- * Add custom image sizes
+ * Add custom image sizes.
+ *
+ * @return void
  */
 function versatile_custom_image_sizes() {
 	add_image_size( 'versatile-featured', 800, 400, true );
@@ -829,15 +869,21 @@ function versatile_custom_image_sizes() {
 add_action( 'after_setup_theme', 'versatile_custom_image_sizes' );
 
 /**
- * Register block styles
+ * Register block styles.
+ *
+ * @return void
  */
 function versatile_register_block_styles() {
-	// Register custom block styles here if needed
+	// Register custom block styles here if needed.
 }
 add_action( 'init', 'versatile_register_block_styles' );
 
 /**
- * Add preload for Google Fonts
+ * Add preload for Google Fonts.
+ *
+ * @param array  $urls URLs to preload.
+ * @param string $relation_type Relation type.
+ * @return array
  */
 function versatile_resource_hints( $urls, $relation_type ) {
 	if ( wp_style_is( 'google-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
@@ -851,28 +897,32 @@ function versatile_resource_hints( $urls, $relation_type ) {
 add_filter( 'wp_resource_hints', 'versatile_resource_hints', 10, 2 );
 
 /**
- * Improve site performance
+ * Improve site performance.
+ *
+ * @return void
  */
 function versatile_performance_optimizations() {
-	// Remove unnecessary WordPress features
+	// Remove unnecessary WordPress features.
 	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 	remove_action( 'wp_print_styles', 'print_emoji_styles' );
 	remove_action( 'admin_print_styles', 'print_emoji_styles' );
 
-	// Remove WordPress version from head
+	// Remove WordPress version from head.
 	remove_action( 'wp_head', 'wp_generator' );
 
-	// Remove RSD link
+	// Remove RSD link.
 	remove_action( 'wp_head', 'rsd_link' );
 
-	// Remove wlwmanifest link
+	// Remove wlwmanifest link.
 	remove_action( 'wp_head', 'wlwmanifest_link' );
 }
 add_action( 'init', 'versatile_performance_optimizations' );
 
 /**
- * Security enhancements
+ * Security enhancements.
+ *
+ * @return void
  */
 function versatile_security_headers() {
 	if ( ! is_admin() ) {
@@ -884,7 +934,9 @@ function versatile_security_headers() {
 add_action( 'send_headers', 'versatile_security_headers' );
 
 /**
- * Output custom CSS for color schemes
+ * Output custom CSS for color schemes.
+ *
+ * @return string
  */
 function versatile_color_scheme_css() {
 	$colors = versatile_get_current_color_scheme();
@@ -1031,12 +1083,14 @@ function versatile_color_scheme_css() {
 }
 
 /**
- * Add custom CSS to head (only for non-customizer preview)
+ * Add custom CSS to head (only for non-customizer preview).
+ *
+ * @return void
  */
 function versatile_custom_css() {
 	if ( ! is_customize_preview() ) {
 		$css = versatile_color_scheme_css();
-		echo '<style type="text/css" id="versatile-color-scheme">' . $css . '</style>';
+		echo '<style type="text/css" id="versatile-color-scheme">' . esc_html( $css ) . '</style>';
 	}
 }
 add_action( 'wp_head', 'versatile_custom_css' );

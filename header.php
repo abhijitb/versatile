@@ -3,7 +3,10 @@
  * The header template file
  * This template part displays the HTML head and opening body tag
  * Versatile WordPress Theme
+ *
+ * @package Versatile
  */
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -47,7 +50,7 @@
 							<div class="header-cart">
 								<a class="cart-contents" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'versatile' ); ?>">
 									<i class="fas fa-shopping-cart"></i>
-									<span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+									<span class="cart-count"><?php echo esc_html( WC()->cart->get_cart_contents_count() ); ?></span>
 								</a>
 								
 								<!-- Mini Cart -->

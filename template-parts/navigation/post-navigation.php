@@ -10,7 +10,7 @@
 $previous_post = get_previous_post();
 $next_post     = get_next_post();
 
-// Don't display navigation if there are no adjacent posts
+// Don't display navigation if there are no adjacent posts.
 if ( ! $previous_post && ! $next_post ) {
 	return;
 }

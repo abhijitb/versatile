@@ -5,18 +5,18 @@
  * @package Versatile
  */
 
-// Prevent direct access
+// Prevent direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Enqueue theme styles and scripts
+ * Enqueue theme styles and scripts.
  */
 function versatile_enqueue_assets() {
 	$theme_version = wp_get_theme()->get( 'Version' );
 
-	// Enqueue Font Awesome
+	// Enqueue Font Awesome.
 	wp_enqueue_style(
 		'font-awesome',
 		'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
@@ -24,7 +24,7 @@ function versatile_enqueue_assets() {
 		'6.4.0'
 	);
 
-	// Enqueue main stylesheet
+	// Enqueue main stylesheet.
 	wp_enqueue_style(
 		'versatile-style',
 		get_stylesheet_uri(),
@@ -32,7 +32,7 @@ function versatile_enqueue_assets() {
 		$theme_version
 	);
 
-	// Enqueue compiled CSS if exists, otherwise fallback to individual files
+	// Enqueue compiled CSS if exists, otherwise fallback to individual files.
 	$main_css_path = get_template_directory() . '/assets/css/dist/main.css';
 	if ( file_exists( $main_css_path ) ) {
 		wp_enqueue_style(
@@ -42,7 +42,7 @@ function versatile_enqueue_assets() {
 			$theme_version
 		);
 	} else {
-		// Fallback to individual CSS files
+		// Fallback to individual CSS files.
 		$css_files = array(
 			'main-styles',
 			'header-footer',
@@ -66,7 +66,7 @@ function versatile_enqueue_assets() {
 		}
 	}
 
-	// Enqueue compiled JS if exists, otherwise fallback to individual files
+	// Enqueue compiled JS if exists, otherwise fallback to individual files.
 	$main_js_path = get_template_directory() . '/assets/js/dist/main.js';
 	if ( file_exists( $main_js_path ) ) {
 		wp_enqueue_script(
@@ -77,7 +77,7 @@ function versatile_enqueue_assets() {
 			true
 		);
 	} else {
-		// Fallback to individual JS files
+		// Fallback to individual JS files.
 		$js_files = array(
 			'main',
 			'archive-view-toggle',
@@ -98,7 +98,7 @@ function versatile_enqueue_assets() {
 		}
 	}
 
-	// Enqueue comment reply script on single posts
+	// Enqueue comment reply script on single posts.
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}

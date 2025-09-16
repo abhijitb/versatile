@@ -5,37 +5,37 @@
  * @package Versatile
  */
 
-// Prevent direct access
+// Prevent direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Set up theme defaults and register support for various WordPress features
+ * Set up theme defaults and register support for various WordPress features.
  */
 function versatile_theme_support() {
-	// Add default posts and comments RSS feed links to head
+	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
 
-	// Let WordPress manage the document title
+	// Let WordPress manage the document title.
 	add_theme_support( 'title-tag' );
 
-	// Enable support for Post Thumbnails on posts and pages
+	// Enable support for Post Thumbnails on posts and pages.
 	add_theme_support( 'post-thumbnails' );
 
-	// Add support for responsive embedded content
+	// Add support for responsive embedded content.
 	add_theme_support( 'responsive-embeds' );
 
-	// Add support for editor styles
+	// Add support for editor styles.
 	add_theme_support( 'editor-styles' );
 
-	// Enqueue editor styles
+	// Enqueue editor styles.
 	add_editor_style( 'assets/css/src/editor-style.css' );
 
-	// Add support for full and wide align images
+	// Add support for full and wide align images.
 	add_theme_support( 'align-wide' );
 
-	// Add support for custom logo
+	// Add support for custom logo.
 	add_theme_support(
 		'custom-logo',
 		array(
@@ -46,7 +46,7 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for custom header
+	// Add support for custom header.
 	add_theme_support(
 		'custom-header',
 		array(
@@ -59,7 +59,7 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for custom background
+	// Add support for custom background.
 	add_theme_support(
 		'custom-background',
 		array(
@@ -67,7 +67,7 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for HTML5 markup
+	// Add support for HTML5 markup.
 	add_theme_support(
 		'html5',
 		array(
@@ -81,10 +81,10 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for selective refresh for widgets
+	// Add support for selective refresh for widgets.
 	add_theme_support( 'customize-selective-refresh-widgets' );
 
-	// Add support for starter content
+	// Add support for starter content.
 	add_theme_support(
 		'starter-content',
 		array(
@@ -130,7 +130,7 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Register navigation menus
+	// Register navigation menus.
 	register_nav_menus(
 		array(
 			'primary' => esc_html__( 'Primary Menu', 'versatile' ),
@@ -139,10 +139,10 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for block styles
+	// Add support for block styles.
 	add_theme_support( 'wp-block-styles' );
 
-	// Add support for editor font sizes
+	// Add support for editor font sizes.
 	add_theme_support(
 		'editor-font-sizes',
 		array(
@@ -169,7 +169,7 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for editor color palette
+	// Add support for editor color palette.
 	add_theme_support(
 		'editor-color-palette',
 		array(

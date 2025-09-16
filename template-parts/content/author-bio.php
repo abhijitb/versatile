@@ -1,6 +1,6 @@
 <?php
 /**
- * Template part for displaying author bio
+ * Template part for displaying author bio.
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
@@ -9,7 +9,7 @@
 
 $author_description = get_the_author_meta( 'description' );
 
-// Don't display author bio if there's no description
+// Don't display author bio if there's no description.
 if ( ! $author_description ) {
 	return;
 }

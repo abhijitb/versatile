@@ -2,6 +2,8 @@
 /**
  * Front Page Template - Personal Site
  * Template Name: front-page-personal.php
+ *
+ * @package Versatile
  */
 
 get_header(); ?>
@@ -13,16 +15,16 @@ get_header(); ?>
 			<div class="hero-content text-center">
 				<?php if ( get_theme_mod( 'hero_image' ) ) : ?>
 					<div class="hero-avatar">
-						<img src="<?php echo esc_url( get_theme_mod( 'hero_image' ) ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="img-fluid">
+						<img src="<?php echo esc_url( get_theme_mod( 'hero_image' ) ); ?>" alt="<?php echo esc_html( bloginfo( 'name' ) ); ?>" class="img-fluid">
 					</div>
 				<?php endif; ?>
 				
 				<h1 class="hero-title">
-					<?php echo get_theme_mod( 'hero_title', 'Hello, I\'m ' . get_bloginfo( 'name' ) ); ?>
+					<?php echo esc_html( get_theme_mod( 'hero_title', 'Hello, I\'m ' . esc_html( get_bloginfo( 'name' ) ) ) ); ?>
 				</h1>
 				
 				<p class="hero-subtitle">
-					<?php echo get_theme_mod( 'hero_subtitle', get_bloginfo( 'description' ) ); ?>
+					<?php echo esc_html( get_theme_mod( 'hero_subtitle', esc_html( get_bloginfo( 'description' ) ) ) ); ?>
 				</p>
 				
 				<?php if ( get_theme_mod( 'hero_cta_text' ) && get_theme_mod( 'hero_cta_url' ) ) : ?>
@@ -71,19 +73,19 @@ get_header(); ?>
 						<article class="post-card">
 							<div class="post-thumbnail">
 								<a href="<?php the_permalink(); ?>">
-									<?php echo versatile_get_post_image( get_the_ID(), 'versatile-featured', array( 'class' => 'img-fluid' ) ); ?>
+									<?php echo esc_html( versatile_get_post_image( get_the_ID(), 'versatile-featured', array( 'class' => 'img-fluid' ) ) ); ?>
 								</a>
 							</div>
 							
 							<div class="post-content">
 								<h3 class="post-title">
-									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+									<a href="<?php the_permalink(); ?>"><?php echo esc_html( the_title() ); ?></a>
 								</h3>
 								<div class="post-meta">
-									<span class="post-date"><?php echo get_the_date(); ?></span>
+									<span class="post-date"><?php echo esc_html( get_the_date() ); ?></span>
 								</div>
 								<div class="post-excerpt">
-									<?php the_excerpt(); ?>
+									<?php echo esc_html( the_excerpt() ); ?>
 								</div>
 								<a href="<?php the_permalink(); ?>" class="read-more">Read More</a>
 							</div>
@@ -96,7 +98,7 @@ get_header(); ?>
 			</div>
 			
 			<div class="text-center mt-3">
-				<a href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>" class="btn btn-secondary">
+				<a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" class="btn btn-secondary">
 					View All Posts
 				</a>
 			</div>
@@ -110,6 +112,8 @@ get_header(); ?>
 /**
  * Front Page Template - E-commerce Site
  * Template Name: front-page-ecommerce.php
+ *
+ * @package Versatile
  */
 
 get_header();
@@ -123,12 +127,12 @@ get_header();
 				<div class="row align-items-center">
 					<div class="col-md-6">
 						<h1 class="hero-title">
-							<?php echo get_theme_mod( 'shop_hero_title', 'Welcome to Our Store' ); ?>
+							<?php echo esc_html( get_theme_mod( 'shop_hero_title', 'Welcome to Our Store' ) ); ?>
 						</h1>
 						<p class="hero-subtitle">
-							<?php echo get_theme_mod( 'shop_hero_subtitle', 'Discover amazing products at great prices' ); ?>
+							<?php echo esc_html( get_theme_mod( 'shop_hero_subtitle', 'Discover amazing products at great prices' ) ); ?>
 						</p>
-						<a href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>" class="btn btn-primary">
+						<a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" class="btn btn-primary">
 							Shop Now
 						</a>
 					</div>
@@ -153,14 +157,14 @@ get_header();
 					<h2 class="section-title text-center">Shop by Category</h2>
 					<div class="categories-grid">
 						<?php
-						foreach ( $featured_categories as $cat_id ) :
-							$category = get_term( $cat_id, 'product_cat' );
+						foreach ( $featured_categories as $feature_cat_id ) :
+							$category = get_term( $feature_cat_id, 'product_cat' );
 							if ( $category && ! is_wp_error( $category ) ) :
-								$thumbnail_id = get_term_meta( $cat_id, 'thumbnail_id', true );
+								$thumbnail_id = get_term_meta( $feature_cat_id, 'thumbnail_id', true );
 								$image        = wp_get_attachment_url( $thumbnail_id );
 								?>
 								<div class="category-card">
-									<a href="<?php echo get_term_link( $category ); ?>">
+									<a href="<?php echo esc_url( get_term_link( $category ) ); ?>">
 										<?php if ( $image ) : ?>
 											<img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $category->name ); ?>" class="img-fluid">
 										<?php endif; ?>
@@ -241,10 +245,10 @@ get_header();
 				<div class="col-md-6">
 					<div class="hero-content">
 						<h1 class="hero-title">
-							<?php echo get_theme_mod( 'business_hero_title', 'Your Business Success Starts Here' ); ?>
+							<?php echo esc_html( get_theme_mod( 'business_hero_title', 'Your Business Success Starts Here' ) ); ?>
 						</h1>
 						<p class="hero-subtitle">
-							<?php echo get_theme_mod( 'business_hero_subtitle', 'We provide professional solutions for your business needs' ); ?>
+							<?php echo esc_html( get_theme_mod( 'business_hero_subtitle', 'We provide professional solutions for your business needs' ) ); ?>
 						</p>
 						<div class="hero-actions">
 							<?php if ( get_theme_mod( 'business_cta_primary_text' ) && get_theme_mod( 'business_cta_primary_url' ) ) : ?>
@@ -277,7 +281,7 @@ get_header();
 			<h2 class="section-title text-center">Our Services</h2>
 			<div class="services-grid">
 				<?php
-				// Get services from customizer or use default
+				// Get services from customizer or use default.
 				$services = get_theme_mod( 'business_services', array() );
 				if ( empty( $services ) ) {
 					$services = array(
@@ -324,7 +328,7 @@ get_header();
 				</div>
 				<div class="col-md-6">
 					<div class="about-content">
-						<h2><?php echo get_theme_mod( 'business_about_title', 'About Our Company' ); ?></h2>
+						<h2><?php echo esc_html( get_theme_mod( 'business_about_title', 'About Our Company' ) ); ?></h2>
 						<p><?php echo wp_kses_post( get_theme_mod( 'business_about_content', 'We are a professional company dedicated to providing excellent services to our clients.' ) ); ?></p>
 						
 						<?php if ( get_theme_mod( 'business_about_cta_text' ) && get_theme_mod( 'business_about_cta_url' ) ) : ?>
@@ -418,9 +422,9 @@ get_header();
 	<section class="contact-cta-section">
 		<div class="container">
 			<div class="contact-cta-content text-center">
-				<h2><?php echo get_theme_mod( 'business_cta_title', 'Ready to Get Started?' ); ?></h2>
-				<p><?php echo get_theme_mod( 'business_cta_subtitle', 'Contact us today to discuss your project requirements.' ); ?></p>
-				<a href="<?php echo get_theme_mod( 'business_contact_url', '/contact' ); ?>" class="btn btn-primary">
+				<h2><?php echo esc_html( get_theme_mod( 'business_cta_title', 'Ready to Get Started?' ) ); ?></h2>
+				<p><?php echo esc_html( get_theme_mod( 'business_cta_subtitle', 'Contact us today to discuss your project requirements.' ) ); ?></p>
+				<a href="<?php echo esc_url( get_theme_mod( 'business_contact_url', '/contact' ) ); ?>" class="btn btn-primary">
 					Get In Touch
 				</a>
 			</div>
@@ -445,10 +449,10 @@ get_header();
 		<div class="container">
 			<div class="hero-content text-center">
 				<h1 class="hero-title">
-					<?php echo get_theme_mod( 'portfolio_hero_title', 'Creative Portfolio' ); ?>
+					<?php echo esc_html( get_theme_mod( 'portfolio_hero_title', 'Creative Portfolio' ) ); ?>
 				</h1>
 				<p class="hero-subtitle">
-					<?php echo get_theme_mod( 'portfolio_hero_subtitle', 'Showcasing my creative work and passion projects' ); ?>
+					<?php echo esc_html( get_theme_mod( 'portfolio_hero_subtitle', 'Showcasing my creative work and passion projects' ) ); ?>
 				</p>
 			</div>
 		</div>
@@ -543,7 +547,7 @@ get_header();
 			</div>
 			
 			<div class="text-center mt-3">
-				<a href="<?php echo get_post_type_archive_link( 'portfolio' ); ?>" class="btn btn-secondary">
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'portfolio' ) ); ?>" class="btn btn-secondary">
 					View All Projects
 				</a>
 			</div>
@@ -556,7 +560,7 @@ get_header();
 			<div class="row">
 				<div class="col-md-6">
 					<h2>Skills & Expertise</h2>
-					<p><?php echo get_theme_mod( 'portfolio_skills_intro', 'Here are some of the technologies and skills I work with:' ); ?></p>
+					<p><?php echo esc_html( get_theme_mod( 'portfolio_skills_intro', 'Here are some of the technologies and skills I work with:' ) ); ?></p>
 				</div>
 				<div class="col-md-6">
 					<div class="skills-list">
@@ -609,9 +613,9 @@ get_header();
 	<section class="contact-section">
 		<div class="container">
 			<div class="contact-content text-center">
-				<h2><?php echo get_theme_mod( 'portfolio_contact_title', 'Let\'s Work Together' ); ?></h2>
-				<p><?php echo get_theme_mod( 'portfolio_contact_subtitle', 'Have a project in mind? I\'d love to hear about it.' ); ?></p>
-				<a href="<?php echo get_theme_mod( 'portfolio_contact_url', '/contact' ); ?>" class="btn btn-primary">
+				<h2><?php echo esc_html( get_theme_mod( 'portfolio_contact_title', 'Let\'s Work Together' ) ); ?></h2>
+				<p><?php echo esc_html( get_theme_mod( 'portfolio_contact_subtitle', 'Have a project in mind? I\'d love to hear about it.' ) ); ?></p>
+				<a href="<?php echo esc_url( get_theme_mod( 'portfolio_contact_url', '/contact' ) ); ?>" class="btn btn-primary">
 					Get In Touch
 				</a>
 			</div>

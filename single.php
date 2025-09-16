@@ -2,6 +2,8 @@
 /**
  * Template for displaying single posts
  * Versatile WordPress Theme
+ *
+ * @package Versatile
  */
 
 get_header(); ?>

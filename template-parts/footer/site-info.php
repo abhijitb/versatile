@@ -13,7 +13,7 @@
 	<div class="container">
 		<div class="footer-info-content">
 			<div class="footer-copyright">
-				<p>&copy; <?php echo date( 'Y' ); ?> 
+				<p>&copy; <?php echo esc_html( get_the_date( 'Y' ) ); ?> 
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>. 
 					<?php esc_html_e( 'All rights reserved.', 'versatile' ); ?>
 				</p>

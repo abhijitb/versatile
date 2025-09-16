@@ -41,13 +41,13 @@
 				$content     = get_the_content();
 				$search_term = get_search_query();
 
-				// Highlight search terms in excerpt
+				// Highlight search terms in excerpt.
 				if ( $search_term ) {
 					$excerpt     = wp_trim_words( $content, 30, '...' );
 					$highlighted = preg_replace( '/(' . preg_quote( $search_term, '/' ) . ')/i', '<mark>$1</mark>', $excerpt );
 					echo wp_kses_post( $highlighted );
 				} else {
-					echo wp_trim_words( $content, 30, '...' );
+					echo esc_html( wp_trim_words( $content, 30, '...' ) );
 				}
 			}
 			?>

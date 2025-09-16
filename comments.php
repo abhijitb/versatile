@@ -2,6 +2,8 @@
 /**
  * Template for displaying comments and comment form
  * Versatile WordPress Theme
+ *
+ * @package Versatile
  */
 
 if ( post_password_required() ) {
@@ -18,19 +20,20 @@ if ( post_password_required() ) {
 					<i class="fas fa-comments"></i>
 					<?php
 					$comment_count = get_comments_number();
-					if ( $comment_count == 1 ) {
+					if ( 1 === $comment_count ) {
 						printf( esc_html__( 'One Comment', 'versatile' ) );
 					} else {
 						printf(
+							// translators: %1$s is the number of comments.
 							esc_html( _n( '%1$s Comment', '%1$s Comments', $comment_count, 'versatile' ) ),
-							number_format_i18n( $comment_count )
+							esc_html( number_format_i18n( $comment_count ) )
 						);
 					}
 					?>
 				</h3>
 				
 				<div class="comments-meta">
-					<span class="comments-count"><?php echo get_comments_number(); ?> <?php echo _n( 'response', 'responses', get_comments_number(), 'versatile' ); ?></span>
+					<span class="comments-count"><?php echo esc_html( get_comments_number() ); ?> <?php echo esc_html( _n( 'response', 'responses', get_comments_number(), 'versatile' ) ); ?></span>
 					<?php if ( comments_open() ) : ?>
 						<a href="#respond" class="scroll-to-form">
 							<i class="fas fa-reply"></i>
@@ -48,7 +51,7 @@ if ( post_password_required() ) {
 							'style'       => 'ol',
 							'short_ping'  => true,
 							'avatar_size' => 60,
-							'callback'    => 'versatilecomment_callback',
+							'callback'    => 'versatile_comment_callback',
 						)
 					);
 					?>
@@ -59,11 +62,13 @@ if ( post_password_required() ) {
 				<nav class="comments-navigation" aria-label="Comments Navigation">
 					<div class="nav-links">
 						<?php
-						if ( $prev_link = get_previous_comments_link() ) {
-							echo '<div class="nav-previous">' . $prev_link . '</div>';
+						$prev_link = get_previous_comments_link();
+						if ( $prev_link ) {
+							echo '<div class="nav-previous">' . esc_html( $prev_link ) . '</div>';
 						}
-						if ( $next_link = get_next_comments_link() ) {
-							echo '<div class="nav-next">' . $next_link . '</div>';
+						$next_link = get_next_comments_link();
+						if ( $next_link ) {
+							echo '<div class="nav-next">' . esc_html( $next_link ) . '</div>';
 						}
 						?>
 					</div>
@@ -80,7 +85,7 @@ if ( post_password_required() ) {
 		<?php endif; ?>
 
 		<?php
-		// Comment form
+		// Comment form.
 		if ( comments_open() ) :
 			$commenter = wp_get_current_commenter();
 			$req       = get_option( 'require_name_email' );
@@ -89,6 +94,7 @@ if ( post_password_required() ) {
 
 			$comment_form_args = array(
 				'title_reply'          => esc_html__( 'Leave a Comment', 'versatile' ),
+				// translators: %s is the comment author.
 				'title_reply_to'       => esc_html__( 'Leave a Reply to %s', 'versatile' ),
 				'cancel_reply_link'    => esc_html__( 'Cancel Reply', 'versatile' ),
 				'label_submit'         => esc_html__( 'Post Comment', 'versatile' ),
@@ -124,13 +130,22 @@ if ( post_password_required() ) {
 </section>
 
 <?php
-// Custom comment callback function
-if ( ! function_exists( 'versatilecomment_callback' ) ) {
+// Custom comment callback function.
+if ( ! function_exists( 'versatile_comment_callback' ) ) {
+	/**
+	 * Custom comment callback function.
+	 *
+	 * @param WP_Comment $comment The comment object.
+	 * @param array      $args    The arguments array.
+	 * @param int        $depth   The depth of the comment.
+	 */
 	function versatile_comment_callback( $comment, $args, $depth ) {
-		$GLOBALS['comment'] = $comment;
-		extract( $args, EXTR_SKIP );
+		// Extract specific arguments we need.
+		$style       = isset( $args['style'] ) ? $args['style'] : 'ul';
+		$avatar_size = isset( $args['avatar_size'] ) ? $args['avatar_size'] : 32;
+		$max_depth   = isset( $args['max_depth'] ) ? $args['max_depth'] : 5;
 
-		if ( 'div' == $args['style'] ) {
+		if ( 'div' === $style ) {
 			$tag       = 'div';
 			$add_below = 'comment';
 		} else {
@@ -139,12 +154,12 @@ if ( ! function_exists( 'versatilecomment_callback' ) ) {
 		}
 		?>
 		
-		<<?php echo $tag; ?> <?php comment_class( 'comment-item' ); ?> id="comment-<?php comment_ID(); ?>">
+		<<?php echo esc_html( $tag ); ?> <?php comment_class( 'comment-item' ); ?> id="comment-<?php comment_ID(); ?>">
 			
 			<div class="comment-body" id="div-comment-<?php comment_ID(); ?>">
 				
 				<div class="comment-avatar">
-					<?php echo get_avatar( $comment, $args['avatar_size'] ); ?>
+					<?php echo esc_html( get_avatar( $comment, $avatar_size ) ); ?>
 				</div>
 				
 				<div class="comment-content">
@@ -153,9 +168,10 @@ if ( ! function_exists( 'versatilecomment_callback' ) ) {
 						<div class="comment-author-info">
 							<h4 class="comment-author">
 								<?php
-								printf( '<cite class="fn">%s</cite>', get_comment_author_link() );
+								// translators: %s is the comment author link.
+								printf( '<cite class="fn">%s</cite>', esc_html( get_comment_author_link() ) );
 								?>
-								<?php if ( $comment->user_id === get_the_author_meta( 'ID' ) ) : ?>
+								<?php if ( get_the_author_meta( 'ID' ) === $comment->user_id ) : ?>
 									<span class="author-badge">
 										<i class="fas fa-crown"></i>
 										<?php esc_html_e( 'Author', 'versatile' ); ?>
@@ -169,15 +185,16 @@ if ( ! function_exists( 'versatilecomment_callback' ) ) {
 									<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
 										<?php
 										printf(
+											// translators: %1$s is the comment date, %2$s is the comment time.
 											esc_html__( '%1$s at %2$s', 'versatile' ),
-											get_comment_date(),
-											get_comment_time()
+											esc_html( get_comment_date() ),
+											esc_html( get_comment_time() )
 										);
 										?>
 									</a>
 								</time>
 								
-								<?php if ( $comment->comment_approved == '0' ) : ?>
+								<?php if ( '0' === $comment->comment_approved ) : ?>
 									<span class="comment-awaiting-moderation">
 										<i class="fas fa-hourglass-half"></i>
 										<?php esc_html_e( 'Your comment is awaiting moderation.', 'versatile' ); ?>
@@ -194,7 +211,7 @@ if ( ! function_exists( 'versatilecomment_callback' ) ) {
 									array(
 										'add_below'  => $add_below,
 										'depth'      => $depth,
-										'max_depth'  => $args['max_depth'],
+										'max_depth'  => $max_depth,
 										'before'     => '<div class="reply-link">',
 										'after'      => '</div>',
 										'reply_text' => '<i class="fas fa-reply"></i> ' . esc_html__( 'Reply', 'versatile' ),
@@ -205,7 +222,7 @@ if ( ! function_exists( 'versatilecomment_callback' ) ) {
 							
 							<?php if ( current_user_can( 'edit_comment', $comment->comment_ID ) ) : ?>
 								<div class="edit-link">
-									<a href="<?php echo get_edit_comment_link(); ?>">
+									<a href="<?php echo esc_url( get_edit_comment_link() ); ?>">
 										<i class="fas fa-edit"></i>
 										<?php esc_html_e( 'Edit', 'versatile' ); ?>
 									</a>
@@ -215,13 +232,13 @@ if ( ! function_exists( 'versatilecomment_callback' ) ) {
 					</div>
 					
 					<div class="comment-text">
-						<?php comment_text(); ?>
+						<?php esc_html( comment_text() ); ?>
 					</div>
 					
 					<!-- Comment Rating (if using a plugin) -->
 					<?php if ( function_exists( 'the_ratings' ) && get_post_type() === 'product' ) : ?>
 						<div class="comment-rating">
-							<?php the_ratings(); ?>
+							<?php esc_html( the_ratings() ); ?>
 						</div>
 					<?php endif; ?>
 					
@@ -244,7 +261,7 @@ if ( ! function_exists( 'versatilecomment_callback' ) ) {
 				</div>
 			</div>
 			
-			<?php if ( 'div' != $args['style'] ) : ?>
+			<?php if ( 'div' !== $style ) : ?>
 				</li>
 				<?php
 			endif;

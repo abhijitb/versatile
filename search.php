@@ -2,6 +2,8 @@
 /**
  * Template for displaying search results
  * Versatile WordPress Theme
+ *
+ * @package Versatile
  */
 
 get_header(); ?>
@@ -15,6 +17,7 @@ get_header(); ?>
 					<h1 class="page-title">
 						<?php
 						printf(
+							// translators: %s is the search query.
 							esc_html__( 'Search Results for: %s', 'versatile' ),
 							'<span>' . get_search_query() . '</span>'
 						);

@@ -2,6 +2,8 @@
 /**
  * Template for displaying pages
  * Versatile WordPress Theme
+ *
+ * @package Versatile
  */
 
 get_header(); ?>
@@ -47,6 +49,7 @@ get_header(); ?>
 								edit_post_link(
 									sprintf(
 										wp_kses(
+											// translators: %s is the theme name.
 											__( 'Edit <span class="screen-reader-text">%s</span>', 'versatile' ),
 											array(
 												'span' => array(

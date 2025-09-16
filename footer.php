@@ -3,7 +3,10 @@
  * The footer template file
  * Contains the closing of the #content div and all content after
  * Versatile WordPress Theme
+ *
+ * @package Versatile
  */
+
 ?>
 
 	</div><!-- #content -->

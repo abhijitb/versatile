@@ -11,7 +11,7 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 	return;
 }
 
-// Enqueue sidebar-specific CSS
+// Enqueue sidebar-specific CSS.
 wp_enqueue_style( 'versatile-sidebar', get_template_directory_uri() . '/assets/css/src/sidebar.css', array(), _S_VERSION );
 ?>
 
@@ -71,7 +71,7 @@ wp_enqueue_style( 'versatile-sidebar', get_template_directory_uri() . '/assets/c
 						<li>
 							<a href="<?php echo esc_url( get_category_link( $category->term_id ) ); ?>">
 								<?php echo esc_html( $category->name ); ?>
-								<span class="post-count">(<?php echo $category->count; ?>)</span>
+								<span class="post-count">(<?php echo esc_html( $category->count ); ?>)</span>
 							</a>
 						</li>
 					<?php endforeach; ?>
@@ -95,11 +95,11 @@ wp_enqueue_style( 'versatile-sidebar', get_template_directory_uri() . '/assets/c
 			<section class="widget widget_tag_cloud">
 				<h2 class="widget-title"><?php esc_html_e( 'Tags', 'versatile' ); ?></h2>
 				<div class="tagcloud">
-					<?php foreach ( $tags as $tag ) : ?>
-						<a href="<?php echo esc_url( get_tag_link( $tag->term_id ) ); ?>" 
+					<?php foreach ( $tags as $tag_item ) : ?>
+						<a href="<?php echo esc_url( get_tag_link( $tag_item->term_id ) ); ?>" 
 							class="tag-cloud-link" 
-							style="font-size: <?php echo min( 22, 12 + ( $tag->count * 2 ) ); ?>px;">
-							<?php echo esc_html( $tag->name ); ?>
+							style="font-size: <?php echo esc_html( min( 22, 12 + ( $tag_item->count * 2 ) ) ); ?>px;">
+							<?php echo esc_html( $tag_item->name ); ?>
 						</a>
 					<?php endforeach; ?>
 				</div>
