@@ -56,12 +56,8 @@
 }
 
 .site-title a {
-    color: #2d3748;
+    color: var(--text-color);
     text-decoration: none;
-    background: linear-gradient(135deg, gray, darkgray);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .site-description {
