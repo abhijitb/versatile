@@ -4,16 +4,16 @@
 
 /* CSS Variables */
 :root {
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-    --secondary-color: #f7fafc;
-    --text-color: #2d3748;
-    --text-muted: #718096;
-    --border-color: #e2e8f0;
+    --primary-color: #0f766e;
+    --primary-hover: #115e59;
+    --secondary-color: #f2f7f6;
+    --text-color: #1f2933;
+    --text-muted: #5f6c7b;
+    --border-color: #dbe7e4;
     --background-color: #ffffff;
-    --background-alt: #f7fafc;
-    --header-bg: #ffffff;
-    --footer-bg: #2d3748;
+    --background-alt: #f2f7f6;
+    --header-bg: #fdfdfc;
+    --footer-bg: #0b3b39;
     --success-color: #48bb78;
     --warning-color: #ed8936;
     --danger-color: #f56565;
@@ -21,6 +21,7 @@
     
     /* Typography */
     --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-family-heading: 'Fraunces', Georgia, serif;
     --font-size-base: 16px;
     --line-height-base: 1.6;
     --font-weight-normal: 400;
@@ -29,15 +30,15 @@
     /* Spacing */
     --container-max-width: 1200px;
     --grid-gutter: 30px;
-    --border-radius: 8px;
-    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --border-radius: 14px;
+    --box-shadow: 0 10px 30px rgba(15, 118, 110, 0.10);
     --transition: all 0.3s ease;
 }
 
 /* Alternative Color Schemes */
 :root[data-theme="dark"] {
-    --primary-color: #818cf8;
-    --primary-hover: #6366f1;
+    --primary-color: #2dd4bf;
+    --primary-hover: #14b8a6;
     --secondary-color: #4a5568;
     --text-color: #f7fafc;
     --text-muted: #a0aec0;
@@ -99,7 +100,9 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-heading);
     font-weight: var(--font-weight-bold);
+    letter-spacing: -0.01em;
     line-height: 1.3;
     margin: 0 0 1rem 0;
 }

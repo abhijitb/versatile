@@ -619,8 +619,20 @@ Versatile is distributed under the terms of the GNU GPL
 .hero-section,
 .portfolio-hero,
 .hero-banner {
-    padding: 80px 0;
-    background: var(--secondary-color);
+    padding: 100px 0;
+    background: linear-gradient(180deg, var(--background-alt) 0%, #fdfdfc 100%);
+    position: relative;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 42px;
+    background: radial-gradient(60% 120% at 50% 0, transparent 60%, var(--background-color) 61%);
+    pointer-events: none;
 }
 
 .hero-content {
@@ -628,14 +640,16 @@ Versatile is distributed under the terms of the GNU GPL
 }
 
 .hero-title {
-    font-size: 3rem;
+    font-size: clamp(2.6rem, 6vw, 4rem);
     margin-bottom: 20px;
     color: var(--text-color);
 }
 
 .hero-subtitle {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
     font-size: 1.3rem;
-    color: var(--text-muted);
+    color: var(--primary-color);
     margin-bottom: 30px;
 }
 
