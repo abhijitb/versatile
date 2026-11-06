@@ -169,34 +169,54 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for editor color palette.
+	// Add support for editor color palette (Versatile palette).
 	add_theme_support(
 		'editor-color-palette',
 		array(
 			array(
 				'name'  => esc_attr__( 'Primary', 'versatile' ),
 				'slug'  => 'primary',
-				'color' => '#007cba',
+				'color' => '#0f766e',
+			),
+			array(
+				'name'  => esc_attr__( 'Primary Hover', 'versatile' ),
+				'slug'  => 'primary-hover',
+				'color' => '#115e59',
+			),
+			array(
+				'name'  => esc_attr__( 'Accent', 'versatile' ),
+				'slug'  => 'accent',
+				'color' => '#14b8a6',
+			),
+			array(
+				'name'  => esc_attr__( 'Accent Bright', 'versatile' ),
+				'slug'  => 'accent-bright',
+				'color' => '#2dd4bf',
 			),
 			array(
 				'name'  => esc_attr__( 'Secondary', 'versatile' ),
 				'slug'  => 'secondary',
-				'color' => '#006ba1',
+				'color' => '#f2f7f6',
 			),
 			array(
-				'name'  => esc_attr__( 'Dark Gray', 'versatile' ),
-				'slug'  => 'dark-gray',
-				'color' => '#333333',
+				'name'  => esc_attr__( 'Dark Teal', 'versatile' ),
+				'slug'  => 'dark-teal',
+				'color' => '#0b3b39',
 			),
 			array(
-				'name'  => esc_attr__( 'Light Gray', 'versatile' ),
-				'slug'  => 'light-gray',
-				'color' => '#f8f9fa',
+				'name'  => esc_attr__( 'Text', 'versatile' ),
+				'slug'  => 'text',
+				'color' => '#1f2933',
+			),
+			array(
+				'name'  => esc_attr__( 'Text Muted', 'versatile' ),
+				'slug'  => 'text-muted',
+				'color' => '#5f6c7b',
 			),
 			array(
 				'name'  => esc_attr__( 'White', 'versatile' ),
 				'slug'  => 'white',
-				'color' => '#ffffff',
+				'color' => '#fdfdfc',
 			),
 		)
 	);

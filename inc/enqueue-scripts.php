@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function versatile_enqueue_assets() {
 	$theme_version = wp_get_theme()->get( 'Version' );
 
-	// Enqueue heading fonts (Tideline design direction).
+	// Enqueue heading fonts (Versatile design direction).
 	wp_enqueue_style(
 		'versatile-fonts',
 		'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,640&family=Newsreader:ital,opsz,wght@1,6..72,500&display=swap',

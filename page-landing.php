@@ -576,7 +576,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
 	color: white;
 	overflow: hidden;
 }
@@ -613,7 +613,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: rgba(102, 126, 234, 0.8);
+	background: rgba(15, 118, 110, 0.8);
 }
 
 .hero-content {
@@ -787,7 +787,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 
 .mockup-header {
 	height: 60px;
-	background: linear-gradient(135deg, #667eea, #764ba2);
+	background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
 	border-radius: 8px;
 	margin-bottom: 20px;
 }
@@ -885,7 +885,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: linear-gradient(145deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+	background: linear-gradient(145deg, rgba(15, 118, 110, 0.05), rgba(17, 94, 89, 0.05));
 	opacity: 0;
 	transition: opacity 0.4s ease;
 }
@@ -896,14 +896,14 @@ get_header( 'landing' ); // Custom header for landing pages.
 
 .features-grid .feature-item:hover {
 	transform: translateY(-15px) scale(1.02);
-	box-shadow: 0 25px 50px rgba(102, 126, 234, 0.15);
-	border-color: rgba(102, 126, 234, 0.3);
+	box-shadow: 0 25px 50px rgba(15, 118, 110, 0.15);
+	border-color: rgba(15, 118, 110, 0.3);
 }
 
 .feature-icon {
 	width: 90px;
 	height: 90px;
-	background: linear-gradient(135deg, #667eea, #764ba2);
+	background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -914,7 +914,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 	position: relative;
 	z-index: 1;
 	transition: all 0.4s ease;
-	box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+	box-shadow: 0 10px 30px rgba(15, 118, 110, 0.3);
 }
 
 .feature-icon::before {
@@ -924,7 +924,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 	left: -5px;
 	right: -5px;
 	bottom: -5px;
-	background: linear-gradient(135deg, #667eea, #764ba2);
+	background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
 	border-radius: 50%;
 	z-index: -1;
 	opacity: 0;
@@ -937,7 +937,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 
 .features-grid .feature-item:hover .feature-icon {
 	transform: scale(1.1) rotateY(15deg);
-	box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+	box-shadow: 0 15px 40px rgba(15, 118, 110, 0.4);
 }
 
 .feature-title {
@@ -955,7 +955,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 /* Stats Section */
 .landing-stats {
 	padding: 80px 0;
-	background: linear-gradient(135deg, #667eea, #764ba2);
+	background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
 	color: white;
 }
 
@@ -1080,7 +1080,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 }
 
 .testimonial-nav-btn {
-	background: #667eea;
+	background: var(--primary-color);
 	color: white;
 	border: none;
 	width: 40px;
@@ -1091,7 +1091,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 }
 
 .testimonial-nav-btn:hover {
-	background: #5a67d8;
+	background: var(--primary-hover);
 	transform: scale(1.1);
 }
 
@@ -1111,7 +1111,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 }
 
 .dot.active {
-	background: #667eea;
+	background: var(--primary-color);
 }
 
 /* Pricing Section */
@@ -1180,7 +1180,7 @@ get_header( 'landing' ); // Custom header for landing pages.
 }
 
 input:checked + .toggle-slider {
-	background-color: #667eea;
+	background-color: var(--primary-color);
 }
 
 input:checked + .toggle-slider:before {
@@ -1214,7 +1214,7 @@ input:checked + .toggle-slider:before {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: linear-gradient(145deg, rgba(102, 126, 234, 0.02), rgba(118, 75, 162, 0.02));
+	background: linear-gradient(145deg, rgba(15, 118, 110, 0.02), rgba(17, 94, 89, 0.02));
 	opacity: 0;
 	transition: opacity 0.4s ease;
 }
@@ -1225,16 +1225,16 @@ input:checked + .toggle-slider:before {
 
 .pricing-card:hover {
 	transform: translateY(-15px) scale(1.02);
-	box-shadow: 0 30px 60px rgba(102, 126, 234, 0.15);
-	border-color: rgba(102, 126, 234, 0.3);
+	box-shadow: 0 30px 60px rgba(15, 118, 110, 0.15);
+	border-color: rgba(15, 118, 110, 0.3);
 }
 
 .pricing-card.popular {
-	border-color: #667eea;
+	border-color: var(--primary-color);
 	transform: scale(1.08);
-	background: linear-gradient(145deg, #667eea, #764ba2);
+	background: linear-gradient(145deg, var(--primary-color), var(--primary-hover));
 	color: white;
-	box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+	box-shadow: 0 20px 40px rgba(15, 118, 110, 0.3);
 }
 
 .pricing-card.popular::before {
@@ -1243,7 +1243,7 @@ input:checked + .toggle-slider:before {
 
 .pricing-card.popular:hover {
 	transform: scale(1.08) translateY(-20px);
-	box-shadow: 0 35px 70px rgba(102, 126, 234, 0.4);
+	box-shadow: 0 35px 70px rgba(15, 118, 110, 0.4);
 }
 
 .pricing-card.popular .plan-name,
@@ -1262,7 +1262,7 @@ input:checked + .toggle-slider:before {
 	top: -1px;
 	left: 50%;
 	transform: translateX(-50%);
-	background: linear-gradient(135deg, #667eea, #764ba2);
+	background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
 	color: white;
 	padding: 8px 25px;
 	border-radius: 0 0 15px 15px;
@@ -1284,7 +1284,7 @@ input:checked + .toggle-slider:before {
 .price {
 	font-size: 3rem;
 	font-weight: 700;
-	color: #667eea;
+	color: var(--primary-color);
 }
 
 .price-period {
@@ -1382,7 +1382,7 @@ input:checked + .toggle-slider:before {
 /* CTA Section */
 .landing-cta {
 	padding: 100px 0;
-	background: linear-gradient(135deg, #667eea, #764ba2);
+	background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
 	color: white;
 }
 

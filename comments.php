@@ -304,14 +304,14 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 }
 
 .scroll-to-form {
-	color: #667eea;
+	color: var(--primary-color);
 	text-decoration: none;
 	font-weight: 600;
 	transition: color 0.3s ease;
 }
 
 .scroll-to-form:hover {
-	color: #5a67d8;
+	color: var(--primary-hover);
 	text-decoration: none;
 }
 
@@ -372,7 +372,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 
 .author-badge {
 	display: inline-block;
-	background: #667eea;
+	background: var(--primary-color);
 	color: white;
 	padding: 2px 8px;
 	border-radius: 15px;
@@ -395,7 +395,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 }
 
 .comment-date a:hover {
-	color: #667eea;
+	color: var(--primary-color);
 }
 
 .comment-awaiting-moderation {
@@ -419,7 +419,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 
 .reply-link a,
 .edit-link a {
-	color: #667eea;
+	color: var(--primary-color);
 	text-decoration: none;
 	font-size: 14px;
 	padding: 5px 10px;
@@ -429,7 +429,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 
 .reply-link a:hover,
 .edit-link a:hover {
-	background: #667eea;
+	background: var(--primary-color);
 	color: white;
 	text-decoration: none;
 }
@@ -497,7 +497,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 	margin-left: 30px;
 	margin-top: 20px;
 	background: #f8f9fa;
-	border-left: 3px solid #667eea;
+	border-left: 3px solid var(--primary-color);
 }
 
 .children .children .comment-item {
@@ -568,8 +568,8 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 .comment-form input:focus,
 .comment-form textarea:focus {
 	outline: none;
-	border-color: #667eea;
-	box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
 }
 
 .comment-form textarea {
@@ -608,7 +608,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 
 .comments-navigation a {
 	padding: 10px 20px;
-	background: #667eea;
+	background: var(--primary-color);
 	color: white;
 	text-decoration: none;
 	border-radius: 5px;
@@ -616,7 +616,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 }
 
 .comments-navigation a:hover {
-	background: #5a67d8;
+	background: var(--primary-hover);
 	text-decoration: none;
 }
 

@@ -209,7 +209,7 @@ function versatile_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'versatile_color_scheme',
 		array(
-			'default'           => 'default',
+			'default'           => 'versatile_teal',
 			'sanitize_callback' => 'versatile_sanitize_color_scheme',
 			'transport'         => 'postMessage',
 		)
@@ -546,7 +546,7 @@ function versatile_is_newsletter_enabled() {
 function versatile_get_color_schemes() {
 	return array(
 		'default' => array(
-			'label'  => esc_html__( 'Ocean Blue (Default)', 'versatile' ),
+			'label'  => esc_html__( 'Ocean Blue', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#2563eb',
 				'primary_hover' => '#1d4ed8',
@@ -599,13 +599,22 @@ function versatile_get_color_schemes() {
 				'accent'        => '#6b7280',
 			),
 		),
-		'teal'    => array(
+		'teal'     => array(
 			'label'  => esc_html__( 'Modern Teal', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#0d9488',
 				'primary_hover' => '#0f766e',
 				'secondary'     => '#f0fdfa',
 				'accent'        => '#14b8a6',
+			),
+		),
+		'versatile_teal' => array(
+			'label'  => esc_html__( 'Versatile (Teal)', 'versatile' ),
+			'colors' => array(
+				'primary'       => '#0f766e',
+				'primary_hover' => '#115e59',
+				'secondary'     => '#f2f7f6',
+				'accent'        => '#2dd4bf',
 			),
 		),
 		'rose'    => array(
@@ -646,7 +655,7 @@ function versatile_sanitize_color_scheme( $input ) {
  * @return bool The custom color scheme value.
  */
 function versatile_is_custom_color_scheme() {
-	return 'custom' === get_theme_mod( 'versatile_color_scheme', 'default' );
+	return 'custom' === get_theme_mod( 'versatile_color_scheme', 'versatile_teal' );
 }
 
 /**
@@ -656,18 +665,18 @@ function versatile_is_custom_color_scheme() {
  */
 function versatile_get_current_color_scheme() {
 	$schemes        = versatile_get_color_schemes();
-	$current_scheme = get_theme_mod( 'versatile_color_scheme', 'default' );
+	$current_scheme = get_theme_mod( 'versatile_color_scheme', 'versatile_teal' );
 
 	if ( 'custom' === $current_scheme ) {
 		return array(
-			'primary'       => get_theme_mod( 'versatile_primary_color', '#2563eb' ),
-			'primary_hover' => versatile_adjust_color_brightness( get_theme_mod( 'versatile_primary_color', '#2563eb' ), -30 ),
-			'secondary'     => get_theme_mod( 'versatile_secondary_color', '#f8f9fa' ),
-			'accent'        => get_theme_mod( 'versatile_primary_color', '#2563eb' ),
+			'primary'       => get_theme_mod( 'versatile_primary_color', '#0f766e' ),
+			'primary_hover' => versatile_adjust_color_brightness( get_theme_mod( 'versatile_primary_color', '#0f766e' ), -30 ),
+			'secondary'     => get_theme_mod( 'versatile_secondary_color', '#f2f7f6' ),
+			'accent'        => get_theme_mod( 'versatile_primary_color', '#0f766e' ),
 		);
 	}
 
-	return isset( $schemes[ $current_scheme ] ) ? $schemes[ $current_scheme ]['colors'] : $schemes['default']['colors'];
+	return isset( $schemes[ $current_scheme ] ) ? $schemes[ $current_scheme ]['colors'] : $schemes['versatile_teal']['colors'];
 }
 
 /**

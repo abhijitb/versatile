@@ -44,6 +44,9 @@ add_action( 'after_setup_theme', 'versatile_woocommerce_setup' );
  * @return void
  */
 function versatile_woocommerce_scripts() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
 	wp_enqueue_style( 'versatile-woocommerce-style', get_template_directory_uri() . '/assets/css/src/woocommerce.css', array(), _S_VERSION );
 
 	$font_path   = WC()->plugin_url() . '/assets/fonts/';
@@ -79,8 +82,9 @@ add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
  * @return array $classes modified to include 'woocommerce-active' class.
  */
 function versatile_woocommerce_active_body_class( $classes ) {
-	$classes[] = 'woocommerce-active';
-
+	if ( class_exists( 'WooCommerce' ) ) {
+		$classes[] = 'woocommerce-active';
+	}
 	return $classes;
 }
 add_filter( 'body_class', 'versatile_woocommerce_active_body_class' );
@@ -293,6 +297,9 @@ add_filter( 'loop_shop_per_page', 'versatile_woocommerce_products_per_page' );
  * Remove WooCommerce sidebar on shop and product pages.
  */
 function versatile_remove_woocommerce_sidebar() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
 	if ( is_shop() || is_product_category() || is_product_tag() ) {
 		remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 	}

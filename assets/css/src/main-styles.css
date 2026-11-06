@@ -904,7 +904,7 @@ select:focus {
 
 .search-input-wrapper:focus-within {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.2);
 }
 
 .search-form .search-field {
@@ -1038,7 +1038,7 @@ select:focus {
     color: white;
     text-decoration: none;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(15, 118, 110, 0.3);
 }
 
 /* Post Navigation Specific Styles */

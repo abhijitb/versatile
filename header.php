@@ -220,7 +220,7 @@
 
 .nav-menu a:hover,
 #primary-menu a:hover {
-	color: #667eea;
+	color: var(--primary-color);
 }
 
 .header-actions {

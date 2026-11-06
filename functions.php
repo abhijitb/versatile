@@ -327,9 +327,9 @@ if ( ! function_exists( 'versatile_get_placeholder_image' ) ) {
 						<stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
 					</linearGradient>
 					<linearGradient id="vGradient-<?php echo esc_attr( $unique_id ); ?>" x1="0%" y1="0%" x2="100%" y2="100%">
-						<stop offset="0%" style="stop-color:#667eea;stop-opacity:0.4" />
-						<stop offset="50%" style="stop-color:#764ba2;stop-opacity:0.6" />
-						<stop offset="100%" style="stop-color:#667eea;stop-opacity:0.4" />
+						<stop offset="0%" style="stop-color:#0f766e;stop-opacity:0.4" />
+						<stop offset="50%" style="stop-color:#115e59;stop-opacity:0.6" />
+						<stop offset="100%" style="stop-color:#0f766e;stop-opacity:0.4" />
 					</linearGradient>
 					<filter id="blur-<?php echo esc_attr( $unique_id ); ?>">
 						<feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
@@ -367,7 +367,7 @@ if ( ! function_exists( 'versatile_get_placeholder_image' ) ) {
 							opacity="0.8"/>
 					
 					<!-- Central accent -->
-					<circle cx="0" cy="50" r="4" fill="#667eea" opacity="0.7"/>
+					<circle cx="0" cy="50" r="4" fill="#0f766e" opacity="0.7"/>
 				</g>
 				
 				<!-- Theme text -->
