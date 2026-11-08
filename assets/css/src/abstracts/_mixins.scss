@@ -1,10 +1,14 @@
+@use 'sass:map';
+@use 'variables' as *;
+
 // =============================================================================
 // Mixins
 // =============================================================================
 
 // Media query mixin
 @mixin media-breakpoint-up($name) {
-    $min: map-get($breakpoints, $name);
+    $min: map.get($breakpoints, $name);
+
     @if $min != 0 {
         @media (min-width: $min) {
             @content;
@@ -15,7 +19,8 @@
 }
 
 @mixin media-breakpoint-down($name) {
-    $max: map-get($breakpoints, $name) - 0.02;
+    $max: map.get($breakpoints, $name) - 0.02;
+
     @media (max-width: $max) {
         @content;
     }

@@ -17,6 +17,10 @@
  * @return void
  */
 function versatile_woocommerce_setup() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
+
 	add_theme_support(
 		'woocommerce',
 		array(
@@ -44,10 +48,20 @@ add_action( 'after_setup_theme', 'versatile_woocommerce_setup' );
  * @return void
  */
 function versatile_woocommerce_scripts() {
-	if ( ! class_exists( 'WooCommerce' ) ) {
+	if ( ! class_exists( 'WooCommerce' ) || ! function_exists( 'is_woocommerce' ) ) {
 		return;
 	}
-	wp_enqueue_style( 'versatile-woocommerce-style', get_template_directory_uri() . '/assets/css/src/woocommerce.css', array(), _S_VERSION );
+
+	if ( ! is_woocommerce() && ! is_cart() && ! is_checkout() && ! is_account_page() ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'versatile-woocommerce-style',
+		VERSATILE_THEME_URI . '/assets/css/dist/woocommerce.css',
+		array( 'versatile-main' ),
+		VERSATILE_VERSION
+	);
 
 	$font_path   = WC()->plugin_url() . '/assets/fonts/';
 	$inline_font = '@font-face {
@@ -162,6 +176,10 @@ add_action( 'woocommerce_after_main_content', 'versatile_woocommerce_wrapper_aft
  * Register WooCommerce sidebar.
  */
 function versatile_woocommerce_widgets_init() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
+
 	register_sidebar(
 		array(
 			'name'          => esc_html__( 'Shop Sidebar', 'versatile' ),

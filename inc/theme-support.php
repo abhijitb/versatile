@@ -1,6 +1,6 @@
 <?php
 /**
- * Theme support features for the Versatile theme
+ * Theme support features for the Versatile theme.
  *
  * @package Versatile
  */
@@ -11,31 +11,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Set up theme defaults and register support for various WordPress features.
+ * Set up theme defaults and register support for WordPress features.
  */
 function versatile_theme_support() {
-	// Add default posts and comments RSS feed links to head.
+	load_theme_textdomain( 'versatile', VERSATILE_THEME_DIR . '/languages' );
+
 	add_theme_support( 'automatic-feed-links' );
-
-	// Let WordPress manage the document title.
 	add_theme_support( 'title-tag' );
-
-	// Enable support for Post Thumbnails on posts and pages.
 	add_theme_support( 'post-thumbnails' );
-
-	// Add support for responsive embedded content.
 	add_theme_support( 'responsive-embeds' );
-
-	// Add support for editor styles.
-	add_theme_support( 'editor-styles' );
-
-	// Enqueue editor styles.
-	add_editor_style( 'assets/css/src/editor-style.css' );
-
-	// Add support for full and wide align images.
 	add_theme_support( 'align-wide' );
+	add_theme_support( 'wp-block-styles' );
+	add_theme_support( 'customize-selective-refresh-widgets' );
+	add_theme_support( 'custom-line-height' );
+	add_theme_support( 'custom-units' );
+	add_theme_support( 'custom-spacing' );
+	add_theme_support( 'custom-padding' );
 
-	// Add support for custom logo.
+	add_theme_support( 'editor-styles' );
+	add_editor_style( 'assets/css/dist/editor-style.css' );
+
 	add_theme_support(
 		'custom-logo',
 		array(
@@ -46,7 +41,6 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for custom header.
 	add_theme_support(
 		'custom-header',
 		array(
@@ -59,7 +53,6 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for custom background.
 	add_theme_support(
 		'custom-background',
 		array(
@@ -67,7 +60,6 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for HTML5 markup.
 	add_theme_support(
 		'html5',
 		array(
@@ -81,44 +73,36 @@ function versatile_theme_support() {
 		)
 	);
 
-	// Add support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
+	register_nav_menus(
+		array(
+			'primary' => esc_html__( 'Primary Menu', 'versatile' ),
+			'footer'  => esc_html__( 'Footer Menu', 'versatile' ),
+			'social'  => esc_html__( 'Social Links Menu', 'versatile' ),
+		)
+	);
 
-	// Add support for starter content.
 	add_theme_support(
 		'starter-content',
 		array(
-			'widgets'    => array(
+			'widgets'   => array(
 				'sidebar-1' => array(
 					'text_business_info',
 					'search',
 					'text_about',
 				),
-				'footer-1'  => array(
-					'text_about',
-				),
-				'footer-2'  => array(
-					'archives',
-				),
-				'footer-3'  => array(
-					'meta',
-				),
+				'footer-1'  => array( 'text_about' ),
+				'footer-2'  => array( 'archives' ),
+				'footer-3'  => array( 'meta' ),
 			),
-			'posts'      => array(
+			'posts'     => array(
 				'home',
 				'about',
 				'contact',
 				'blog',
 			),
-			'theme_mods' => array(
-				'panel_1' => '{{home}}',
-				'panel_2' => '{{about}}',
-				'panel_3' => '{{blog}}',
-				'panel_4' => '{{contact}}',
-			),
-			'nav_menus'  => array(
-				'top' => array(
-					'name'  => __( 'Top Menu', 'versatile' ),
+			'nav_menus' => array(
+				'primary' => array(
+					'name'  => __( 'Primary Menu', 'versatile' ),
 					'items' => array(
 						'link_home',
 						'page_about',
@@ -129,102 +113,11 @@ function versatile_theme_support() {
 			),
 		)
 	);
-
-	// Register navigation menus.
-	register_nav_menus(
-		array(
-			'primary' => esc_html__( 'Primary Menu', 'versatile' ),
-			'footer'  => esc_html__( 'Footer Menu', 'versatile' ),
-			'social'  => esc_html__( 'Social Links Menu', 'versatile' ),
-		)
-	);
-
-	// Add support for block styles.
-	add_theme_support( 'wp-block-styles' );
-
-	// Add support for editor font sizes.
-	add_theme_support(
-		'editor-font-sizes',
-		array(
-			array(
-				'name' => esc_attr__( 'Small', 'versatile' ),
-				'size' => 12,
-				'slug' => 'small',
-			),
-			array(
-				'name' => esc_attr__( 'Regular', 'versatile' ),
-				'size' => 16,
-				'slug' => 'regular',
-			),
-			array(
-				'name' => esc_attr__( 'Large', 'versatile' ),
-				'size' => 36,
-				'slug' => 'large',
-			),
-			array(
-				'name' => esc_attr__( 'Huge', 'versatile' ),
-				'size' => 50,
-				'slug' => 'huge',
-			),
-		)
-	);
-
-	// Add support for editor color palette (Versatile palette).
-	add_theme_support(
-		'editor-color-palette',
-		array(
-			array(
-				'name'  => esc_attr__( 'Primary', 'versatile' ),
-				'slug'  => 'primary',
-				'color' => '#0f766e',
-			),
-			array(
-				'name'  => esc_attr__( 'Primary Hover', 'versatile' ),
-				'slug'  => 'primary-hover',
-				'color' => '#115e59',
-			),
-			array(
-				'name'  => esc_attr__( 'Accent', 'versatile' ),
-				'slug'  => 'accent',
-				'color' => '#14b8a6',
-			),
-			array(
-				'name'  => esc_attr__( 'Accent Bright', 'versatile' ),
-				'slug'  => 'accent-bright',
-				'color' => '#2dd4bf',
-			),
-			array(
-				'name'  => esc_attr__( 'Secondary', 'versatile' ),
-				'slug'  => 'secondary',
-				'color' => '#f2f7f6',
-			),
-			array(
-				'name'  => esc_attr__( 'Dark Teal', 'versatile' ),
-				'slug'  => 'dark-teal',
-				'color' => '#0b3b39',
-			),
-			array(
-				'name'  => esc_attr__( 'Text', 'versatile' ),
-				'slug'  => 'text',
-				'color' => '#1f2933',
-			),
-			array(
-				'name'  => esc_attr__( 'Text Muted', 'versatile' ),
-				'slug'  => 'text-muted',
-				'color' => '#5f6c7b',
-			),
-			array(
-				'name'  => esc_attr__( 'White', 'versatile' ),
-				'slug'  => 'white',
-				'color' => '#fdfdfc',
-			),
-		)
-	);
 }
 add_action( 'after_setup_theme', 'versatile_theme_support' );
 
 /**
- * Set the content width in pixels, based on the theme's design and stylesheet
+ * Set the content width in pixels, based on the theme's design.
  */
 function versatile_content_width() {
 	$GLOBALS['content_width'] = apply_filters( 'versatile_content_width', 1200 );

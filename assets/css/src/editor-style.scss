@@ -1,0 +1,55 @@
+/* Block editor presentation for Versatile. */
+
+.editor-styles-wrapper {
+    --primary-color: #0f766e;
+    --primary-hover: #115e59;
+    --text-color: #1f2933;
+    --text-light: #5f6c7b;
+    --border-color: #dbe7e4;
+
+    background: #fdfdfc;
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+
+    .wp-block {
+        max-width: 1200px;
+    }
+
+    .wp-block[data-align='wide'] {
+        max-width: 1400px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--text-color);
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.2;
+    }
+
+    a {
+        color: var(--primary-color);
+
+        &:hover {
+            color: var(--primary-hover);
+        }
+    }
+
+    blockquote {
+        border-left: 3px solid var(--primary-color);
+        margin-left: 0;
+        padding-left: 1.5rem;
+    }
+
+    img {
+        height: auto;
+        max-width: 100%;
+    }
+}

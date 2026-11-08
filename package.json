@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build:css && npm run build:js",
-    "build:css": "sass assets/css/src/main.scss assets/css/dist/main.css --style compressed",
+    "build:css": "sass assets/css/src/main.scss assets/css/dist/main.css --style compressed && sass assets/css/src/editor-style.scss assets/css/dist/editor-style.css --style compressed && sass assets/css/src/store.scss assets/css/dist/woocommerce.css --style compressed",
     "build:js": "webpack --config build/webpack.config.js --mode production",
     "watch": "npm run watch:css & npm run watch:js",
-    "watch:css": "sass assets/css/src/main.scss assets/css/dist/main.css --watch --style compressed",
+    "watch:css": "sass --watch assets/css/src/main.scss:assets/css/dist/main.css assets/css/src/editor-style.scss:assets/css/dist/editor-style.css assets/css/src/store.scss:assets/css/dist/woocommerce.css --style compressed",
     "watch:js": "webpack --config build/webpack.config.js --mode development --watch",
     "dev": "npm run watch",
     "lint:css": "stylelint 'assets/css/src/**/*.scss'",
