@@ -17,6 +17,10 @@
  * @return void
  */
 function versatile_woocommerce_setup() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
+
 	add_theme_support(
 		'woocommerce',
 		array(
@@ -44,7 +48,20 @@ add_action( 'after_setup_theme', 'versatile_woocommerce_setup' );
  * @return void
  */
 function versatile_woocommerce_scripts() {
-	wp_enqueue_style( 'versatile-woocommerce-style', get_template_directory_uri() . '/assets/css/src/woocommerce.css', array(), _S_VERSION );
+	if ( ! class_exists( 'WooCommerce' ) || ! function_exists( 'is_woocommerce' ) ) {
+		return;
+	}
+
+	if ( ! is_woocommerce() && ! is_cart() && ! is_checkout() && ! is_account_page() ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'versatile-woocommerce-style',
+		VERSATILE_THEME_URI . '/assets/css/dist/woocommerce.css',
+		array( 'versatile-main' ),
+		VERSATILE_VERSION
+	);
 
 	$font_path   = WC()->plugin_url() . '/assets/fonts/';
 	$inline_font = '@font-face {
@@ -79,8 +96,9 @@ add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
  * @return array $classes modified to include 'woocommerce-active' class.
  */
 function versatile_woocommerce_active_body_class( $classes ) {
-	$classes[] = 'woocommerce-active';
-
+	if ( class_exists( 'WooCommerce' ) ) {
+		$classes[] = 'woocommerce-active';
+	}
 	return $classes;
 }
 add_filter( 'body_class', 'versatile_woocommerce_active_body_class' );
@@ -158,6 +176,10 @@ add_action( 'woocommerce_after_main_content', 'versatile_woocommerce_wrapper_aft
  * Register WooCommerce sidebar.
  */
 function versatile_woocommerce_widgets_init() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
+
 	register_sidebar(
 		array(
 			'name'          => esc_html__( 'Shop Sidebar', 'versatile' ),
@@ -293,6 +315,9 @@ add_filter( 'loop_shop_per_page', 'versatile_woocommerce_products_per_page' );
  * Remove WooCommerce sidebar on shop and product pages.
  */
 function versatile_remove_woocommerce_sidebar() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
 	if ( is_shop() || is_product_category() || is_product_tag() ) {
 		remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 	}

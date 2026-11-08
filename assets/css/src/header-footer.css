@@ -93,7 +93,7 @@
 .primary-menu a:hover,
 .primary-menu a:focus,
 .primary-menu .current-menu-item > a {
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 .primary-menu a::after {
@@ -103,7 +103,7 @@
     height: 2px;
     bottom: 0;
     left: 50%;
-    background: #667eea;
+    background: var(--primary-color);
     transition: all 0.3s ease;
     transform: translateX(-50%);
 }
@@ -176,7 +176,7 @@
 
 .search-toggle:hover {
     background: #f7fafc;
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 /* Header Cart (WooCommerce) */
@@ -197,7 +197,7 @@
 
 .cart-contents:hover {
     background: #f7fafc;
-    color: #667eea;
+    color: var(--primary-color);
     text-decoration: none;
 }
 
@@ -258,7 +258,7 @@
 }
 
 .social-link:hover {
-    background: #667eea;
+    background: var(--primary-color);
     color: white;
     text-decoration: none;
     transform: translateY(-2px);
@@ -266,19 +266,19 @@
 
 /* Header CTA */
 .header-cta .cta-button {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
     color: white;
     padding: 12px 24px;
     border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(15, 118, 110, 0.3);
     transition: all 0.3s ease;
 }
 
 .header-cta .cta-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 25px rgba(15, 118, 110, 0.4);
     color: white;
     text-decoration: none;
 }
@@ -371,7 +371,7 @@
 
 .search-overlay .search-input-wrapper:focus-within {
     border-color: var(--primary-color);
-    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 20px rgba(15, 118, 110, 0.3);
 }
 
 .search-overlay .search-field {
@@ -482,7 +482,7 @@
 }
 
 .mobile-navigation .mobile-menu a:hover {
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 .mobile-search {
@@ -532,7 +532,7 @@
 }
 
 .footer-widget-area .widget-title::after {
-    background: #667eea;
+    background: var(--primary-color);
 }
 
 .footer-widget-area ul {
@@ -553,7 +553,7 @@
 }
 
 .footer-widget-area a:hover {
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 /* Footer Info */
@@ -612,7 +612,7 @@
 }
 
 .contact-item i {
-    color: #667eea;
+    color: var(--primary-color);
     width: 16px;
 }
 
@@ -622,7 +622,7 @@
 }
 
 .contact-item a:hover {
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 /* Footer Navigation */
@@ -650,7 +650,7 @@
 }
 
 .footer-menu a:hover {
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 /* Newsletter */
@@ -686,7 +686,7 @@
 }
 
 .newsletter-submit {
-    background: #667eea;
+    background: var(--primary-color);
     color: white;
     border: none;
     padding: 12px 15px;
@@ -696,7 +696,7 @@
 }
 
 .newsletter-submit:hover {
-    background: #5a67d8;
+    background: var(--primary-hover);
 }
 
 /* Footer Social */
@@ -717,7 +717,7 @@
 }
 
 .footer-social .social-link:hover {
-    background: #667eea;
+    background: var(--primary-color);
 }
 
 /* Payment Methods */
@@ -740,7 +740,7 @@
 }
 
 .payment-icons i:hover {
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 /* Footer Bottom */
@@ -764,7 +764,7 @@
 }
 
 .footer-copyright a {
-    color: #667eea;
+    color: var(--primary-color);
     text-decoration: none;
 }
 
@@ -784,7 +784,7 @@
 }
 
 .footer-legal-menu a:hover {
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 .theme-credit {
@@ -793,7 +793,7 @@
 }
 
 .theme-credit a {
-    color: #667eea;
+    color: var(--primary-color);
     text-decoration: none;
 }
 
@@ -810,7 +810,7 @@
     border-radius: 50%;
     cursor: pointer;
     font-size: 18px;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(15, 118, 110, 0.3);
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
@@ -827,7 +827,7 @@
 .back-to-top:hover {
     background: var(--primary-color);
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 25px rgba(15, 118, 110, 0.4);
 }
 
 /* Notifications */
@@ -1063,7 +1063,7 @@ body.mobile-menu-open {
 }
 
 .skip-link:focus {
-    background: #667eea;
+    background: var(--primary-color);
     color: white;
     left: 6px;
     padding: 8px 16px;
@@ -1075,7 +1075,7 @@ body.mobile-menu-open {
 
 /* Accessibility */
 .user-is-tabbing *:focus {
-    outline: 2px solid #667eea !important;
+    outline: 2px solid var(--primary-color) !important;
     outline-offset: 2px;
 }
 

@@ -39,157 +39,6 @@ require_once VERSATILE_THEME_DIR . '/inc/customizer/customizer-setup.php';
 // Load integration files.
 require_once VERSATILE_THEME_DIR . '/inc/integrations/woocommerce.php';
 
-// Load existing functions (these can be gradually moved to appropriate inc files).
-if ( ! defined( '_S_VERSION' ) ) {
-	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.0' );
-}
-
-/**
- * Sets up theme defaults and registers support for various WordPress features.
- * Legacy function - most features now handled in inc/theme-support.php.
- */
-function versatile_legacy_setup() {
-	/*
-	 * Make theme available for translation.
-	 */
-	load_theme_textdomain( 'versatile', get_template_directory() . '/languages' );
-
-	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
-
-	/*
-	 * Let WordPress manage the document title.
-	 */
-	add_theme_support( 'title-tag' );
-
-	/*
-	 * Enable support for Post Thumbnails on posts and pages.
-	 */
-	add_theme_support( 'post-thumbnails' );
-
-	// This theme uses wp_nav_menu() in multiple locations.
-	register_nav_menus(
-		array(
-			'menu-1'            => esc_html__( 'Primary', 'versatile' ),
-			'footer-menu'       => esc_html__( 'Footer Menu', 'versatile' ),
-			'footer-legal-menu' => esc_html__( 'Footer Legal Menu', 'versatile' ),
-		)
-	);
-
-	/*
-	 * Switch default core markup for search form, comment form, and comments to output valid HTML5.
-	 */
-	add_theme_support(
-		'html5',
-		array(
-			'search-form',
-			'comment-form',
-			'comment-list',
-			'gallery',
-			'caption',
-			'style',
-			'script',
-		)
-	);
-
-	// Set up the WordPress core custom background feature.
-	add_theme_support(
-		'custom-background',
-		apply_filters(
-			'versatilecustom_background_args',
-			array(
-				'default-color' => 'ffffff',
-				'default-image' => '',
-			)
-		)
-	);
-
-	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
-
-	/**
-	 * Add support for core custom logo.
-	 */
-	add_theme_support(
-		'custom-logo',
-		array(
-			'height'      => 250,
-			'width'       => 250,
-			'flex-width'  => true,
-			'flex-height' => true,
-		)
-	);
-
-	// Add support for Block Styles.
-	add_theme_support( 'wp-block-styles' );
-
-	// Add support for full and wide align images.
-	add_theme_support( 'align-wide' );
-
-	// Add support for editor styles.
-	add_theme_support( 'editor-styles' );
-
-	// Enqueue editor styles.
-	add_editor_style( 'style-editor.css' );
-
-	// Add custom editor font sizes.
-	add_theme_support(
-		'editor-font-sizes',
-		array(
-			array(
-				'name'      => esc_html__( 'Small', 'versatile' ),
-				'shortName' => esc_html__( 'S', 'versatile' ),
-				'size'      => 14,
-				'slug'      => 'small',
-			),
-			array(
-				'name'      => esc_html__( 'Normal', 'versatile' ),
-				'shortName' => esc_html__( 'M', 'versatile' ),
-				'size'      => 16,
-				'slug'      => 'normal',
-			),
-			array(
-				'name'      => esc_html__( 'Large', 'versatile' ),
-				'shortName' => esc_html__( 'L', 'versatile' ),
-				'size'      => 24,
-				'slug'      => 'large',
-			),
-			array(
-				'name'      => esc_html__( 'Huge', 'versatile' ),
-				'shortName' => esc_html__( 'XL', 'versatile' ),
-				'size'      => 32,
-				'slug'      => 'huge',
-			),
-		)
-	);
-
-	// Add support for responsive embedded content.
-	add_theme_support( 'responsive-embeds' );
-
-	// Add support for custom line height controls.
-	add_theme_support( 'custom-line-height' );
-
-	// Add support for custom units.
-	add_theme_support( 'custom-units' );
-
-	// Remove support for custom colors.
-	add_theme_support( 'disable-custom-colors' );
-
-	// Add support for custom spacing.
-	add_theme_support( 'custom-spacing' );
-
-	// Add support for custom padding.
-	add_theme_support( 'custom-padding' );
-
-	// WooCommerce support.
-	add_theme_support( 'woocommerce' );
-	add_theme_support( 'wc-product-gallery-zoom' );
-	add_theme_support( 'wc-product-gallery-lightbox' );
-	add_theme_support( 'wc-product-gallery-slider' );
-}
-add_action( 'after_setup_theme', 'versatile_legacy_setup' );
-
 /**
  * Register widget area.
  */
@@ -222,25 +71,10 @@ function versatile_widgets_init() {
 			)
 		);
 	}
-
-	// Shop sidebar for WooCommerce.
-	if ( class_exists( 'WooCommerce' ) ) {
-		register_sidebar(
-			array(
-				'name'          => esc_html__( 'Shop Sidebar', 'versatile' ),
-				'id'            => 'sidebar-shop',
-				'description'   => esc_html__( 'Add widgets here to appear in the shop sidebar.', 'versatile' ),
-				'before_widget' => '<section id="%1$s" class="widget %2$s">',
-				'after_widget'  => '</section>',
-				'before_title'  => '<h2 class="widget-title">',
-				'after_title'   => '</h2>',
-			)
-		);
-	}
 }
 add_action( 'widgets_init', 'versatile_widgets_init' );
 
-if ( ! function_exists( 'versatilesocial_links' ) ) {
+if ( ! function_exists( 'versatile_social_links' ) ) {
 	/**
 	 * Social Links Function.
 	 *
@@ -274,14 +108,18 @@ if ( ! function_exists( 'versatilesocial_links' ) ) {
 	}
 }
 
-if ( ! function_exists( 'versatilefallback_menu' ) ) {
+if ( ! function_exists( 'versatile_fallback_menu' ) ) {
 	/**
 	 * Fallback Menu Function.
 	 *
+	 * @param array $args Navigation menu arguments.
 	 * @return void
 	 */
-	function versatile_fallback_menu() {
-		echo '<ul id="primary-menu" class="primary-menu">';
+	function versatile_fallback_menu( $args = array() ) {
+		$menu_id    = ! empty( $args['menu_id'] ) ? $args['menu_id'] : 'primary-menu';
+		$menu_class = ! empty( $args['menu_class'] ) ? $args['menu_class'] : 'primary-menu';
+
+		echo '<ul id="' . esc_attr( $menu_id ) . '" class="' . esc_attr( $menu_class ) . '">';
 		echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'Home', 'versatile' ) . '</a></li>';
 
 		// Add some default pages.
@@ -327,9 +165,9 @@ if ( ! function_exists( 'versatile_get_placeholder_image' ) ) {
 						<stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
 					</linearGradient>
 					<linearGradient id="vGradient-<?php echo esc_attr( $unique_id ); ?>" x1="0%" y1="0%" x2="100%" y2="100%">
-						<stop offset="0%" style="stop-color:#667eea;stop-opacity:0.4" />
-						<stop offset="50%" style="stop-color:#764ba2;stop-opacity:0.6" />
-						<stop offset="100%" style="stop-color:#667eea;stop-opacity:0.4" />
+						<stop offset="0%" style="stop-color:#0f766e;stop-opacity:0.4" />
+						<stop offset="50%" style="stop-color:#115e59;stop-opacity:0.6" />
+						<stop offset="100%" style="stop-color:#0f766e;stop-opacity:0.4" />
 					</linearGradient>
 					<filter id="blur-<?php echo esc_attr( $unique_id ); ?>">
 						<feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
@@ -367,7 +205,7 @@ if ( ! function_exists( 'versatile_get_placeholder_image' ) ) {
 							opacity="0.8"/>
 					
 					<!-- Central accent -->
-					<circle cx="0" cy="50" r="4" fill="#667eea" opacity="0.7"/>
+					<circle cx="0" cy="50" r="4" fill="#0f766e" opacity="0.7"/>
 				</g>
 				
 				<!-- Theme text -->
@@ -794,36 +632,12 @@ if ( ! function_exists( 'versatile_get_small_post_image' ) ) {
 }
 
 /**
- * Detect site type and apply appropriate settings.
- *
- * @return string
- */
-function versatile_detect_site_type() {
-	$site_type = 'personal'; // default.
-
-	// Check for WooCommerce.
-	if ( class_exists( 'WooCommerce' ) ) {
-		$site_type = 'ecommerce';
-	} elseif ( 'page' === get_option( 'show_on_front' ) && get_option( 'page_on_front' ) ) { // Check for business indicators.
-		$site_type = 'business';
-	} elseif ( 'posts' === get_option( 'show_on_front' ) ) { // Check for blog.
-		$site_type = 'blog';
-	}
-
-	return apply_filters( 'versatilesite_type', $site_type );
-}
-
-/**
- * Add body classes based on site type.
+ * Add a body class for the active sidebar state.
  *
  * @param array $classes Classes for the body element.
  * @return array
  */
 function versatile_body_classes( $classes ) {
-	$site_type = versatile_detect_site_type();
-	$classes[] = 'site-type-' . $site_type;
-
-	// Add class for sidebar.
 	if ( is_active_sidebar( 'sidebar-1' ) && ! is_page_template( 'page-landing.php' ) ) {
 		$classes[] = 'has-sidebar';
 	} else {
@@ -837,22 +651,20 @@ add_filter( 'body_class', 'versatile_body_classes' );
 /**
  * Custom excerpt length.
  *
- * @param int $length Excerpt length.
  * @return int
  */
-function versatile_excerpt_length( $length ) {
-	return $length ?? 25;
+function versatile_excerpt_length() {
+	return 25;
 }
 add_filter( 'excerpt_length', 'versatile_excerpt_length', 999 );
 
 /**
  * Custom excerpt more string.
  *
- * @param string $more Excerpt more string.
  * @return string
  */
-function versatile_excerpt_more( $more ) {
-	return $more ?? '...';
+function versatile_excerpt_more() {
+	return '&hellip;';
 }
 add_filter( 'excerpt_more', 'versatile_excerpt_more' );
 

@@ -20,14 +20,14 @@ function versatile_customize_register( $wp_customize ) {
 			'blogname',
 			array(
 				'selector'        => '.site-title a',
-				'render_callback' => 'versatilecustomize_partial_blogname',
+				'render_callback' => 'versatile_customize_partial_blogname',
 			)
 		);
 		$wp_customize->selective_refresh->add_partial(
 			'blogdescription',
 			array(
 				'selector'        => '.site-description',
-				'render_callback' => 'versatilecustomize_partial_blogdescription',
+				'render_callback' => 'versatile_customize_partial_blogdescription',
 			)
 		);
 
@@ -36,7 +36,7 @@ function versatile_customize_register( $wp_customize ) {
 			'versatile_color_scheme_css',
 			array(
 				'selector'            => '#versatile-color-scheme',
-				'render_callback'     => 'versatilecustomize_partial_css',
+				'render_callback'     => 'versatile_customize_partial_css',
 				'container_inclusive' => true,
 			)
 		);
@@ -209,7 +209,7 @@ function versatile_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'versatile_color_scheme',
 		array(
-			'default'           => 'default',
+			'default'           => 'versatile_teal',
 			'sanitize_callback' => 'versatile_sanitize_color_scheme',
 			'transport'         => 'postMessage',
 		)
@@ -236,7 +236,7 @@ function versatile_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'versatile_primary_color',
 		array(
-			'default'           => '#007cba',
+			'default'           => '#0f766e',
 			'sanitize_callback' => 'sanitize_hex_color',
 			'transport'         => 'postMessage',
 		)
@@ -258,7 +258,7 @@ function versatile_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'versatile_secondary_color',
 		array(
-			'default'           => '#f8f9fa',
+			'default'           => '#f2f7f6',
 			'sanitize_callback' => 'sanitize_hex_color',
 			'transport'         => 'postMessage',
 		)
@@ -324,7 +324,7 @@ function versatile_customize_register( $wp_customize ) {
 		'versatile_social_links_header',
 		array(
 			'default'           => false,
-			'sanitize_callback' => 'versatilesanitize_checkbox',
+			'sanitize_callback' => 'versatile_sanitize_checkbox',
 		)
 	);
 	$wp_customize->add_control(
@@ -367,7 +367,7 @@ function versatile_customize_register( $wp_customize ) {
 		'versatile_show_theme_credit',
 		array(
 			'default'           => true,
-			'sanitize_callback' => 'versatilesanitize_checkbox',
+			'sanitize_callback' => 'versatile_sanitize_checkbox',
 		)
 	);
 	$wp_customize->add_control(
@@ -376,59 +376,6 @@ function versatile_customize_register( $wp_customize ) {
 			'label'   => esc_html__( 'Show Theme Credit', 'versatile' ),
 			'section' => 'versatile_footer_options',
 			'type'    => 'checkbox',
-		)
-	);
-
-	// Newsletter Section.
-	$wp_customize->add_setting(
-		'versatile_newsletter_enable',
-		array(
-			'default'           => false,
-			'sanitize_callback' => 'versatilesanitize_checkbox',
-		)
-	);
-	$wp_customize->add_control(
-		'versatile_newsletter_enable',
-		array(
-			'label'   => esc_html__( 'Enable Newsletter Signup', 'versatile' ),
-			'section' => 'versatile_footer_options',
-			'type'    => 'checkbox',
-		)
-	);
-
-	// Newsletter Title.
-	$wp_customize->add_setting(
-		'versatile_newsletter_title',
-		array(
-			'default'           => esc_html__( 'Subscribe to Newsletter', 'versatile' ),
-			'sanitize_callback' => 'sanitize_text_field',
-		)
-	);
-	$wp_customize->add_control(
-		'versatile_newsletter_title',
-		array(
-			'label'           => esc_html__( 'Newsletter Title', 'versatile' ),
-			'section'         => 'versatile_footer_options',
-			'type'            => 'text',
-			'active_callback' => 'versatile_is_newsletter_enabled',
-		)
-	);
-
-	// Newsletter Description.
-	$wp_customize->add_setting(
-		'versatile_newsletter_description',
-		array(
-			'default'           => esc_html__( 'Get the latest updates and news.', 'versatile' ),
-			'sanitize_callback' => 'sanitize_textarea_field',
-		)
-	);
-	$wp_customize->add_control(
-		'versatile_newsletter_description',
-		array(
-			'label'           => esc_html__( 'Newsletter Description', 'versatile' ),
-			'section'         => 'versatile_footer_options',
-			'type'            => 'textarea',
-			'active_callback' => 'versatile_is_newsletter_enabled',
 		)
 	);
 
@@ -444,38 +391,10 @@ function versatile_customize_register( $wp_customize ) {
 		'versatile_social_links_mobile',
 		array(
 			'label'   => esc_html__( 'Show Social Links in Mobile Menu', 'versatile' ),
-			'section' => 'versatile_footer_options',
+			'section' => 'versatile_header_options',
 			'type'    => 'checkbox',
 		)
 	);
-
-	// WooCommerce Options (if WooCommerce is active).
-	if ( class_exists( 'WooCommerce' ) ) {
-		$wp_customize->add_section(
-			'versatile_woocommerce_options',
-			array(
-				'title'    => esc_html__( 'WooCommerce Options', 'versatile' ),
-				'priority' => 50,
-			)
-		);
-
-		// Show Payment Methods.
-		$wp_customize->add_setting(
-			'versatile_payment_methods',
-			array(
-				'default'           => false,
-				'sanitize_callback' => 'versatilesanitize_checkbox',
-			)
-		);
-		$wp_customize->add_control(
-			'versatile_payment_methods',
-			array(
-				'label'   => esc_html__( 'Show Payment Methods in Footer', 'versatile' ),
-				'section' => 'versatile_woocommerce_options',
-				'type'    => 'checkbox',
-			)
-		);
-	}
 }
 add_action( 'customize_register', 'versatile_customize_register' );
 
@@ -511,10 +430,9 @@ function versatile_customize_partial_css() {
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function versatile_customize_preview_js() {
-	// Only enqueue if the file exists.
-	$customizer_js_path = get_template_directory() . '/assets/js/src/customizer.js';
+	$customizer_js_path = VERSATILE_THEME_DIR . '/assets/js/dist/customizer.js';
 	if ( file_exists( $customizer_js_path ) ) {
-		wp_enqueue_script( 'versatile-customizer', get_template_directory_uri() . '/assets/js/src/customizer.js', array( 'customize-preview' ), _S_VERSION, true );
+		wp_enqueue_script( 'versatile-customizer', VERSATILE_THEME_URI . '/assets/js/dist/customizer.js', array( 'customize-preview' ), VERSATILE_VERSION, true );
 	}
 }
 add_action( 'customize_preview_init', 'versatile_customize_preview_js' );
@@ -522,20 +440,11 @@ add_action( 'customize_preview_init', 'versatile_customize_preview_js' );
 /**
  * Sanitize checkbox values.
  *
- * @param bool $checked The checkbox value.
+ * @param mixed $checked The checkbox value.
  * @return bool The sanitized checkbox value.
  */
 function versatile_sanitize_checkbox( $checked ) {
-	return ( ( isset( $checked ) && true === $checked ) ? true : false );
-}
-
-/**
- * Active callback for newsletter settings.
- *
- * @return bool The newsletter enabled value.
- */
-function versatile_is_newsletter_enabled() {
-	return get_theme_mod( 'versatile_newsletter_enable', false );
+	return in_array( $checked, array( true, 1, '1', 'true', 'on' ), true );
 }
 
 /**
@@ -545,8 +454,8 @@ function versatile_is_newsletter_enabled() {
  */
 function versatile_get_color_schemes() {
 	return array(
-		'default' => array(
-			'label'  => esc_html__( 'Ocean Blue (Default)', 'versatile' ),
+		'default'        => array(
+			'label'  => esc_html__( 'Ocean Blue', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#2563eb',
 				'primary_hover' => '#1d4ed8',
@@ -554,7 +463,7 @@ function versatile_get_color_schemes() {
 				'accent'        => '#3b82f6',
 			),
 		),
-		'emerald' => array(
+		'emerald'        => array(
 			'label'  => esc_html__( 'Emerald Green', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#059669',
@@ -563,7 +472,7 @@ function versatile_get_color_schemes() {
 				'accent'        => '#10b981',
 			),
 		),
-		'sunset'  => array(
+		'sunset'         => array(
 			'label'  => esc_html__( 'Sunset Orange', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#ea580c',
@@ -572,7 +481,7 @@ function versatile_get_color_schemes() {
 				'accent'        => '#fb923c',
 			),
 		),
-		'royal'   => array(
+		'royal'          => array(
 			'label'  => esc_html__( 'Royal Purple', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#7c3aed',
@@ -581,7 +490,7 @@ function versatile_get_color_schemes() {
 				'accent'        => '#8b5cf6',
 			),
 		),
-		'crimson' => array(
+		'crimson'        => array(
 			'label'  => esc_html__( 'Crimson Red', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#dc2626',
@@ -590,7 +499,7 @@ function versatile_get_color_schemes() {
 				'accent'        => '#ef4444',
 			),
 		),
-		'slate'   => array(
+		'slate'          => array(
 			'label'  => esc_html__( 'Slate Gray', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#374151',
@@ -599,7 +508,7 @@ function versatile_get_color_schemes() {
 				'accent'        => '#6b7280',
 			),
 		),
-		'teal'    => array(
+		'teal'           => array(
 			'label'  => esc_html__( 'Modern Teal', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#0d9488',
@@ -608,7 +517,16 @@ function versatile_get_color_schemes() {
 				'accent'        => '#14b8a6',
 			),
 		),
-		'rose'    => array(
+		'versatile_teal' => array(
+			'label'  => esc_html__( 'Versatile (Teal)', 'versatile' ),
+			'colors' => array(
+				'primary'       => '#0f766e',
+				'primary_hover' => '#115e59',
+				'secondary'     => '#f2f7f6',
+				'accent'        => '#2dd4bf',
+			),
+		),
+		'rose'           => array(
 			'label'  => esc_html__( 'Rose Pink', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#e11d48',
@@ -617,7 +535,7 @@ function versatile_get_color_schemes() {
 				'accent'        => '#f43f5e',
 			),
 		),
-		'custom'  => array(
+		'custom'         => array(
 			'label'  => esc_html__( 'Custom Colors', 'versatile' ),
 			'colors' => array(
 				'primary'       => '#2563eb',
@@ -637,7 +555,7 @@ function versatile_get_color_schemes() {
  */
 function versatile_sanitize_color_scheme( $input ) {
 	$valid_schemes = array_keys( versatile_get_color_schemes() );
-	return in_array( $input, $valid_schemes, true ) ? $input : 'default';
+	return in_array( $input, $valid_schemes, true ) ? $input : 'versatile_teal';
 }
 
 /**
@@ -646,7 +564,7 @@ function versatile_sanitize_color_scheme( $input ) {
  * @return bool The custom color scheme value.
  */
 function versatile_is_custom_color_scheme() {
-	return 'custom' === get_theme_mod( 'versatile_color_scheme', 'default' );
+	return 'custom' === get_theme_mod( 'versatile_color_scheme', 'versatile_teal' );
 }
 
 /**
@@ -656,18 +574,18 @@ function versatile_is_custom_color_scheme() {
  */
 function versatile_get_current_color_scheme() {
 	$schemes        = versatile_get_color_schemes();
-	$current_scheme = get_theme_mod( 'versatile_color_scheme', 'default' );
+	$current_scheme = get_theme_mod( 'versatile_color_scheme', 'versatile_teal' );
 
 	if ( 'custom' === $current_scheme ) {
 		return array(
-			'primary'       => get_theme_mod( 'versatile_primary_color', '#2563eb' ),
-			'primary_hover' => versatile_adjust_color_brightness( get_theme_mod( 'versatile_primary_color', '#2563eb' ), -30 ),
-			'secondary'     => get_theme_mod( 'versatile_secondary_color', '#f8f9fa' ),
-			'accent'        => get_theme_mod( 'versatile_primary_color', '#2563eb' ),
+			'primary'       => get_theme_mod( 'versatile_primary_color', '#0f766e' ),
+			'primary_hover' => versatile_adjust_color_brightness( get_theme_mod( 'versatile_primary_color', '#0f766e' ), -30 ),
+			'secondary'     => get_theme_mod( 'versatile_secondary_color', '#f2f7f6' ),
+			'accent'        => get_theme_mod( 'versatile_primary_color', '#0f766e' ),
 		);
 	}
 
-	return isset( $schemes[ $current_scheme ] ) ? $schemes[ $current_scheme ]['colors'] : $schemes['default']['colors'];
+	return isset( $schemes[ $current_scheme ] ) ? $schemes[ $current_scheme ]['colors'] : $schemes['versatile_teal']['colors'];
 }
 
 /**

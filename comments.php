@@ -6,6 +6,144 @@
  * @package Versatile
  */
 
+// Custom comment callback function.
+if ( ! function_exists( 'versatile_comment_callback' ) ) {
+	/**
+	 * Custom comment callback function.
+	 *
+	 * @param WP_Comment $comment The comment object.
+	 * @param array      $args    The arguments array.
+	 * @param int        $depth   The depth of the comment.
+	 */
+	function versatile_comment_callback( $comment, $args, $depth ) {
+		// Extract specific arguments we need.
+		$style       = isset( $args['style'] ) ? $args['style'] : 'ul';
+		$avatar_size = isset( $args['avatar_size'] ) ? $args['avatar_size'] : 32;
+		$max_depth   = isset( $args['max_depth'] ) ? $args['max_depth'] : 5;
+
+		if ( 'div' === $style ) {
+			$tag       = 'div';
+			$add_below = 'comment';
+		} else {
+			$tag       = 'li';
+			$add_below = 'div-comment';
+		}
+		?>
+		
+		<<?php echo esc_html( $tag ); ?> <?php comment_class( 'comment-item' ); ?> id="comment-<?php comment_ID(); ?>">
+			
+			<div class="comment-body" id="div-comment-<?php comment_ID(); ?>">
+				
+				<div class="comment-avatar">
+					<?php echo wp_kses_post( get_avatar( $comment, $avatar_size ) ); ?>
+				</div>
+				
+				<div class="comment-content">
+					
+					<div class="comment-header">
+						<div class="comment-author-info">
+							<h4 class="comment-author">
+								<?php
+								// translators: %s is the comment author link.
+								printf( '<cite class="fn">%s</cite>', wp_kses_post( get_comment_author_link( $comment ) ) );
+								?>
+								<?php if ( get_the_author_meta( 'ID' ) === $comment->user_id ) : ?>
+									<span class="author-badge">
+										<i class="fas fa-crown"></i>
+										<?php esc_html_e( 'Author', 'versatile' ); ?>
+									</span>
+								<?php endif; ?>
+							</h4>
+							
+							<div class="comment-meta">
+								<time class="comment-date" datetime="<?php comment_time( 'c' ); ?>">
+									<i class="fas fa-clock"></i>
+									<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
+										<?php
+										printf(
+											// translators: %1$s is the comment date, %2$s is the comment time.
+											esc_html__( '%1$s at %2$s', 'versatile' ),
+											esc_html( get_comment_date() ),
+											esc_html( get_comment_time() )
+										);
+										?>
+									</a>
+								</time>
+								
+								<?php if ( '0' === $comment->comment_approved ) : ?>
+									<span class="comment-awaiting-moderation">
+										<i class="fas fa-hourglass-half"></i>
+										<?php esc_html_e( 'Your comment is awaiting moderation.', 'versatile' ); ?>
+									</span>
+								<?php endif; ?>
+							</div>
+						</div>
+						
+						<div class="comment-actions">
+							<?php
+							comment_reply_link(
+								array_merge(
+									$args,
+									array(
+										'add_below'  => $add_below,
+										'depth'      => $depth,
+										'max_depth'  => $max_depth,
+										'before'     => '<div class="reply-link">',
+										'after'      => '</div>',
+										'reply_text' => '<i class="fas fa-reply"></i> ' . esc_html__( 'Reply', 'versatile' ),
+									)
+								)
+							);
+							?>
+							
+							<?php if ( current_user_can( 'edit_comment', $comment->comment_ID ) ) : ?>
+								<div class="edit-link">
+									<a href="<?php echo esc_url( get_edit_comment_link() ); ?>">
+										<i class="fas fa-edit"></i>
+										<?php esc_html_e( 'Edit', 'versatile' ); ?>
+									</a>
+								</div>
+							<?php endif; ?>
+						</div>
+					</div>
+					
+					<div class="comment-text">
+						<?php comment_text(); ?>
+					</div>
+					
+					<!-- Comment Rating (if using a plugin) -->
+					<?php if ( function_exists( 'the_ratings' ) && get_post_type() === 'product' ) : ?>
+						<div class="comment-rating">
+							<?php the_ratings(); ?>
+						</div>
+					<?php endif; ?>
+					
+					<!-- Comment Likes (optional feature) -->
+					<div class="comment-footer">
+						<div class="comment-likes" data-comment-id="<?php comment_ID(); ?>">
+							<button class="like-btn" onclick="toggleCommentLike(<?php comment_ID(); ?>)">
+								<i class="far fa-heart"></i>
+								<span class="like-count">0</span>
+							</button>
+						</div>
+						
+						<div class="comment-share">
+							<button class="share-btn" onclick="shareComment(<?php comment_ID(); ?>)">
+								<i class="fas fa-share"></i>
+								<?php esc_html_e( 'Share', 'versatile' ); ?>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<?php if ( 'div' !== $style ) : ?>
+				</li>
+				<?php
+			endif;
+	}
+}
+
 if ( post_password_required() ) {
 	return;
 }
@@ -13,7 +151,7 @@ if ( post_password_required() ) {
 
 <section id="comments" class="comments-section">
 	<div class="comments-wrapper">
-		
+
 		<?php if ( have_comments() ) : ?>
 			<div class="comments-header">
 				<h3 class="comments-title">
@@ -31,7 +169,7 @@ if ( post_password_required() ) {
 					}
 					?>
 				</h3>
-				
+
 				<div class="comments-meta">
 					<span class="comments-count"><?php echo esc_html( get_comments_number() ); ?> <?php echo esc_html( _n( 'response', 'responses', get_comments_number(), 'versatile' ) ); ?></span>
 					<?php if ( comments_open() ) : ?>
@@ -129,146 +267,6 @@ if ( post_password_required() ) {
 	</div>
 </section>
 
-<?php
-// Custom comment callback function.
-if ( ! function_exists( 'versatile_comment_callback' ) ) {
-	/**
-	 * Custom comment callback function.
-	 *
-	 * @param WP_Comment $comment The comment object.
-	 * @param array      $args    The arguments array.
-	 * @param int        $depth   The depth of the comment.
-	 */
-	function versatile_comment_callback( $comment, $args, $depth ) {
-		// Extract specific arguments we need.
-		$style       = isset( $args['style'] ) ? $args['style'] : 'ul';
-		$avatar_size = isset( $args['avatar_size'] ) ? $args['avatar_size'] : 32;
-		$max_depth   = isset( $args['max_depth'] ) ? $args['max_depth'] : 5;
-
-		if ( 'div' === $style ) {
-			$tag       = 'div';
-			$add_below = 'comment';
-		} else {
-			$tag       = 'li';
-			$add_below = 'div-comment';
-		}
-		?>
-		
-		<<?php echo esc_html( $tag ); ?> <?php comment_class( 'comment-item' ); ?> id="comment-<?php comment_ID(); ?>">
-			
-			<div class="comment-body" id="div-comment-<?php comment_ID(); ?>">
-				
-				<div class="comment-avatar">
-					<?php echo esc_html( get_avatar( $comment, $avatar_size ) ); ?>
-				</div>
-				
-				<div class="comment-content">
-					
-					<div class="comment-header">
-						<div class="comment-author-info">
-							<h4 class="comment-author">
-								<?php
-								// translators: %s is the comment author link.
-								printf( '<cite class="fn">%s</cite>', esc_html( get_comment_author_link() ) );
-								?>
-								<?php if ( get_the_author_meta( 'ID' ) === $comment->user_id ) : ?>
-									<span class="author-badge">
-										<i class="fas fa-crown"></i>
-										<?php esc_html_e( 'Author', 'versatile' ); ?>
-									</span>
-								<?php endif; ?>
-							</h4>
-							
-							<div class="comment-meta">
-								<time class="comment-date" datetime="<?php comment_time( 'c' ); ?>">
-									<i class="fas fa-clock"></i>
-									<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
-										<?php
-										printf(
-											// translators: %1$s is the comment date, %2$s is the comment time.
-											esc_html__( '%1$s at %2$s', 'versatile' ),
-											esc_html( get_comment_date() ),
-											esc_html( get_comment_time() )
-										);
-										?>
-									</a>
-								</time>
-								
-								<?php if ( '0' === $comment->comment_approved ) : ?>
-									<span class="comment-awaiting-moderation">
-										<i class="fas fa-hourglass-half"></i>
-										<?php esc_html_e( 'Your comment is awaiting moderation.', 'versatile' ); ?>
-									</span>
-								<?php endif; ?>
-							</div>
-						</div>
-						
-						<div class="comment-actions">
-							<?php
-							comment_reply_link(
-								array_merge(
-									$args,
-									array(
-										'add_below'  => $add_below,
-										'depth'      => $depth,
-										'max_depth'  => $max_depth,
-										'before'     => '<div class="reply-link">',
-										'after'      => '</div>',
-										'reply_text' => '<i class="fas fa-reply"></i> ' . esc_html__( 'Reply', 'versatile' ),
-									)
-								)
-							);
-							?>
-							
-							<?php if ( current_user_can( 'edit_comment', $comment->comment_ID ) ) : ?>
-								<div class="edit-link">
-									<a href="<?php echo esc_url( get_edit_comment_link() ); ?>">
-										<i class="fas fa-edit"></i>
-										<?php esc_html_e( 'Edit', 'versatile' ); ?>
-									</a>
-								</div>
-							<?php endif; ?>
-						</div>
-					</div>
-					
-					<div class="comment-text">
-						<?php esc_html( comment_text() ); ?>
-					</div>
-					
-					<!-- Comment Rating (if using a plugin) -->
-					<?php if ( function_exists( 'the_ratings' ) && get_post_type() === 'product' ) : ?>
-						<div class="comment-rating">
-							<?php esc_html( the_ratings() ); ?>
-						</div>
-					<?php endif; ?>
-					
-					<!-- Comment Likes (optional feature) -->
-					<div class="comment-footer">
-						<div class="comment-likes" data-comment-id="<?php comment_ID(); ?>">
-							<button class="like-btn" onclick="toggleCommentLike(<?php comment_ID(); ?>)">
-								<i class="far fa-heart"></i>
-								<span class="like-count">0</span>
-							</button>
-						</div>
-						
-						<div class="comment-share">
-							<button class="share-btn" onclick="shareComment(<?php comment_ID(); ?>)">
-								<i class="fas fa-share"></i>
-								<?php esc_html_e( 'Share', 'versatile' ); ?>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<?php if ( 'div' !== $style ) : ?>
-				</li>
-				<?php
-			endif;
-	}
-}
-?>
-
 <style>
 /* Comments Section Styles */
 .comments-section {
@@ -304,14 +302,14 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 }
 
 .scroll-to-form {
-	color: #667eea;
+	color: var(--primary-color);
 	text-decoration: none;
 	font-weight: 600;
 	transition: color 0.3s ease;
 }
 
 .scroll-to-form:hover {
-	color: #5a67d8;
+	color: var(--primary-hover);
 	text-decoration: none;
 }
 
@@ -372,7 +370,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 
 .author-badge {
 	display: inline-block;
-	background: #667eea;
+	background: var(--primary-color);
 	color: white;
 	padding: 2px 8px;
 	border-radius: 15px;
@@ -395,7 +393,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 }
 
 .comment-date a:hover {
-	color: #667eea;
+	color: var(--primary-color);
 }
 
 .comment-awaiting-moderation {
@@ -419,7 +417,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 
 .reply-link a,
 .edit-link a {
-	color: #667eea;
+	color: var(--primary-color);
 	text-decoration: none;
 	font-size: 14px;
 	padding: 5px 10px;
@@ -429,7 +427,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 
 .reply-link a:hover,
 .edit-link a:hover {
-	background: #667eea;
+	background: var(--primary-color);
 	color: white;
 	text-decoration: none;
 }
@@ -497,7 +495,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 	margin-left: 30px;
 	margin-top: 20px;
 	background: #f8f9fa;
-	border-left: 3px solid #667eea;
+	border-left: 3px solid var(--primary-color);
 }
 
 .children .children .comment-item {
@@ -568,8 +566,8 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 .comment-form input:focus,
 .comment-form textarea:focus {
 	outline: none;
-	border-color: #667eea;
-	box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
 }
 
 .comment-form textarea {
@@ -608,7 +606,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 
 .comments-navigation a {
 	padding: 10px 20px;
-	background: #667eea;
+	background: var(--primary-color);
 	color: white;
 	text-decoration: none;
 	border-radius: 5px;
@@ -616,7 +614,7 @@ if ( ! function_exists( 'versatile_comment_callback' ) ) {
 }
 
 .comments-navigation a:hover {
-	background: #5a67d8;
+	background: var(--primary-hover);
 	text-decoration: none;
 }
 

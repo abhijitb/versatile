@@ -16,12 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 function versatile_enqueue_assets() {
 	$theme_version = wp_get_theme()->get( 'Version' );
 
-	// Enqueue heading fonts (Tideline design direction).
+	// Enqueue heading fonts (Versatile design direction).
 	wp_enqueue_style(
 		'versatile-fonts',
 		'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,640&family=Newsreader:ital,opsz,wght@1,6..72,500&display=swap',
 		array(),
-		null
+		$theme_version
 	);
 
 	// Enqueue Font Awesome.
@@ -40,71 +40,20 @@ function versatile_enqueue_assets() {
 		$theme_version
 	);
 
-	// Enqueue compiled CSS if exists, otherwise fallback to individual files.
-	$main_css_path = get_template_directory() . '/assets/css/dist/main.css';
-	if ( file_exists( $main_css_path ) ) {
-		wp_enqueue_style(
-			'versatile-main',
-			get_template_directory_uri() . '/assets/css/dist/main.css',
-			array( 'versatile-style' ),
-			$theme_version
-		);
-	} else {
-		// Fallback to individual CSS files.
-		$css_files = array(
-			'main-styles',
-			'header-footer',
-			'sidebar',
-			'archive',
-			'author',
-			'search',
-			'woocommerce',
-		);
+	wp_enqueue_style(
+		'versatile-main',
+		VERSATILE_THEME_URI . '/assets/css/dist/main.css',
+		array( 'versatile-style', 'versatile-fonts' ),
+		$theme_version
+	);
 
-		foreach ( $css_files as $css_file ) {
-			$css_path = get_template_directory() . '/assets/css/src/' . $css_file . '.css';
-			if ( file_exists( $css_path ) ) {
-				wp_enqueue_style(
-					'versatile-' . $css_file,
-					get_template_directory_uri() . '/assets/css/src/' . $css_file . '.css',
-					array( 'versatile-style' ),
-					$theme_version
-				);
-			}
-		}
-	}
-
-	// Enqueue compiled JS if exists, otherwise fallback to individual files.
-	$main_js_path = get_template_directory() . '/assets/js/dist/main.js';
-	if ( file_exists( $main_js_path ) ) {
-		wp_enqueue_script(
-			'versatile-main',
-			get_template_directory_uri() . '/assets/js/dist/main.js',
-			array( 'jquery' ),
-			$theme_version,
-			true
-		);
-	} else {
-		// Fallback to individual JS files.
-		$js_files = array(
-			'main',
-			'archive-view-toggle',
-			'author-filter',
-		);
-
-		foreach ( $js_files as $js_file ) {
-			$js_path = get_template_directory() . '/assets/js/src/' . $js_file . '.js';
-			if ( file_exists( $js_path ) ) {
-				wp_enqueue_script(
-					'versatile-' . $js_file,
-					get_template_directory_uri() . '/assets/js/src/' . $js_file . '.js',
-					array( 'jquery' ),
-					$theme_version,
-					true
-				);
-			}
-		}
-	}
+	wp_enqueue_script(
+		'versatile-main',
+		VERSATILE_THEME_URI . '/assets/js/dist/main.js',
+		array( 'jquery' ),
+		$theme_version,
+		true
+	);
 
 	// Enqueue comment reply script on single posts.
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

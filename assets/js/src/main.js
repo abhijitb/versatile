@@ -1,3 +1,6 @@
+import './archive-view-toggle';
+import './author-filter';
+
 /**
  * Main JavaScript file for Versatile theme
  */
@@ -17,7 +20,8 @@
             // Open search overlay
             searchToggle.on('click', function(e) {
                 e.preventDefault();
-                searchOverlay.addClass('active');
+                searchOverlay.addClass('active').attr('aria-hidden', 'false');
+                searchToggle.attr('aria-expanded', 'true');
                 $('body').addClass('search-open');
                 
                 // Focus on search field after animation
@@ -47,7 +51,8 @@
             });
             
             function closeSearchOverlay() {
-                searchOverlay.removeClass('active');
+                searchOverlay.removeClass('active').attr('aria-hidden', 'true');
+                searchToggle.attr('aria-expanded', 'false').focus();
                 $('body').removeClass('search-open');
                 searchField.val('');
             }
@@ -62,7 +67,7 @@
             // Open mobile menu
             menuToggle.on('click', function(e) {
                 e.preventDefault();
-                mobileOverlay.addClass('active');
+                mobileOverlay.addClass('active').attr('aria-hidden', 'false');
                 $('body').addClass('mobile-menu-open');
                 $(this).attr('aria-expanded', 'true');
             });
@@ -88,9 +93,9 @@
             });
             
             function closeMobileMenu() {
-                mobileOverlay.removeClass('active');
+                mobileOverlay.removeClass('active').attr('aria-hidden', 'true');
                 $('body').removeClass('mobile-menu-open');
-                menuToggle.attr('aria-expanded', 'false');
+                menuToggle.attr('aria-expanded', 'false').focus();
             }
         }
         
@@ -184,7 +189,7 @@
             const images = $('img[data-src]');
             
             if ('IntersectionObserver' in window) {
-                const imageObserver = new IntersectionObserver(function(entries, observer) {
+                const imageObserver = new IntersectionObserver(function(entries) {
                     entries.forEach(function(entry) {
                         if (entry.isIntersecting) {
                             const img = entry.target;
@@ -206,106 +211,6 @@
             }
         }
         
-        // Form Enhancements
-        function initFormEnhancements() {
-            // Add loading state to forms
-            $('form').on('submit', function() {
-                const submitBtn = $(this).find('button[type="submit"], input[type="submit"]');
-                const originalText = submitBtn.text();
-                
-                submitBtn.prop('disabled', true);
-                if (submitBtn.is('button')) {
-                    submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Processing...');
-                } else {
-                    submitBtn.val('Processing...');
-                }
-                
-                // Re-enable after 3 seconds (fallback)
-                setTimeout(function() {
-                    submitBtn.prop('disabled', false);
-                    if (submitBtn.is('button')) {
-                        submitBtn.text(originalText);
-                    } else {
-                        submitBtn.val(originalText);
-                    }
-                }, 3000);
-            });
-            
-            // Floating labels for forms
-            $('.form-control').on('focus blur', function(e) {
-                const $this = $(this);
-                const label = $this.prev('label');
-                
-                if (e.type === 'focus' || this.value.length > 0) {
-                    label.addClass('floating');
-                } else {
-                    label.removeClass('floating');
-                }
-            }).trigger('blur');
-        }
-        
-        // Notification System
-        window.showNotification = function(message, type = 'info', duration = 5000) {
-            const container = $('#notifications');
-            if (!container.length) return;
-            
-            const notification = $(`
-                <div class="notification notification-${type}">
-                    <div class="notification-content">
-                        <span class="notification-message">${message}</span>
-                        <button class="notification-close">&times;</button>
-                    </div>
-                </div>
-            `);
-            
-            container.append(notification);
-            
-            // Show notification
-            setTimeout(() => notification.addClass('show'), 100);
-            
-            // Auto-hide notification
-            setTimeout(() => {
-                notification.removeClass('show');
-                setTimeout(() => notification.remove(), 300);
-            }, duration);
-            
-            // Manual close
-            notification.find('.notification-close').on('click', function() {
-                notification.removeClass('show');
-                setTimeout(() => notification.remove(), 300);
-            });
-        };
-        
-        // AJAX Comment Loading
-        function initAjaxComments() {
-            $(document).on('submit', '#commentform', function(e) {
-                e.preventDefault();
-                
-                const form = $(this);
-                const submitBtn = form.find('#submit');
-                const originalText = submitBtn.val();
-                
-                submitBtn.val('Posting...').prop('disabled', true);
-                
-                $.ajax({
-                    url: form.attr('action'),
-                    type: 'POST',
-                    data: form.serialize(),
-                    success: function(response) {
-                        // Handle successful comment submission
-                        showNotification('Comment posted successfully!', 'success');
-                        form[0].reset();
-                    },
-                    error: function() {
-                        showNotification('Error posting comment. Please try again.', 'error');
-                    },
-                    complete: function() {
-                        submitBtn.val(originalText).prop('disabled', false);
-                    }
-                });
-            });
-        }
-        
         // Initialize all functions
         initSearchOverlay();
         initMobileMenu();
@@ -314,31 +219,12 @@
         initStickyHeader();
         initSmoothScrolling();
         initLazyLoading();
-        initFormEnhancements();
-        initAjaxComments();
-        
-        // Initialize header nav mobile toggle
-        function initHeaderNavToggle() {
-            const $toggle = $('.menu-toggle');
-            const $menu = $('#site-navigation .nav-menu');
-            if (!$toggle.length || !$menu.length) return;
 
-            $toggle.on('click', function(e) {
-                e.preventDefault();
-                const isOpen = $menu.hasClass('is-open');
-                $menu.toggleClass('is-open', !isOpen);
-                $(this).attr('aria-expanded', String(!isOpen));
-            });
-        }
-
-        // Call initializers
-        initHeaderNavToggle();
-        
         // Window resize handler
         $(window).on('resize', function() {
             // Close mobile menu on resize
             if ($(window).width() > 991) {
-                $('.mobile-menu-overlay').removeClass('active');
+                $('.mobile-menu-overlay').removeClass('active').attr('aria-hidden', 'true');
                 $('body').removeClass('mobile-menu-open');
                 $('.menu-toggle').attr('aria-expanded', 'false');
             }

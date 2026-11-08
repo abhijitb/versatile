@@ -272,7 +272,7 @@ get_header(); ?>
 <style>
 /* 404 Page Specific Styles */
 .error-404-main {
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
 	color: white;
 }
 
@@ -455,7 +455,7 @@ get_header(); ?>
 }
 
 .post-content h5 a:hover {
-	color: #667eea;
+	color: var(--primary-color);
 }
 
 .post-date,
@@ -483,7 +483,7 @@ get_header(); ?>
 }
 
 .category-item:hover {
-	background: #667eea;
+	background: var(--primary-color);
 	color: white;
 	text-decoration: none;
 }
@@ -519,14 +519,14 @@ get_header(); ?>
 }
 
 .tag-link:hover {
-	background: #667eea;
+	background: var(--primary-color);
 	color: white;
 	text-decoration: none;
 }
 
 .error-404-help-section {
 	padding: 80px 0;
-	background: #667eea;
+	background: var(--primary-color);
 	color: white;
 }
 
