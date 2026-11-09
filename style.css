@@ -7,7 +7,7 @@ Author URI: https://abhijitbhatnagar.com
 Text Domain: versatile
 Domain Path: /languages
 Requires at least: 5.0
-Tested up to: 6.4
+Tested up to: 6.8
 Requires PHP: 7.4
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -646,9 +646,7 @@ Versatile is distributed under the terms of the GNU GPL
 }
 
 .hero-subtitle {
-    font-family: 'Newsreader', Georgia, serif;
-    font-style: italic;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     color: var(--primary-color);
     margin-bottom: 30px;
 }

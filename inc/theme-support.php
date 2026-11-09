@@ -29,7 +29,12 @@ function versatile_theme_support() {
 	add_theme_support( 'custom-padding' );
 
 	add_theme_support( 'editor-styles' );
-	add_editor_style( 'assets/css/dist/editor-style.css' );
+	add_editor_style(
+		array(
+			'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@700;800&display=swap',
+			'assets/css/dist/editor-style.css',
+		)
+	);
 
 	add_theme_support(
 		'custom-logo',

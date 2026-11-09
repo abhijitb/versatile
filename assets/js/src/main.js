@@ -1,5 +1,6 @@
 import './archive-view-toggle';
 import './author-filter';
+import './single-post';
 
 /**
  * Main JavaScript file for Versatile theme

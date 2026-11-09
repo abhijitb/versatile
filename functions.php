@@ -677,6 +677,9 @@ function versatile_custom_image_sizes() {
 	add_image_size( 'versatile-featured', 800, 400, true );
 	add_image_size( 'versatile-portfolio', 600, 400, true );
 	add_image_size( 'versatile-testimonial', 100, 100, true );
+	add_image_size( 'versatile-card', 640, 480, true );
+	add_image_size( 'versatile-hero', 1280, 720, true );
+	add_image_size( 'versatile-wide', 1440, 620, true );
 }
 add_action( 'after_setup_theme', 'versatile_custom_image_sizes' );
 

@@ -39,10 +39,7 @@
 
 						<?php if ( class_exists( 'WooCommerce' ) && WC()->cart ) : ?>
 							<div class="header-cart">
-								<a class="cart-contents" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'versatile' ); ?>">
-									<i class="fas fa-shopping-cart" aria-hidden="true"></i>
-									<span class="cart-count"><?php echo esc_html( WC()->cart->get_cart_contents_count() ); ?></span>
-								</a>
+								<?php versatile_woocommerce_cart_link(); ?>
 
 								<div class="mini-cart-wrapper">
 									<?php if ( ! WC()->cart->is_empty() ) : ?>

@@ -16,10 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 function versatile_enqueue_assets() {
 	$theme_version = wp_get_theme()->get( 'Version' );
 
-	// Enqueue heading fonts (Versatile design direction).
+	// Enqueue theme fonts: Inter (body) and Manrope (headings).
 	wp_enqueue_style(
 		'versatile-fonts',
-		'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,640&family=Newsreader:ital,opsz,wght@1,6..72,500&display=swap',
+		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@700;800&display=swap',
 		array(),
 		$theme_version
 	);

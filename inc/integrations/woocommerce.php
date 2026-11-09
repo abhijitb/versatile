@@ -235,15 +235,18 @@ if ( ! function_exists( 'versatile_woocommerce_cart_link' ) ) {
 	 */
 	function versatile_woocommerce_cart_link() {
 		?>
-		<a class="cart-contents" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'versatile' ); ?>">
-			<?php
-			$item_count_text = sprintf(
-				/* translators: number of items in the mini cart. */
-				_n( '%d item', '%d items', WC()->cart->get_cart_contents_count(), 'versatile' ),
-				WC()->cart->get_cart_contents_count()
-			);
-			?>
-			<span class="amount"><?php echo wp_kses_data( WC()->cart->get_cart_subtotal() ); ?></span> <span class="count"><?php echo esc_html( $item_count_text ); ?></span>
+		<?php
+		$count           = WC()->cart->get_cart_contents_count();
+		$item_count_text = sprintf(
+			/* translators: %d: number of items in the cart. */
+			_n( 'Cart, %d item', 'Cart, %d items', $count, 'versatile' ),
+			$count
+		);
+		?>
+		<a class="cart-contents" href="<?php echo esc_url( wc_get_cart_url() ); ?>" aria-label="<?php echo esc_attr( $item_count_text ); ?>">
+			<svg class="cart-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+			<span class="cart-label" aria-hidden="true"><?php esc_html_e( 'Cart', 'versatile' ); ?></span>
+			<span class="cart-count" aria-hidden="true"><?php echo esc_html( $count ); ?></span>
 		</a>
 		<?php
 	}

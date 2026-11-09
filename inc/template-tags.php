@@ -161,3 +161,84 @@ if ( ! function_exists( 'wp_body_open' ) ) :
 		do_action( 'wp_body_open' );
 	}
 endif;
+if ( ! function_exists( 'versatile_reading_time' ) ) :
+	/**
+	 * Estimated reading time for a post, e.g. "4 min read".
+	 *
+	 * @param int|null $post_id Post ID. Defaults to the current post.
+	 * @return string
+	 */
+	function versatile_reading_time( $post_id = null ) {
+		$words   = str_word_count( wp_strip_all_tags( get_post_field( 'post_content', $post_id ) ) );
+		$minutes = max( 1, (int) ceil( $words / 225 ) );
+
+		/* translators: %d: minutes. */
+		return sprintf( _n( '%d min read', '%d min read', $minutes, 'versatile' ), $minutes );
+	}
+endif;
+
+if ( ! function_exists( 'versatile_primary_category' ) ) :
+	/**
+	 * Prints the first category of a post as a link.
+	 *
+	 * @param string   $class   CSS class for the link.
+	 * @param int|null $post_id Post ID. Defaults to the current post.
+	 */
+	function versatile_primary_category( $class = 'post-category', $post_id = null ) {
+		$categories = get_the_category( $post_id );
+		if ( empty( $categories ) ) {
+			return;
+		}
+		printf(
+			'<a class="%1$s" href="%2$s">%3$s</a>',
+			esc_attr( $class ),
+			esc_url( get_category_link( $categories[0]->term_id ) ),
+			esc_html( $categories[0]->name )
+		);
+	}
+endif;
+
+if ( ! function_exists( 'versatile_category_pills' ) ) :
+	/**
+	 * Prints a row of category filter pills linking to category archives.
+	 *
+	 * @param int $limit Max categories to show.
+	 */
+	function versatile_category_pills( $limit = 6 ) {
+		$categories = get_categories(
+			array(
+				'orderby'    => 'count',
+				'order'      => 'DESC',
+				'number'     => $limit,
+				'hide_empty' => true,
+			)
+		);
+		if ( count( $categories ) < 2 ) {
+			return;
+		}
+
+		$posts_page = get_option( 'page_for_posts' );
+		$all_url    = $posts_page ? get_permalink( $posts_page ) : home_url( '/' );
+		$current    = is_category() ? get_queried_object_id() : 0;
+
+		echo '<nav class="category-pills" aria-label="' . esc_attr__( 'Browse by category', 'versatile' ) . '">';
+		printf(
+			'<a class="category-pill%1$s" href="%2$s"%3$s>%4$s</a>',
+			$current ? '' : ' is-active',
+			esc_url( $all_url ),
+			$current ? '' : ' aria-current="page"',
+			esc_html__( 'All', 'versatile' )
+		);
+		foreach ( $categories as $category ) {
+			$active = ( $current === $category->term_id );
+			printf(
+				'<a class="category-pill%1$s" href="%2$s"%3$s>%4$s</a>',
+				$active ? ' is-active' : '',
+				esc_url( get_category_link( $category->term_id ) ),
+				$active ? ' aria-current="page"' : '',
+				esc_html( $category->name )
+			);
+		}
+		echo '</nav>';
+	}
+endif;

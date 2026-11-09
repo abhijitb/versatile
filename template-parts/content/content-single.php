@@ -9,92 +9,91 @@
 
 ?>
 
+<div class="reading-progress" aria-hidden="true"><span class="reading-progress__bar"></span></div>
+
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'single-post-article' ); ?>>
-	
-	<!-- Hero Section -->
-	<div class="post-hero">
-		<div class="container">
-			<?php if ( has_post_thumbnail() ) : ?>
-				<div class="post-featured-image">
-					<?php the_post_thumbnail( 'large', array( 'class' => 'img-fluid' ) ); ?>
-				</div>
+
+	<header class="entry-hero">
+		<div class="entry-hero__inner">
+			<nav class="entry-breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'versatile' ); ?>">
+				<?php
+				$versatile_posts_page = get_option( 'page_for_posts' );
+				printf(
+					'<a href="%1$s">%2$s</a>',
+					esc_url( $versatile_posts_page ? get_permalink( $versatile_posts_page ) : home_url( '/' ) ),
+					esc_html( $versatile_posts_page ? get_the_title( $versatile_posts_page ) : __( 'Home', 'versatile' ) )
+				);
+				?>
+				<span aria-hidden="true">/</span>
+				<?php versatile_primary_category( 'entry-breadcrumb__category' ); ?>
+			</nav>
+
+			<h1 class="entry-title"><?php the_title(); ?></h1>
+
+			<?php if ( has_excerpt() ) : ?>
+				<p class="entry-standfirst"><?php echo esc_html( get_the_excerpt() ); ?></p>
 			<?php endif; ?>
-			
-			<div class="post-header">
-				<div class="post-meta">
-					<span class="post-date">
-						<i class="fas fa-calendar-alt"></i>
-						<?php echo get_the_date(); ?>
-					</span>
-					<span class="post-author">
-						<i class="fas fa-user"></i>
-						<a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>">
-							<?php the_author(); ?>
-						</a>
-					</span>
-					<?php if ( has_category() ) : ?>
-						<span class="post-categories">
-							<i class="fas fa-folder"></i>
-							<?php the_category( ', ' ); ?>
+
+			<div class="entry-byline">
+				<div class="entry-byline__author">
+					<?php echo get_avatar( get_the_author_meta( 'ID' ), 44 ); ?>
+					<div>
+						<a class="entry-byline__name" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>"><?php the_author(); ?></a>
+						<span class="entry-byline__meta">
+							<time datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time>
+							· <?php echo esc_html( versatile_reading_time() ); ?>
 						</span>
-					<?php endif; ?>
-				</div>
-				
-				<h1 class="post-title"><?php the_title(); ?></h1>
-				
-				<?php if ( has_excerpt() ) : ?>
-					<div class="post-excerpt">
-						<?php the_excerpt(); ?>
 					</div>
-				<?php endif; ?>
-			</div>
-		</div>
-	</div>
-
-	<!-- Post Content -->
-	<div class="post-content-wrapper">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8">
-					<div class="post-content">
-						<?php
-						the_content();
-
-						wp_link_pages(
-							array(
-								'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'versatile' ),
-								'after'  => '</div>',
-							)
-						);
-						?>
-					</div>
-
-					<?php if ( has_tag() ) : ?>
-						<div class="post-tags">
-							<h3><?php esc_html_e( 'Tags', 'versatile' ); ?></h3>
-							<?php the_tags( '<div class="tag-links">', '', '</div>' ); ?>
-						</div>
-					<?php endif; ?>
-
-					<!-- Author Bio -->
-					<?php get_template_part( 'template-parts/content/author-bio' ); ?>
-
-					<!-- Post Navigation -->
-					<?php get_template_part( 'template-parts/navigation/post-navigation' ); ?>
-
-					<!-- Comments -->
-					<?php
-					if ( comments_open() || get_comments_number() ) :
-						comments_template();
-					endif;
-					?>
 				</div>
-
-				<div class="col-lg-4">
-					<?php get_sidebar(); ?>
+				<div class="entry-share">
+					<button type="button" class="icon-button js-copy-link" data-url="<?php the_permalink(); ?>" aria-label="<?php esc_attr_e( 'Copy link', 'versatile' ); ?>">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+					</button>
+					<button type="button" class="icon-button js-share" data-url="<?php the_permalink(); ?>" data-title="<?php the_title_attribute(); ?>" aria-label="<?php esc_attr_e( 'Share', 'versatile' ); ?>" hidden>
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M5 13v6h14v-6"/></svg>
+					</button>
+					<span class="entry-share__status" role="status"></span>
 				</div>
 			</div>
 		</div>
+
+		<?php if ( has_post_thumbnail() ) : ?>
+			<figure class="entry-featured-image">
+				<?php the_post_thumbnail( 'versatile-wide', array( 'fetchpriority' => 'high' ) ); ?>
+			</figure>
+		<?php endif; ?>
+	</header>
+
+	<div class="entry-content post-content">
+		<?php
+		the_content();
+
+		wp_link_pages(
+			array(
+				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'versatile' ),
+				'after'  => '</div>',
+			)
+		);
+		?>
 	</div>
+
+	<footer class="entry-footer">
+		<?php if ( has_tag() ) : ?>
+			<div class="entry-tags">
+				<h2 class="screen-reader-text"><?php esc_html_e( 'Tags', 'versatile' ); ?></h2>
+				<?php the_tags( '', '', '' ); ?>
+			</div>
+		<?php endif; ?>
+
+		<?php get_template_part( 'template-parts/content/author-bio' ); ?>
+	</footer>
 
 </article><!-- #post-<?php the_ID(); ?> -->
+
+<?php get_template_part( 'template-parts/blog/related' ); ?>
+
+<?php if ( comments_open() || get_comments_number() ) : ?>
+	<div class="entry-comments">
+		<?php comments_template(); ?>
+	</div>
+<?php endif; ?>

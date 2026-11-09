@@ -1,70 +1,32 @@
 <?php
 /**
- * Template part for displaying archive content
+ * Template part for a post card in the magazine grid.
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package Versatile
  */
 
+$versatile_heading = ( isset( $args['heading'] ) && 'h3' === $args['heading'] ) ? 'h3' : 'h2';
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'archive-post-item' ); ?>>
-	
-	<?php if ( has_post_thumbnail() ) : ?>
-		<div class="post-thumbnail">
-			<a href="<?php the_permalink(); ?>">
-				<?php the_post_thumbnail( 'medium', array( 'class' => 'img-fluid' ) ); ?>
-			</a>
-		</div>
-	<?php endif; ?>
-	
-	<div class="post-content">
-		<div class="post-meta">
-			<span class="post-date">
-				<i class="fas fa-calendar-alt"></i>
-				<?php echo get_the_date(); ?>
-			</span>
-			<span class="post-author">
-				<i class="fas fa-user"></i>
-				<a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>">
-					<?php the_author(); ?>
-				</a>
-			</span>
-			<?php if ( has_category() ) : ?>
-				<span class="post-categories">
-					<i class="fas fa-folder"></i>
-					<?php the_category( ', ' ); ?>
-				</span>
-			<?php endif; ?>
-		</div>
-		
-		<h2 class="post-title">
-			<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-		</h2>
-		
-		<div class="post-excerpt">
-			<?php
-			if ( has_excerpt() ) {
-				the_excerpt();
-			} else {
-				echo esc_html( wp_trim_words( get_the_content(), 30, '...' ) );
-			}
-			?>
-		</div>
-		
-		<div class="post-footer">
-			<a href="<?php the_permalink(); ?>" class="read-more-btn">
-				<?php esc_html_e( 'Read More', 'versatile' ); ?>
-				<i class="fas fa-arrow-right"></i>
-			</a>
-			
-			<?php if ( has_tag() ) : ?>
-				<div class="post-tags">
-					<?php the_tags( '', '', '' ); ?>
-				</div>
-			<?php endif; ?>
-		</div>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'post-card' ); ?>>
+	<a class="post-card__media<?php echo has_post_thumbnail() ? '' : ' is-empty'; ?>" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true">
+		<?php
+		if ( has_post_thumbnail() ) {
+			the_post_thumbnail( 'versatile-card', array( 'loading' => 'lazy' ) );
+		}
+		?>
+	</a>
+
+	<div class="post-card__meta">
+		<?php versatile_primary_category( 'post-card__category' ); ?>
+		<time datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time>
 	</div>
-	
+
+	<<?php echo $versatile_heading; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- whitelisted tag. ?> class="post-card__title">
+		<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+	</<?php echo $versatile_heading; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- whitelisted tag. ?>>
+
+	<span class="post-card__read"><?php echo esc_html( versatile_reading_time() ); ?></span>
 </article><!-- #post-<?php the_ID(); ?> -->

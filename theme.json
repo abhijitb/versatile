@@ -5,54 +5,49 @@
 		"color": {
 			"palette": [
 				{
-					"name": "Primary",
-					"slug": "primary",
-					"color": "#0f766e"
-				},
-				{
-					"name": "Primary Hover",
-					"slug": "primary-hover",
-					"color": "#115e59"
-				},
-				{
 					"name": "Accent",
-					"slug": "accent",
-					"color": "#14b8a6"
+					"slug": "primary",
+					"color": "#2747e8"
 				},
 				{
-					"name": "Accent Bright",
-					"slug": "accent-bright",
-					"color": "#2dd4bf"
+					"name": "Accent Hover",
+					"slug": "primary-hover",
+					"color": "#1d36c4"
 				},
 				{
-					"name": "Secondary",
-					"slug": "secondary",
-					"color": "#f2f7f6"
-				},
-				{
-					"name": "Dark Teal",
-					"slug": "dark-teal",
-					"color": "#0b3b39"
+					"name": "Ink",
+					"slug": "ink",
+					"color": "#111318"
 				},
 				{
 					"name": "Text",
 					"slug": "text",
-					"color": "#1f2933"
+					"color": "#111318"
 				},
 				{
 					"name": "Text Muted",
 					"slug": "text-muted",
-					"color": "#5f6c7b"
+					"color": "#5b6170"
+				},
+				{
+					"name": "Surface",
+					"slug": "secondary",
+					"color": "#f6f7f9"
+				},
+				{
+					"name": "Chip",
+					"slug": "chip",
+					"color": "#f2f3f5"
 				},
 				{
 					"name": "Border",
 					"slug": "border",
-					"color": "#dbe7e4"
+					"color": "#e6e8ec"
 				},
 				{
 					"name": "White",
 					"slug": "white",
-					"color": "#fdfdfc"
+					"color": "#ffffff"
 				}
 			],
 			"defaultPalette": false,
@@ -62,26 +57,21 @@
 		"typography": {
 			"fontFamilies": [
 				{
-					"name": "Fraunces",
-					"slug": "fraunces",
-					"fontFamily": "'Fraunces', Georgia, serif"
+					"name": "Inter",
+					"slug": "inter",
+					"fontFamily": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
 				},
 				{
-					"name": "Newsreader",
-					"slug": "newsreader",
-					"fontFamily": "'Newsreader', Georgia, serif"
-				},
-				{
-					"name": "System Sans",
-					"slug": "system-sans",
-					"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif"
+					"name": "Manrope",
+					"slug": "manrope",
+					"fontFamily": "'Manrope', 'Inter', sans-serif"
 				}
 			],
 			"fontSizes": [
 				{
 					"name": "Small",
 					"slug": "small",
-					"size": "0.75rem"
+					"size": "0.875rem"
 				},
 				{
 					"name": "Regular",
@@ -89,27 +79,38 @@
 					"size": "1rem"
 				},
 				{
+					"name": "Medium",
+					"slug": "medium",
+					"size": "1.1875rem"
+				},
+				{
 					"name": "Large",
 					"slug": "large",
-					"size": "2.25rem"
+					"size": "clamp(1.75rem, 3vw, 2.25rem)"
 				},
 				{
 					"name": "Huge",
 					"slug": "huge",
-					"size": "3.125rem"
+					"size": "clamp(2.25rem, 5vw, 3.25rem)"
 				}
 			],
 			"customFontSize": true
 		},
 		"spacing": {
-			"units": ["px", "em", "rem", "%", "vw"],
+			"units": [
+				"px",
+				"em",
+				"rem",
+				"%",
+				"vw"
+			],
 			"padding": true,
 			"margin": true,
 			"blockGap": true
 		},
 		"layout": {
-			"contentSize": "1200px",
-			"wideSize": "1400px"
+			"contentSize": "760px",
+			"wideSize": "1280px"
 		}
 	},
 	"styles": {
@@ -118,17 +119,17 @@
 			"text": "var(--wp--preset--color--text)"
 		},
 		"typography": {
-			"fontFamily": "var(--wp--preset--font-family--system-sans)",
+			"fontFamily": "var(--wp--preset--font-family--inter)",
 			"fontSize": "var(--wp--preset--font-size--regular)",
 			"lineHeight": "1.6"
 		},
 		"elements": {
 			"heading": {
 				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--fraunces)",
-					"fontWeight": "600",
-					"letterSpacing": "-0.01em",
-					"lineHeight": "1.2"
+					"fontFamily": "var(--wp--preset--font-family--manrope)",
+					"fontWeight": "800",
+					"letterSpacing": "-0.025em",
+					"lineHeight": "1.15"
 				},
 				"color": {
 					"text": "var(--wp--preset--color--text)"
@@ -146,16 +147,16 @@
 			},
 			"button": {
 				"color": {
-					"background": "var(--wp--preset--color--primary)",
+					"background": "var(--wp--preset--color--ink)",
 					"text": "var(--wp--preset--color--white)"
 				},
 				":hover": {
 					"color": {
-						"background": "var(--wp--preset--color--primary-hover)"
+						"background": "var(--wp--preset--color--primary)"
 					}
 				},
 				"border": {
-					"radius": "14px"
+					"radius": "999px"
 				}
 			}
 		}
