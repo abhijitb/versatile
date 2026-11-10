@@ -497,10 +497,13 @@ a {
     }
 }
 
-.posts-grid {
+.posts-grid,
+.site-type-personal .posts-grid,
+.site-type-business .posts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 40px 28px;
+    margin-bottom: 0;
 
     &--three {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -511,7 +514,8 @@ a {
     }
 }
 
-.post-card {
+.post-card,
+.posts-grid .post-card {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -519,7 +523,16 @@ a {
     padding: 0;
     background: none;
     border: 0;
+    border-radius: 0;
     box-shadow: none;
+    overflow: visible;
+    transform: none;
+
+    &:hover {
+        background: none;
+        box-shadow: none;
+        transform: none;
+    }
 
     &__media {
         display: block;
@@ -537,6 +550,11 @@ a {
 
         &:hover img {
             transform: scale(1.03);
+        }
+
+        &.is-empty {
+            background-color: var(--background-alt);
+            background-image: radial-gradient(circle at 30% 25%, rgb(39 71 232 / 10%), transparent 60%);
         }
     }
 
@@ -622,6 +640,10 @@ a {
 
     a.page-numbers,
     span.page-numbers {
+        flex-direction: row;
+        max-width: none;
+        white-space: nowrap;
+        text-align: center;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -650,6 +672,10 @@ a {
 
         &.dots {
             border: 0;
+        }
+
+        i {
+            font-size: 12px;
         }
     }
 }
@@ -755,10 +781,13 @@ a {
     // Search (classic + block).
     .search-form,
     .wp-block-search__inside-wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
         display: flex;
         align-items: center;
         gap: 6px;
-        padding: 4px 4px 4px 16px;
+        padding: 4px 4px 4px 18px;
         border: 0;
         border-radius: $pill;
         background: $chip;
@@ -800,10 +829,13 @@ a {
     .widget_search .search-submit,
     .widget_search button[type='submit'],
     .widget_search input[type='submit'] {
+        flex: none;
         height: 40px;
+        min-height: 0;
         margin: 0;
-        padding: 0 16px;
+        padding: 0 18px;
         border: 0;
+        line-height: 1;
         border-radius: $pill !important; // Legacy rules use !important.
         background: $ink !important;
         color: #fff;

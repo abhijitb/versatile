@@ -51,6 +51,12 @@
             secondary: '#f0fdfa',
             accent: '#14b8a6'
         },
+        versatile_ink: {
+            primary: '#2747e8',
+            primary_hover: '#1d36c4',
+            secondary: '#f2f3f5',
+            accent: '#2747e8'
+        },
         versatile_teal: {
             primary: '#0f766e',
             primary_hover: '#115e59',
@@ -81,7 +87,7 @@
         const scheme = wp.customize('versatile_color_scheme')();
 
         if (scheme !== 'custom') {
-            return colorSchemes[scheme] || colorSchemes.versatile_teal;
+            return colorSchemes[scheme] || colorSchemes.versatile_ink;
         }
 
         const primary = wp.customize('versatile_primary_color')();
