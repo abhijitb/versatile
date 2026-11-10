@@ -209,7 +209,7 @@ function versatile_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'versatile_color_scheme',
 		array(
-			'default'           => 'versatile_ink',
+			'default'           => 'versatile_teal',
 			'sanitize_callback' => 'versatile_sanitize_color_scheme',
 			'transport'         => 'postMessage',
 		)
@@ -236,7 +236,7 @@ function versatile_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'versatile_primary_color',
 		array(
-			'default'           => '#2747e8',
+			'default'           => '#0f766e',
 			'sanitize_callback' => 'sanitize_hex_color',
 			'transport'         => 'postMessage',
 		)
@@ -258,7 +258,7 @@ function versatile_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'versatile_secondary_color',
 		array(
-			'default'           => '#f2f3f5',
+			'default'           => '#f2f7f6',
 			'sanitize_callback' => 'sanitize_hex_color',
 			'transport'         => 'postMessage',
 		)
@@ -564,7 +564,7 @@ function versatile_get_color_schemes() {
  */
 function versatile_sanitize_color_scheme( $input ) {
 	$valid_schemes = array_keys( versatile_get_color_schemes() );
-	return in_array( $input, $valid_schemes, true ) ? $input : 'versatile_ink';
+	return in_array( $input, $valid_schemes, true ) ? $input : 'versatile_teal';
 }
 
 /**
@@ -573,7 +573,7 @@ function versatile_sanitize_color_scheme( $input ) {
  * @return bool The custom color scheme value.
  */
 function versatile_is_custom_color_scheme() {
-	return 'custom' === get_theme_mod( 'versatile_color_scheme', 'versatile_ink' );
+	return 'custom' === get_theme_mod( 'versatile_color_scheme', 'versatile_teal' );
 }
 
 /**
@@ -583,18 +583,18 @@ function versatile_is_custom_color_scheme() {
  */
 function versatile_get_current_color_scheme() {
 	$schemes        = versatile_get_color_schemes();
-	$current_scheme = get_theme_mod( 'versatile_color_scheme', 'versatile_ink' );
+	$current_scheme = get_theme_mod( 'versatile_color_scheme', 'versatile_teal' );
 
 	if ( 'custom' === $current_scheme ) {
 		return array(
-			'primary'       => get_theme_mod( 'versatile_primary_color', '#2747e8' ),
-			'primary_hover' => versatile_adjust_color_brightness( get_theme_mod( 'versatile_primary_color', '#2747e8' ), -30 ),
-			'secondary'     => get_theme_mod( 'versatile_secondary_color', '#f2f3f5' ),
-			'accent'        => get_theme_mod( 'versatile_primary_color', '#2747e8' ),
+			'primary'       => get_theme_mod( 'versatile_primary_color', '#0f766e' ),
+			'primary_hover' => versatile_adjust_color_brightness( get_theme_mod( 'versatile_primary_color', '#0f766e' ), -30 ),
+			'secondary'     => get_theme_mod( 'versatile_secondary_color', '#f2f7f6' ),
+			'accent'        => get_theme_mod( 'versatile_primary_color', '#0f766e' ),
 		);
 	}
 
-	return isset( $schemes[ $current_scheme ] ) ? $schemes[ $current_scheme ]['colors'] : $schemes['versatile_ink']['colors'];
+	return isset( $schemes[ $current_scheme ] ) ? $schemes[ $current_scheme ]['colors'] : $schemes['versatile_teal']['colors'];
 }
 
 /**

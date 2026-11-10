@@ -4,9 +4,9 @@
 
 /* CSS Variables */
 :root {
-    --primary-color: #2747e8;
-    --primary-hover: #1d36c4;
-    --secondary-color: #f2f3f5;
+    --primary-color: #0f766e;
+    --primary-hover: #115e59;
+    --secondary-color: #f2f7f6;
     --text-color: #111318;
     --text-muted: #5b6170;
     --border-color: #e6e8ec;
@@ -39,8 +39,8 @@
 
 /* Alternative Color Schemes */
 :root[data-theme="dark"] {
-    --primary-color: #8fa2ff;
-    --primary-hover: #b3c0ff;
+    --primary-color: #2dd4bf;
+    --primary-hover: #14b8a6;
     --ink: #f7fafc;
     --secondary-color: #4a5568;
     --text-color: #f7fafc;

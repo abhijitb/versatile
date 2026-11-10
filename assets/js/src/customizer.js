@@ -87,7 +87,7 @@
         const scheme = wp.customize('versatile_color_scheme')();
 
         if (scheme !== 'custom') {
-            return colorSchemes[scheme] || colorSchemes.versatile_ink;
+            return colorSchemes[scheme] || colorSchemes.versatile_teal;
         }
 
         const primary = wp.customize('versatile_primary_color')();

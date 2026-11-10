@@ -7,12 +7,12 @@
 				{
 					"name": "Accent",
 					"slug": "primary",
-					"color": "#2747e8"
+					"color": "#0f766e"
 				},
 				{
 					"name": "Accent Hover",
 					"slug": "primary-hover",
-					"color": "#1d36c4"
+					"color": "#115e59"
 				},
 				{
 					"name": "Ink",
@@ -37,7 +37,7 @@
 				{
 					"name": "Chip",
 					"slug": "chip",
-					"color": "#f2f3f5"
+					"color": "#f2f7f6"
 				},
 				{
 					"name": "Border",
