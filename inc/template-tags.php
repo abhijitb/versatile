@@ -242,3 +242,76 @@ if ( ! function_exists( 'versatile_category_pills' ) ) :
 		echo '</nav>';
 	}
 endif;
+
+if ( ! function_exists( 'versatile_search_excerpt' ) ) :
+	/**
+	 * Returns an escaped excerpt for the current search result with each
+	 * search term wrapped in <mark>.
+	 *
+	 * @param int $words Excerpt length in words.
+	 * @return string Safe HTML.
+	 */
+	function versatile_search_excerpt( $words = 32 ) {
+		$source  = has_excerpt() ? get_the_excerpt() : strip_shortcodes( get_the_content() );
+		$excerpt = esc_html( wp_trim_words( wp_strip_all_tags( $source ), $words, '…' ) );
+
+		$terms = array_filter( preg_split( '/\s+/', trim( get_search_query( false ) ) ) );
+		$terms = array_filter(
+			$terms,
+			function ( $term ) {
+				return mb_strlen( $term ) > 1;
+			}
+		);
+		if ( empty( $terms ) ) {
+			return $excerpt;
+		}
+
+		$pattern = implode( '|', array_map( 'preg_quote', array_map( 'esc_html', $terms ), array_fill( 0, count( $terms ), '/' ) ) );
+
+		// Skip HTML entities so a term like "amp" never splits "&amp;".
+		return preg_replace_callback(
+			'/(&#?\w+;)|(' . $pattern . ')/iu',
+			function ( $m ) {
+				return '' !== $m[1] ? $m[1] : '<mark>' . $m[2] . '</mark>';
+			},
+			$excerpt
+		);
+	}
+endif;
+
+if ( ! function_exists( 'versatile_search_type_pills' ) ) :
+	/**
+	 * Prints filter pills (All / Posts / Pages / Products) for search results.
+	 */
+	function versatile_search_type_pills() {
+		$types = array(
+			''     => __( 'All', 'versatile' ),
+			'post' => __( 'Posts', 'versatile' ),
+			'page' => __( 'Pages', 'versatile' ),
+		);
+		if ( post_type_exists( 'product' ) ) {
+			$types['product'] = __( 'Products', 'versatile' );
+		}
+
+		$current = get_query_var( 'post_type' );
+		$current = is_array( $current ) ? '' : (string) $current;
+		$query   = get_search_query( false );
+
+		echo '<nav class="category-pills search-type-pills" aria-label="' . esc_attr__( 'Filter results by type', 'versatile' ) . '">';
+		foreach ( $types as $type => $label ) {
+			$args = array( 's' => $query );
+			if ( $type ) {
+				$args['post_type'] = $type;
+			}
+			$active = ( $current === $type );
+			printf(
+				'<a class="category-pill%1$s" href="%2$s"%3$s>%4$s</a>',
+				$active ? ' is-active' : '',
+				esc_url( add_query_arg( array_map( 'rawurlencode', $args ), home_url( '/' ) ) ),
+				$active ? ' aria-current="page"' : '',
+				esc_html( $label )
+			);
+		}
+		echo '</nav>';
+	}
+endif;

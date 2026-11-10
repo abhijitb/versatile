@@ -1,64 +1,43 @@
 <?php
 /**
- * Template part for displaying search results
+ * Template part for a single search result row.
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package Versatile
  */
 
+$versatile_type_obj = get_post_type_object( get_post_type() );
+$versatile_is_post  = ( 'post' === get_post_type() );
+$versatile_product  = ( 'product' === get_post_type() && function_exists( 'wc_get_product' ) ) ? wc_get_product( get_the_ID() ) : null;
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'search-result-item' ); ?>>
-	
-	<div class="result-content">
-		<div class="result-meta">
-			<span class="result-date">
-				<i class="fas fa-calendar-alt"></i>
-				<?php echo get_the_date(); ?>
-			</span>
-			<span class="result-type">
-				<i class="fas fa-file-alt"></i>
-				<?php echo esc_html( get_post_type_object( get_post_type() )->labels->singular_name ); ?>
-			</span>
-			<?php if ( has_category() && get_post_type() === 'post' ) : ?>
-				<span class="post-categories">
-					<i class="fas fa-folder"></i>
-					<?php the_category( ', ' ); ?>
-				</span>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'search-result' ); ?>>
+	<div class="search-result__body">
+		<div class="post-card__meta">
+			<span class="search-result__type"><?php echo esc_html( $versatile_type_obj ? $versatile_type_obj->labels->singular_name : '' ); ?></span>
+			<?php if ( $versatile_is_post ) : ?>
+				<?php versatile_primary_category( 'post-card__category' ); ?>
+				<time datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time>
+			<?php elseif ( $versatile_product ) : ?>
+				<span class="search-result__price"><?php echo wp_kses_post( $versatile_product->get_price_html() ); ?></span>
 			<?php endif; ?>
 		</div>
-		
-		<h2 class="result-title">
+
+		<h2 class="search-result__title">
 			<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 		</h2>
-		
-		<div class="result-excerpt">
-			<?php
-			if ( has_excerpt() ) {
-				the_excerpt();
-			} else {
-				$content     = get_the_content();
-				$search_term = get_search_query();
 
-				// Highlight search terms in excerpt.
-				if ( $search_term ) {
-					$excerpt     = wp_trim_words( $content, 30, '...' );
-					$highlighted = preg_replace( '/(' . preg_quote( $search_term, '/' ) . ')/i', '<mark>$1</mark>', $excerpt );
-					echo wp_kses_post( $highlighted );
-				} else {
-					echo esc_html( wp_trim_words( $content, 30, '...' ) );
-				}
-			}
-			?>
-		</div>
-		
-		<div class="result-footer">
-			<a href="<?php the_permalink(); ?>" class="read-more-btn">
-				<?php esc_html_e( 'Read More', 'versatile' ); ?>
-				<i class="fas fa-arrow-right"></i>
-			</a>
-		</div>
+		<p class="search-result__excerpt"><?php echo versatile_search_excerpt(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?></p>
+
+		<?php if ( $versatile_is_post ) : ?>
+			<span class="post-card__read"><?php echo esc_html( versatile_reading_time() ); ?></span>
+		<?php endif; ?>
 	</div>
-	
+
+	<?php if ( has_post_thumbnail() ) : ?>
+		<a class="search-result__media" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true">
+			<?php the_post_thumbnail( 'versatile-card', array( 'loading' => 'lazy' ) ); ?>
+		</a>
+	<?php endif; ?>
 </article><!-- #post-<?php the_ID(); ?> -->
