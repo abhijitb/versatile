@@ -127,18 +127,85 @@ add_filter( 'woocommerce_output_related_products_args', 'versatile_woocommerce_r
 remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
 
+if ( ! function_exists( 'versatile_shop_sidebar_mode' ) ) {
+	/**
+	 * Shop sidebar mode for product listings and single products.
+	 *
+	 * - builtin (default): product search, categories, price filter, top rated.
+	 * - widgets: the "Shop Sidebar" widget area.
+	 * - none: full width.
+	 *
+	 * Cart, checkout and account pages are always full width.
+	 *
+	 * @return string builtin|widgets|none
+	 */
+	function versatile_shop_sidebar_mode() {
+		if ( ! ( is_shop() || is_product_taxonomy() || is_product() ) ) {
+			return 'none';
+		}
+
+		$mode = get_theme_mod( 'versatile_shop_sidebar', 'builtin' );
+		if ( true === $mode || '1' === $mode ) {
+			$mode = 'widgets'; // Legacy checkbox value.
+		}
+		if ( 'widgets' === $mode && ! is_active_sidebar( 'shop-sidebar' ) ) {
+			$mode = 'builtin';
+		}
+
+		return in_array( $mode, array( 'builtin', 'widgets', 'none' ), true ) ? $mode : 'builtin';
+	}
+}
+
 if ( ! function_exists( 'versatile_show_shop_sidebar' ) ) {
 	/**
-	 * Whether WooCommerce pages show the Shop Sidebar.
-	 *
-	 * Off by default: product pages read better full-width, and the sidebar
-	 * often inherits blog widgets (Archives, Categories) when first created.
-	 * Enable it under Customizer → WooCommerce → Product Catalog.
+	 * Whether the current WooCommerce page shows a sidebar.
 	 *
 	 * @return bool
 	 */
 	function versatile_show_shop_sidebar() {
-		return (bool) get_theme_mod( 'versatile_shop_sidebar', false ) && is_active_sidebar( 'shop-sidebar' );
+		return 'none' !== versatile_shop_sidebar_mode();
+	}
+}
+
+if ( ! function_exists( 'versatile_builtin_shop_sidebar' ) ) {
+	/**
+	 * Renders the default product sidebar with core WooCommerce widgets.
+	 */
+	function versatile_builtin_shop_sidebar() {
+		$args = array(
+			'before_widget' => '<section class="widget %s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		);
+
+		the_widget( 'WC_Widget_Product_Search', array( 'title' => __( 'Search products', 'versatile' ) ), $args );
+
+		if ( ! is_product() ) {
+			the_widget( 'WC_Widget_Layered_Nav_Filters', array( 'title' => __( 'Active filters', 'versatile' ) ), $args );
+			the_widget( 'WC_Widget_Price_Filter', array( 'title' => __( 'Price', 'versatile' ) ), $args );
+		}
+
+		the_widget(
+			'WC_Widget_Product_Categories',
+			array(
+				'title'        => __( 'Categories', 'versatile' ),
+				'count'        => 1,
+				'hierarchical' => 1,
+				'hide_empty'   => 1,
+				'orderby'      => 'name',
+			),
+			$args
+		);
+
+		the_widget(
+			'WC_Widget_Top_Rated_Products',
+			array(
+				'title'  => __( 'Top rated', 'versatile' ),
+				'number' => 3,
+			),
+			$args
+		);
 	}
 }
 
@@ -152,10 +219,10 @@ if ( ! function_exists( 'versatile_woocommerce_wrapper_before' ) ) {
 	 */
 	function versatile_woocommerce_wrapper_before() {
 		?>
-			<main id="primary" class="site-main">
+			<main id="primary" class="site-main shop-main">
 				<div class="container">
-					<div class="row">
-						<div class="<?php echo versatile_show_shop_sidebar() ? 'col-lg-8' : 'col-12'; ?>">
+					<div class="shop-layout<?php echo versatile_show_shop_sidebar() ? ' has-sidebar' : ''; ?>">
+						<div class="shop-content">
 		<?php
 	}
 }
@@ -172,12 +239,19 @@ if ( ! function_exists( 'versatile_woocommerce_wrapper_after' ) ) {
 	function versatile_woocommerce_wrapper_after() {
 		?>
 						</div>
-						<?php if ( versatile_show_shop_sidebar() ) : ?>
-							<div class="col-lg-4">
-								<aside id="secondary" class="widget-area shop-sidebar">
-									<?php dynamic_sidebar( 'shop-sidebar' ); ?>
-								</aside>
-							</div>
+						<?php
+						$versatile_sidebar_mode = versatile_shop_sidebar_mode();
+						if ( 'none' !== $versatile_sidebar_mode ) :
+							?>
+							<aside id="secondary" class="widget-area shop-sidebar" aria-label="<?php esc_attr_e( 'Shop sidebar', 'versatile' ); ?>">
+								<?php
+								if ( 'widgets' === $versatile_sidebar_mode ) {
+									dynamic_sidebar( 'shop-sidebar' );
+								} else {
+									versatile_builtin_shop_sidebar();
+								}
+								?>
+							</aside>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -425,7 +499,17 @@ function versatile_shop_toolbar_close() {
 add_action( 'woocommerce_before_shop_loop', 'versatile_shop_toolbar_close', 31 );
 
 /**
- * Customizer: toggle for the shop sidebar.
+ * Sanitizes the shop sidebar mode.
+ *
+ * @param string $value Raw value.
+ * @return string
+ */
+function versatile_sanitize_shop_sidebar( $value ) {
+	return in_array( $value, array( 'builtin', 'widgets', 'none' ), true ) ? $value : 'builtin';
+}
+
+/**
+ * Customizer: shop sidebar mode.
  *
  * @param WP_Customize_Manager $wp_customize Customizer manager.
  */
@@ -433,17 +517,22 @@ function versatile_woocommerce_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'versatile_shop_sidebar',
 		array(
-			'default'           => false,
-			'sanitize_callback' => 'rest_sanitize_boolean',
+			'default'           => 'builtin',
+			'sanitize_callback' => 'versatile_sanitize_shop_sidebar',
 		)
 	);
 	$wp_customize->add_control(
 		'versatile_shop_sidebar',
 		array(
-			'label'       => esc_html__( 'Show shop sidebar', 'versatile' ),
-			'description' => esc_html__( 'Displays the "Shop Sidebar" widget area beside products. Add product widgets (filters, categories) there first.', 'versatile' ),
+			'label'       => esc_html__( 'Shop sidebar', 'versatile' ),
+			'description' => esc_html__( 'Shown on product listings and product pages.', 'versatile' ),
 			'section'     => 'woocommerce_product_catalog',
-			'type'        => 'checkbox',
+			'type'        => 'select',
+			'choices'     => array(
+				'builtin' => esc_html__( 'Product filters (built-in)', 'versatile' ),
+				'widgets' => esc_html__( 'Shop Sidebar widgets', 'versatile' ),
+				'none'    => esc_html__( 'None (full width)', 'versatile' ),
+			),
 		)
 	);
 }
