@@ -42,13 +42,10 @@
 								<?php versatile_woocommerce_cart_link(); ?>
 
 								<div class="mini-cart-wrapper">
-									<?php if ( ! WC()->cart->is_empty() ) : ?>
-										<div class="widget_shopping_cart_content">
-											<?php woocommerce_mini_cart(); ?>
-										</div>
-									<?php else : ?>
-										<p class="empty-cart"><?php esc_html_e( 'Your cart is empty', 'versatile' ); ?></p>
-									<?php endif; ?>
+									<?php // Always render the container: WooCommerce's AJAX cart fragments refresh it in place. ?>
+									<div class="widget_shopping_cart_content">
+										<?php woocommerce_mini_cart(); ?>
+									</div>
 								</div>
 							</div>
 						<?php endif; ?>
