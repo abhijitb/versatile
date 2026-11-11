@@ -1868,3 +1868,89 @@ a {
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// Comment form fixes
+// comments.php prints inline CSS (".comment-form input { width: 100% }")
+// after the stylesheet, so these selectors carry extra specificity.
+// -----------------------------------------------------------------------------
+
+.comment-respond {
+    // "Save my name, email…" consent row.
+    .comment-form-cookies-consent {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin: 4px 0 20px;
+
+        input[type='checkbox'] {
+            appearance: none;
+            flex: none;
+            width: 20px;
+            height: 20px;
+            margin: 2px 0 0;
+            padding: 0;
+            border: 1.5px solid #b9bec8;
+            border-radius: 6px;
+            background: #fff center / 14px no-repeat;
+            box-shadow: none;
+            cursor: pointer;
+
+            &:checked {
+                border-color: $accent;
+                background-color: $accent;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+            }
+
+            &:focus,
+            &:focus-visible {
+                border-color: $accent;
+                box-shadow: none;
+            }
+
+            &:focus-visible {
+                outline: 2px solid $accent;
+                outline-offset: 2px;
+            }
+        }
+
+        label {
+            display: inline;
+            margin: 0;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: $muted;
+            cursor: pointer;
+        }
+    }
+
+    // Submit: inherit the page font, icon centred beside the text.
+    .form-submit {
+        margin: 0;
+    }
+
+    .form-submit .submit,
+    button.submit {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 48px;
+        margin: 0;
+        padding: 0 28px;
+        border: 0;
+        border-radius: $pill;
+        font-family: var(--font-family-base);
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1;
+
+        i,
+        svg {
+            margin: 0;
+            font-size: 0.95em;
+            line-height: 1;
+        }
+    }
+}
