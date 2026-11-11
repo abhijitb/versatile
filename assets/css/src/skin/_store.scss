@@ -275,7 +275,8 @@ $pill: var(--radius-pill, 999px);
     }
 }
 
-.woocommerce span.onsale {
+.woocommerce span.onsale,
+.woocommerce span.soldout {
     top: 14px;
     left: 14px;
     right: auto;
@@ -815,6 +816,7 @@ $pill: var(--radius-pill, 999px);
 // -----------------------------------------------------------------------------
 
 .single-product div.product {
+    position: relative;
     padding: 0;
     border-radius: 0;
     background: none;
@@ -1451,5 +1453,35 @@ body .wc-block-checkout__add-note {
 
     &:hover {
         background: $accent-hover !important;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Sold out
+// -----------------------------------------------------------------------------
+
+.woocommerce span.soldout {
+    position: absolute;
+    z-index: 2;
+    background: #5b6170;
+}
+
+.woocommerce ul.products li.product.outofstock {
+    img {
+        opacity: 0.8;
+        filter: grayscale(0.4);
+    }
+
+    .button.is-soldout {
+        border-color: #dadde3;
+        background: #fff;
+        color: $ink;
+
+        &:hover,
+        &:focus-visible {
+            border-color: $ink;
+            background: #fff;
+            color: $ink;
+        }
     }
 }

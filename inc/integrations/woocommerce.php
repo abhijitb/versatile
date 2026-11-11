@@ -552,3 +552,72 @@ function versatile_woocommerce_customize_register( $wp_customize ) {
 	);
 }
 add_action( 'customize_register', 'versatile_woocommerce_customize_register', 20 );
+
+/**
+ * Out-of-stock products: "Sold out" badge instead of "Sale!", and a clear
+ * "View product" button instead of WooCommerce's generic "Read more".
+ *
+ * @param WC_Product|mixed $product Product.
+ * @return bool
+ */
+function versatile_is_sold_out( $product ) {
+	return $product instanceof WC_Product && ! $product->is_in_stock();
+}
+
+/**
+ * Hide the sale flash on sold-out products (the Sold out badge takes its place).
+ *
+ * @param string     $html    Sale flash HTML.
+ * @param WP_Post    $post    Post object.
+ * @param WC_Product $product Product.
+ * @return string
+ */
+function versatile_sold_out_hide_sale_flash( $html, $post, $product ) {
+	return versatile_is_sold_out( $product ) ? '' : $html;
+}
+add_filter( 'woocommerce_sale_flash', 'versatile_sold_out_hide_sale_flash', 10, 3 );
+
+/**
+ * Prints the Sold out badge (loop and single product).
+ */
+function versatile_sold_out_badge() {
+	global $product;
+	if ( versatile_is_sold_out( $product ) ) {
+		echo '<span class="soldout">' . esc_html__( 'Sold out', 'versatile' ) . '</span>';
+	}
+}
+add_action( 'woocommerce_before_shop_loop_item_title', 'versatile_sold_out_badge', 9 );
+add_action( 'woocommerce_before_single_product_summary', 'versatile_sold_out_badge', 9 );
+
+/**
+ * Loop button text for products that can't be added from the listing.
+ *
+ * Keeps WooCommerce's own text for variable ("Select options"), grouped
+ * and external products.
+ *
+ * @param string     $text    Button text.
+ * @param WC_Product $product Product.
+ * @return string
+ */
+function versatile_loop_add_to_cart_text( $text, $product ) {
+	if ( $product instanceof WC_Product && $product->is_type( 'simple' ) && ( ! $product->is_in_stock() || ! $product->is_purchasable() ) ) {
+		return __( 'View product', 'versatile' );
+	}
+	return $text;
+}
+add_filter( 'woocommerce_product_add_to_cart_text', 'versatile_loop_add_to_cart_text', 10, 2 );
+
+/**
+ * Marks the loop button of sold-out products for styling.
+ *
+ * @param array      $args    Button args.
+ * @param WC_Product $product Product.
+ * @return array
+ */
+function versatile_loop_add_to_cart_args( $args, $product ) {
+	if ( versatile_is_sold_out( $product ) ) {
+		$args['class'] = trim( ( $args['class'] ?? '' ) . ' is-soldout' );
+	}
+	return $args;
+}
+add_filter( 'woocommerce_loop_add_to_cart_args', 'versatile_loop_add_to_cart_args', 10, 2 );
