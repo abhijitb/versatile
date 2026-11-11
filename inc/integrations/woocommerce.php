@@ -80,6 +80,21 @@ function versatile_woocommerce_scripts() {
 add_action( 'wp_enqueue_scripts', 'versatile_woocommerce_scripts' );
 
 /**
+ * Load WooCommerce's cart fragments script on every page.
+ *
+ * Since WooCommerce 7.8 it is no longer enqueued by default, but the header
+ * cart (count + mini-cart dropdown) on every page relies on it to update
+ * after add-to-cart / remove without a reload.
+ */
+function versatile_woocommerce_cart_fragments() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
+	wp_enqueue_script( 'wc-cart-fragments' );
+}
+add_action( 'wp_enqueue_scripts', 'versatile_woocommerce_cart_fragments', 20 );
+
+/**
  * Disable the default WooCommerce stylesheet.
  *
  * Removing the default WooCommerce stylesheet and enqueing your own will

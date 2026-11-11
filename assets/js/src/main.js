@@ -1,6 +1,7 @@
 import './archive-view-toggle';
 import './author-filter';
 import './single-post';
+import './cart-sync';
 
 /**
  * Main JavaScript file for Versatile theme
