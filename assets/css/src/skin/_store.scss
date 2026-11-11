@@ -423,11 +423,11 @@ $pill: var(--radius-pill, 999px);
 .shop-sidebar {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    padding: 0;
+    gap: 32px;
+    padding: 28px 24px;
     border: 0;
-    border-radius: 0;
-    background: none;
+    border-radius: 20px;
+    background: var(--background-alt);
     box-shadow: none;
 
     .widget ul {
@@ -499,8 +499,9 @@ $pill: var(--radius-pill, 999px);
         align-items: center;
         gap: 6px;
         padding: 4px 4px 4px 16px;
+        border: 1px solid $line;
         border-radius: $pill;
-        background: $chip;
+        background: #fff;
 
         &:focus-within {
             outline: 2px solid $accent;
@@ -755,5 +756,197 @@ $pill: var(--radius-pill, 999px);
                 font-size: 13px;
             }
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Single product
+// -----------------------------------------------------------------------------
+
+.single-product div.product {
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    column-gap: 48px;
+
+    // Legacy CSS makes div.product a 2-col grid; full-width rows for these.
+    > .woocommerce-tabs,
+    > .related,
+    > .upsells,
+    > .up-sells {
+        grid-column: 1 / -1;
+    }
+
+    .product_title {
+        margin: 0 0 12px;
+        font-size: clamp(1.75rem, 3vw, 2.5rem);
+        line-height: 1.12;
+    }
+
+    p.price ins,
+    span.price ins {
+        text-decoration: none;
+    }
+
+    .summary {
+        padding-left: 0;
+    }
+
+    .woocommerce-product-details__short-description {
+        font-size: 16px;
+        line-height: 1.7;
+        color: $muted;
+    }
+
+    .stock {
+        font-size: 14px;
+        font-weight: 600;
+        color: $accent;
+    }
+
+    .product_meta {
+        font-size: 14px;
+        color: $muted;
+
+        > span {
+            display: block;
+            margin-top: 6px;
+        }
+    }
+
+    // Gallery.
+    .woocommerce-product-gallery {
+        position: relative;
+    }
+
+    .woocommerce-product-gallery__trigger {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        z-index: 2;
+        width: 40px;
+        height: 40px;
+        border-radius: $pill;
+        background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23111318' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") center / 18px no-repeat;
+        box-shadow: 0 2px 8px rgb(17 19 24 / 15%);
+        font-size: 0;
+        color: transparent;
+        overflow: hidden;
+
+        img,
+        span,
+        &::before,
+        &::after {
+            display: none !important;
+        }
+    }
+
+    .flex-control-thumbs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin: 12px 0 0;
+        padding: 0;
+
+        li {
+            width: auto;
+            margin: 0;
+            float: none;
+        }
+
+        img {
+            border-radius: 12px;
+            opacity: 0.6;
+            transition: opacity 0.15s ease;
+
+            &:hover,
+            &.flex-active {
+                opacity: 1;
+            }
+        }
+    }
+
+    // Tabs panel.
+    .woocommerce-tabs {
+        margin-top: 56px;
+
+        .panel {
+            max-width: 760px;
+            margin: 24px 0 0;
+            padding: 0;
+            border: 0;
+            background: none;
+            box-shadow: none;
+            font-size: 16px;
+            line-height: 1.75;
+
+            > h2:first-child {
+                margin: 0 0 12px;
+                font-size: 1.375rem;
+            }
+        }
+    }
+}
+
+// Related / upsells: compact row so the main product keeps focus.
+.woocommerce div.product .related.products,
+.woocommerce div.product .upsells.products,
+.woocommerce .related.products,
+.woocommerce .upsells.products {
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid $line;
+
+    > h2 {
+        margin: 0 0 20px;
+        font-size: 1.375rem;
+        text-align: left;
+    }
+
+    ul.products {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 28px 20px;
+        margin-top: 0;
+
+        @media (width <= 600px) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px 12px;
+        }
+
+        li.product {
+            gap: 6px;
+
+            img {
+                border-radius: 14px;
+            }
+
+            .woocommerce-loop-product__title {
+                font-size: 14px;
+                text-align: left;
+            }
+
+            .price {
+                font-size: 14px;
+            }
+
+            .button {
+                min-height: 38px;
+                margin-top: 4px;
+                font-size: 13px;
+            }
+
+            .onsale {
+                top: 10px;
+                left: 10px;
+                font-size: 11px;
+            }
+        }
+    }
+}
+
+@media (width <= 768px) {
+    .single-product div.product {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
