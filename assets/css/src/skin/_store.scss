@@ -513,6 +513,7 @@ $pill: var(--radius-pill, 999px);
             min-width: 0;
             height: 40px;
             padding: 0;
+            text-overflow: ellipsis;
             border: 0;
             background: transparent;
             font-size: 15px;
@@ -524,20 +525,22 @@ $pill: var(--radius-pill, 999px);
             }
         }
 
+        // Icon-only button so the field keeps its width; the button's text
+        // stays in the DOM (font-size: 0) as its accessible name.
         button {
             flex: none;
+            width: 40px;
             height: 40px;
-            padding: 0 16px;
+            padding: 0;
             border: 0;
             border-radius: $pill !important;
-            background: $accent !important;
-            color: #fff;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 1;
+            background: $accent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") center / 18px no-repeat !important;
+            color: transparent;
+            font-size: 0;
+            line-height: 0;
 
             &:hover {
-                background: $accent-hover !important;
+                background-color: $accent-hover !important;
             }
         }
     }
@@ -948,5 +951,141 @@ $pill: var(--radius-pill, 999px);
 @media (width <= 768px) {
     .single-product div.product {
         grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Notices (added to cart, info, errors)
+// -----------------------------------------------------------------------------
+
+.woocommerce-notices-wrapper:empty {
+    display: none;
+}
+
+.woocommerce .woocommerce-message,
+.woocommerce .woocommerce-info,
+.woocommerce .woocommerce-error,
+.woocommerce-page .woocommerce-message,
+.woocommerce-page .woocommerce-info,
+.woocommerce-page .woocommerce-error {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    margin: 0 0 24px;
+    padding: 12px 12px 12px 48px;
+    border: 1px solid rgb(15 118 110 / 22%);
+    border-left-width: 1px;
+    border-radius: 14px;
+    background: rgb(15 118 110 / 7%);
+    color: $ink;
+    font-size: 15px;
+    line-height: 1.5;
+    list-style: none;
+    box-shadow: none;
+
+    // WooCommerce focuses notices for screen readers; no visible ring.
+    &:focus {
+        outline: none;
+    }
+
+    // Replace the plugin icon font with an inline SVG.
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 16px;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f766e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8 12.5l2.5 2.5L16 9.5'/%3E%3C/svg%3E") center / 20px no-repeat;
+        font-family: inherit;
+        color: transparent;
+    }
+
+    &::after {
+        display: none;
+    }
+
+    .button,
+    a.button {
+        order: 2;
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        margin: 0 0 0 auto;
+        padding: 0 16px;
+        float: none;
+        border: 0;
+        border-radius: $pill;
+        background: $accent;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1;
+        white-space: nowrap;
+
+        &:hover {
+            background: $accent-hover;
+            color: #fff;
+        }
+    }
+
+    a:not(.button) {
+        color: $accent;
+        font-weight: 600;
+    }
+}
+
+.woocommerce .woocommerce-info,
+.woocommerce-page .woocommerce-info {
+    border-color: $line;
+    background: var(--background-alt);
+
+    &::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b6170' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 11v5M12 8h.01'/%3E%3C/svg%3E");
+    }
+}
+
+// Errors are a <ul> of <li>: stack the lines, icon top-aligned.
+.woocommerce .woocommerce-error,
+.woocommerce-page .woocommerce-error {
+    display: block;
+    border-color: #f1c4c4;
+    background: #fdf3f3;
+    color: #8a1f1f;
+
+    &::before {
+        top: 14px;
+        margin-top: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c53030' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5v5.5M12 16.5h.01'/%3E%3C/svg%3E");
+    }
+
+    li {
+        margin: 0;
+        padding: 0;
+    }
+
+    li + li {
+        margin-top: 4px;
+    }
+}
+
+@media (width <= 600px) {
+    .woocommerce .woocommerce-message,
+    .woocommerce-page .woocommerce-message,
+    .woocommerce .woocommerce-info,
+    .woocommerce-page .woocommerce-info {
+        &::before {
+            top: 14px;
+            margin-top: 0;
+        }
+
+        a.button,
+        .button {
+            margin-left: 0;
+        }
     }
 }
