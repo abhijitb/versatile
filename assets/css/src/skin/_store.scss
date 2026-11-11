@@ -186,11 +186,11 @@ $pill: var(--radius-pill, 999px);
             }
         }
 
-        .button,
-        .added_to_cart {
+        .button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
             position: static;
             width: 100%;
             min-height: 44px;
@@ -215,14 +215,62 @@ $pill: var(--radius-pill, 999px);
 
             &.loading {
                 opacity: 0.7;
+                pointer-events: none;
+            }
+
+            // After a successful AJAX add: light teal with a tick.
+            &.added {
+                border-color: rgb(15 118 110 / 30%);
+                background: rgb(15 118 110 / 10%);
+                color: $accent;
+
+                &::after {
+                    content: '';
+                    width: 14px;
+                    height: 14px;
+                    background-color: currentcolor;
+                    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat;
+                }
+
+                &:hover {
+                    border-color: $accent;
+                    background: $accent;
+                    color: #fff;
+                }
             }
         }
 
+        // "View cart" link WooCommerce inserts after an AJAX add: a quiet
+        // text link, not a second button.
         .added_to_cart {
+            display: inline-flex;
+            align-self: center;
+            align-items: center;
+            gap: 4px;
+            margin: 2px 0 0;
+            padding: 6px 4px;
             border: 0;
             background: none;
-            min-height: 0;
             color: $accent;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+
+            &::after {
+                content: '→';
+                transition: transform 0.15s ease;
+            }
+
+            &:hover {
+                background: none;
+                color: $accent-hover;
+                text-decoration: underline;
+                text-underline-offset: 3px;
+
+                &::after {
+                    transform: translateX(2px);
+                }
+            }
         }
     }
 }

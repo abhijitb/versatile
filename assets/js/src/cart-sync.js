@@ -79,6 +79,12 @@
         });
     }
 
+    // WooCommerce adds title="View cart" to the link it inserts after an
+    // AJAX add; the native tooltip just repeats the link text.
+    $(document.body).on('added_to_cart', function () {
+        $('a.added_to_cart').removeAttr('title');
+    });
+
     // Blocks fire these native events on add/remove (e.g. product blocks).
     ['wc-blocks_added_to_cart', 'wc-blocks_removed_from_cart'].forEach(function (name) {
         document.body.addEventListener(name, refreshHeaderCart);
