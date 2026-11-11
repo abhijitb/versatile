@@ -172,6 +172,7 @@ $pill: var(--radius-pill, 999px);
         .price {
             margin: 0;
             padding: 0;
+            line-height: 1.5;
             font-size: 16px;
             font-weight: 600;
             color: $ink;
@@ -194,7 +195,7 @@ $pill: var(--radius-pill, 999px);
             position: static;
             width: 100%;
             min-height: 44px;
-            margin: 6px 0 0;
+            margin: auto 0 0; // Pin to the card bottom so buttons align per row.
             padding: 0 16px;
             border: 1px solid $accent;
             border-radius: $pill;
@@ -669,18 +670,21 @@ $pill: var(--radius-pill, 999px);
                 color: $accent;
             }
 
-            .amount,
-            ins {
+            // Regular price 14px; sale scale comes from the shared price rule.
+            > .amount,
+            > .woocommerce-Price-amount {
                 font-size: 14px;
                 font-weight: 600;
                 color: $ink;
-                text-decoration: none;
             }
 
             del,
-            del .amount {
-                font-weight: 400;
-                color: $muted;
+            ins {
+                font-size: 14px;
+            }
+
+            ins {
+                font-size: calc(14px * 1.15);
             }
         }
     }
@@ -985,7 +989,7 @@ $pill: var(--radius-pill, 999px);
 
             .button {
                 min-height: 38px;
-                margin-top: 4px;
+                margin-top: auto;
                 font-size: 13px;
             }
 
@@ -1484,5 +1488,51 @@ body .wc-block-checkout__add-note {
             background: #fff;
             color: $ink;
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Price scale (one rule everywhere)
+// Each context sets the size of a regular price; on sale, the struck-through
+// original keeps exactly that size and the sale price is 1.15× and bolder.
+// Selectors match the legacy ones (e.g. ".woocommerce div.product .price
+// del { font-size: 1.2rem }", which also hit related products) so these win.
+// -----------------------------------------------------------------------------
+
+.woocommerce div.product .summary p.price,
+.woocommerce div.product .summary span.price {
+    font-size: 1.375rem;
+}
+
+.woocommerce .price,
+.woocommerce div.product .price,
+.woocommerce ul.products li.product .price,
+.woocommerce div.product ul.products li.product .price,
+.product_list_widget li,
+.woocommerce-mini-cart-item .quantity,
+.search-result__price {
+    del,
+    del .amount {
+        margin-right: 0.35em;
+        font-size: 1em;
+        font-weight: 400;
+        color: $muted;
+        opacity: 1;
+    }
+
+    ins {
+        font-size: 1.15em;
+        font-weight: 700;
+        line-height: 1; // Don't grow the line box: price rows stay level.
+        color: $ink;
+        text-decoration: none;
+
+        .amount {
+            font-size: 1em;
+        }
+    }
+
+    .amount {
+        font-size: inherit;
     }
 }
