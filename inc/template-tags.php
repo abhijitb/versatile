@@ -315,3 +315,29 @@ if ( ! function_exists( 'versatile_search_type_pills' ) ) :
 		echo '</nav>';
 	}
 endif;
+
+if ( ! function_exists( 'versatile_is_commerce_flow_page' ) ) :
+	/**
+	 * Whether the current page is part of the purchase flow (cart,
+	 * checkout incl. order received, My Account). These pages render
+	 * without a sidebar so nothing distracts from placing the order.
+	 *
+	 * @return bool
+	 */
+	function versatile_is_commerce_flow_page() {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return false;
+		}
+
+		$flow = ( function_exists( 'is_cart' ) && is_cart() )
+			|| ( function_exists( 'is_checkout' ) && is_checkout() )
+			|| ( function_exists( 'is_account_page' ) && is_account_page() );
+
+		/**
+		 * Filters whether the current page is treated as a purchase-flow page.
+		 *
+		 * @param bool $flow Whether the page is cart/checkout/account.
+		 */
+		return (bool) apply_filters( 'versatile_is_commerce_flow_page', $flow );
+	}
+endif;

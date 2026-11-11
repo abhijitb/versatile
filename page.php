@@ -6,12 +6,16 @@
  * @package Versatile
  */
 
-get_header(); ?>
+get_header();
 
-<main class="site-main page-main">
+// Cart, checkout and account pages stay focused: no sidebar.
+$versatile_page_sidebar = ! versatile_is_commerce_flow_page();
+?>
+
+<main id="primary" class="site-main page-main<?php echo $versatile_page_sidebar ? '' : ' page-main--commerce'; ?>">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8">
+			<div class="<?php echo $versatile_page_sidebar ? 'col-lg-8' : 'col-12'; ?>">
 				
 				<?php
 				while ( have_posts() ) :
@@ -79,9 +83,11 @@ get_header(); ?>
 				
 			</div><!-- .col-lg-8 -->
 			
-			<div class="col-lg-4">
-				<?php get_sidebar(); ?>
-			</div><!-- .col-lg-4 -->
+			<?php if ( $versatile_page_sidebar ) : ?>
+				<div class="col-lg-4">
+					<?php get_sidebar(); ?>
+				</div><!-- .col-lg-4 -->
+			<?php endif; ?>
 			
 		</div><!-- .row -->
 	</div><!-- .container -->
