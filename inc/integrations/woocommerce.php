@@ -127,6 +127,21 @@ add_filter( 'woocommerce_output_related_products_args', 'versatile_woocommerce_r
 remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
 
+if ( ! function_exists( 'versatile_show_shop_sidebar' ) ) {
+	/**
+	 * Whether WooCommerce pages show the Shop Sidebar.
+	 *
+	 * Off by default: product pages read better full-width, and the sidebar
+	 * often inherits blog widgets (Archives, Categories) when first created.
+	 * Enable it under Customizer → WooCommerce → Product Catalog.
+	 *
+	 * @return bool
+	 */
+	function versatile_show_shop_sidebar() {
+		return (bool) get_theme_mod( 'versatile_shop_sidebar', false ) && is_active_sidebar( 'shop-sidebar' );
+	}
+}
+
 if ( ! function_exists( 'versatile_woocommerce_wrapper_before' ) ) {
 	/**
 	 * Before Content.
@@ -140,7 +155,7 @@ if ( ! function_exists( 'versatile_woocommerce_wrapper_before' ) ) {
 			<main id="primary" class="site-main">
 				<div class="container">
 					<div class="row">
-						<div class="<?php echo is_active_sidebar( 'shop-sidebar' ) ? 'col-lg-8' : 'col-12'; ?>">
+						<div class="<?php echo versatile_show_shop_sidebar() ? 'col-lg-8' : 'col-12'; ?>">
 		<?php
 	}
 }
@@ -157,7 +172,7 @@ if ( ! function_exists( 'versatile_woocommerce_wrapper_after' ) ) {
 	function versatile_woocommerce_wrapper_after() {
 		?>
 						</div>
-						<?php if ( is_active_sidebar( 'shop-sidebar' ) ) : ?>
+						<?php if ( versatile_show_shop_sidebar() ) : ?>
 							<div class="col-lg-4">
 								<aside id="secondary" class="widget-area shop-sidebar">
 									<?php dynamic_sidebar( 'shop-sidebar' ); ?>
@@ -321,7 +336,9 @@ function versatile_remove_woocommerce_sidebar() {
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		return;
 	}
-	if ( is_shop() || is_product_category() || is_product_tag() ) {
+	// The theme wrapper renders the shop sidebar itself; WooCommerce's own
+	// call would fall back to the blog sidebar on product pages.
+	if ( is_woocommerce() ) {
 		remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 	}
 }
@@ -345,3 +362,89 @@ if ( ! function_exists( 'versatile_woocommerce_cart_emptied' ) ) {
 	}
 }
 add_action( 'woocommerce_cart_is_empty', 'versatile_woocommerce_cart_emptied' );
+
+/**
+ * Shop toolbar: product category pills, then result count + sorting on one row.
+ */
+function versatile_shop_category_pills() {
+	if ( ! ( is_shop() || is_product_taxonomy() ) ) {
+		return;
+	}
+
+	$terms = get_terms(
+		array(
+			'taxonomy'   => 'product_cat',
+			'parent'     => 0,
+			'hide_empty' => true,
+			'exclude'    => array( (int) get_option( 'default_product_cat' ) ),
+			'number'     => 8,
+		)
+	);
+	if ( is_wp_error( $terms ) || empty( $terms ) ) {
+		return;
+	}
+
+	$current = is_product_category() ? get_queried_object_id() : 0;
+
+	echo '<nav class="category-pills shop-category-pills" aria-label="' . esc_attr__( 'Browse by category', 'versatile' ) . '">';
+	printf(
+		'<a class="category-pill%1$s" href="%2$s"%3$s>%4$s</a>',
+		$current ? '' : ' is-active',
+		esc_url( wc_get_page_permalink( 'shop' ) ),
+		$current ? '' : ' aria-current="page"',
+		esc_html__( 'All', 'versatile' )
+	);
+	foreach ( $terms as $term ) {
+		$active = ( $current === $term->term_id );
+		printf(
+			'<a class="category-pill%1$s" href="%2$s"%3$s>%4$s</a>',
+			$active ? ' is-active' : '',
+			esc_url( get_term_link( $term ) ),
+			$active ? ' aria-current="page"' : '',
+			esc_html( $term->name )
+		);
+	}
+	echo '</nav>';
+}
+add_action( 'woocommerce_before_shop_loop', 'versatile_shop_category_pills', 15 );
+
+/**
+ * Opens the toolbar row around the result count (20) and ordering (30).
+ */
+function versatile_shop_toolbar_open() {
+	echo '<div class="shop-toolbar">';
+}
+add_action( 'woocommerce_before_shop_loop', 'versatile_shop_toolbar_open', 19 );
+
+/**
+ * Closes the toolbar row.
+ */
+function versatile_shop_toolbar_close() {
+	echo '</div>';
+}
+add_action( 'woocommerce_before_shop_loop', 'versatile_shop_toolbar_close', 31 );
+
+/**
+ * Customizer: toggle for the shop sidebar.
+ *
+ * @param WP_Customize_Manager $wp_customize Customizer manager.
+ */
+function versatile_woocommerce_customize_register( $wp_customize ) {
+	$wp_customize->add_setting(
+		'versatile_shop_sidebar',
+		array(
+			'default'           => false,
+			'sanitize_callback' => 'rest_sanitize_boolean',
+		)
+	);
+	$wp_customize->add_control(
+		'versatile_shop_sidebar',
+		array(
+			'label'       => esc_html__( 'Show shop sidebar', 'versatile' ),
+			'description' => esc_html__( 'Displays the "Shop Sidebar" widget area beside products. Add product widgets (filters, categories) there first.', 'versatile' ),
+			'section'     => 'woocommerce_product_catalog',
+			'type'        => 'checkbox',
+		)
+	);
+}
+add_action( 'customize_register', 'versatile_woocommerce_customize_register', 20 );

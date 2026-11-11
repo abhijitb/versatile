@@ -10,6 +10,7 @@ $muted: var(--text-muted);
 $line: var(--border-color);
 $chip: var(--secondary-color);
 $accent: var(--primary-color);
+$accent-hover: var(--primary-hover);
 $pill: var(--radius-pill, 999px);
 
 .woocommerce-page .site-main,
@@ -41,22 +42,67 @@ $pill: var(--radius-pill, 999px);
     }
 }
 
+// Toolbar: result count left, sorting right (wrapper added in PHP).
+// Prefixed with .woocommerce to beat the plugin's float rules.
+.woocommerce .shop-toolbar,
+.shop-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin: 8px 0 0;
+
+    .woocommerce-result-count,
+    .woocommerce-ordering {
+        float: none;
+        margin: 0;
+    }
+}
+
+.shop-category-pills {
+    margin-top: 8px;
+    margin-bottom: 24px;
+}
+
 .woocommerce-result-count {
     margin: 0;
     font-size: 14px;
     color: $muted;
 }
 
-.woocommerce-ordering select,
+.woocommerce .woocommerce-ordering select,
 .woocommerce select.orderby {
+    appearance: none;
+    width: auto;
+    min-width: 220px;
     height: 44px;
-    padding: 0 40px 0 16px;
+    margin: 0;
+    padding: 0 44px 0 18px;
     border: 1px solid #dadde3;
     border-radius: $pill;
     background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23111318' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 12px;
+    font-family: var(--font-family-base);
     font-size: 14px;
     font-weight: 500;
+    line-height: 42px;
     color: $ink;
+    box-shadow: none;
+    cursor: pointer;
+
+    &:hover {
+        border-color: $ink;
+    }
+
+    &:focus {
+        border-color: $accent;
+        outline: 2px solid $accent;
+        outline-offset: 2px;
+    }
 }
 
 .woocommerce ul.products {
@@ -150,26 +196,25 @@ $pill: var(--radius-pill, 999px);
             min-height: 44px;
             margin: 6px 0 0;
             padding: 0 16px;
-            border: 1px solid #dadde3;
+            border: 1px solid $accent;
             border-radius: $pill;
-            background: #fff;
-            color: $ink;
+            background: $accent;
+            color: #fff;
             font-size: 14px;
             font-weight: 600;
             opacity: 1;
             transform: none;
             box-shadow: none;
 
-            &:hover {
-                border-color: $ink;
-                background: $ink;
+            &:hover,
+            &:focus-visible {
+                border-color: $accent-hover;
+                background: $accent-hover;
                 color: #fff;
             }
 
-            &.added {
-                border-color: $accent;
-                background: $accent;
-                color: #fff;
+            &.loading {
+                opacity: 0.7;
             }
         }
 
@@ -190,7 +235,7 @@ $pill: var(--radius-pill, 999px);
     min-height: 0;
     padding: 5px 10px;
     border-radius: $pill;
-    background: $ink;
+    background: $accent;
     color: #fff;
     font-size: 12px;
     font-weight: 600;
@@ -277,12 +322,12 @@ $pill: var(--radius-pill, 999px);
             padding: 0 32px;
             border: 0;
             border-radius: $pill;
-            background: $ink;
+            background: $accent;
             color: #fff;
             font-weight: 600;
 
             &:hover {
-                background: $accent;
+                background: $accent-hover;
             }
         }
     }
@@ -355,13 +400,13 @@ $pill: var(--radius-pill, 999px);
     min-height: 48px;
     padding: 0 24px;
     border-radius: $pill;
-    background: $ink;
+    background: $accent;
     color: #fff;
     font-weight: 600;
     box-shadow: none;
 
     &:hover {
-        background: $accent;
+        background: $accent-hover;
         color: #fff;
     }
 }
@@ -379,6 +424,23 @@ $pill: var(--radius-pill, 999px);
     display: flex;
     flex-direction: column;
     gap: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+
+    .widget ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .widget li {
+        padding: 12px 0;
+        border-top: 1px solid $line;
+        font-size: 15px;
+    }
 
     .widget {
         margin: 0;
@@ -388,7 +450,9 @@ $pill: var(--radius-pill, 999px);
         box-shadow: none;
     }
 
-    .widget-title {
+    .widget-title,
+    .wp-block-heading {
+        margin: 0 0 12px;
         font-family: var(--font-family-base);
         font-size: 13px;
         font-weight: 700;
