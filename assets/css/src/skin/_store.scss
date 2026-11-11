@@ -1463,7 +1463,8 @@ body .wc-block-checkout__add-note {
 .woocommerce span.soldout {
     position: absolute;
     z-index: 2;
-    background: #5b6170;
+    background: #b91c1c; // Dark red; white text ≈ 6.5:1.
+    box-shadow: 0 1px 3px rgb(17 19 24 / 20%);
 }
 
 .woocommerce ul.products li.product.outofstock {
