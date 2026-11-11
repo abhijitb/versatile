@@ -102,27 +102,64 @@ import './cart-sync';
         }
         
         // Mini Cart Functions (WooCommerce)
+        // Events are delegated from .header-cart: WooCommerce cart fragments
+        // replace a.cart-contents and the mini-cart content on every update,
+        // which would drop handlers bound to those elements directly.
         function initMiniCart() {
-            const cartContents = $('.cart-contents');
-            const miniCartWrapper = $('.mini-cart-wrapper');
-            
-            if (cartContents.length && miniCartWrapper.length) {
-                cartContents.on('mouseenter', function() {
-                    miniCartWrapper.addClass('visible');
-                });
-                
-                $('.header-cart').on('mouseleave', function() {
-                    miniCartWrapper.removeClass('visible');
-                });
-                
-                // Mobile cart toggle
-                cartContents.on('click', function(e) {
+            const headerCart = $('.header-cart');
+            if (!headerCart.length) {
+                return;
+            }
+
+            let closeTimer = null;
+            const wrapper = function() {
+                return headerCart.find('.mini-cart-wrapper');
+            };
+            const open = function() {
+                window.clearTimeout(closeTimer);
+                wrapper().addClass('visible');
+            };
+            const close = function(delay) {
+                window.clearTimeout(closeTimer);
+                closeTimer = window.setTimeout(function() {
+                    wrapper().removeClass('visible');
+                }, delay || 0);
+            };
+
+            headerCart
+                .on('mouseenter', '.cart-contents', function() {
+                    if ($(window).width() > 768) {
+                        open();
+                    }
+                })
+                .on('mouseenter', '.mini-cart-wrapper', open)
+                .on('mouseleave', function() {
+                    if ($(window).width() > 768) {
+                        close(150);
+                    }
+                })
+                // Keyboard: open while focus is inside, close when it leaves.
+                .on('focusin', open)
+                .on('focusout', function() {
+                    window.setTimeout(function() {
+                        if (!headerCart[0].contains(document.activeElement)) {
+                            close();
+                        }
+                    }, 0);
+                })
+                // Mobile: tap the cart pill to toggle.
+                .on('click', '.cart-contents', function(e) {
                     if ($(window).width() <= 768) {
                         e.preventDefault();
-                        miniCartWrapper.toggleClass('visible');
+                        wrapper().toggleClass('visible');
                     }
                 });
-            }
+
+            $(document).on('keyup', function(e) {
+                if (e.key === 'Escape') {
+                    close();
+                }
+            });
         }
         
         // Back to Top Button
