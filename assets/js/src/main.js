@@ -174,9 +174,32 @@ import './single-post';
         
         // Smooth Scrolling for Anchor Links
         function initSmoothScrolling() {
-            $('a[href*="#"]:not([href="#"])').on('click', function(e) {
-                const target = $(this.hash);
-                if (target.length) {
+            // Skip UI controls that use #hash links for their own behaviour
+            // (WooCommerce product tabs, review link, comment reply, etc.).
+            const skip = [
+                '.wc-tabs a',
+                '.woocommerce-tabs a',
+                '[role="tab"]',
+                '[data-toggle]',
+                '.woocommerce-review-link',
+                '.comment-reply-link',
+                '#cancel-comment-reply-link',
+                '.skip-link',
+                '.screen-reader-text'
+            ].join(',');
+
+            $('a[href*="#"]:not([href="#"])').not(skip).on('click', function(e) {
+                // Only same-page anchors.
+                if (this.pathname !== window.location.pathname || this.host !== window.location.host) {
+                    return;
+                }
+                let target;
+                try {
+                    target = $(this.hash);
+                } catch (err) {
+                    return; // Hash is not a valid selector (e.g. "#/route").
+                }
+                if (target.length && target.is(':visible')) {
                     e.preventDefault();
                     $('html, body').animate({
                         scrollTop: target.offset().top - 80

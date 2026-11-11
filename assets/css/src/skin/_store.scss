@@ -1089,3 +1089,213 @@ $pill: var(--radius-pill, 999px);
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// Star ratings
+// The plugin stylesheet (and its icon font) is disabled by the theme, so
+// stars are drawn with an SVG mask tinted by the accent colour.
+// -----------------------------------------------------------------------------
+
+$star-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z'/%3E%3C/svg%3E");
+$star-empty: #d3d7dd;
+
+// Display: <div class="star-rating"><span style="width:90%">Rated …</span></div>
+.star-rating {
+    position: relative;
+    display: inline-block;
+    width: 5.5em;
+    height: 1.1em;
+    font-size: 14px;
+    line-height: 1;
+    overflow: hidden;
+    vertical-align: middle;
+
+    &::before,
+    span::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        width: 5.5em;
+        mask: $star-svg left center / 1.1em 1.1em repeat-x;
+    }
+
+    &::before {
+        background-color: $star-empty;
+    }
+
+    span {
+        position: absolute;
+        inset: 0 auto 0 0;
+        overflow: hidden;
+        font-size: 0; // Hide "Rated x out of 5" (aria-label carries it).
+
+        &::before {
+            background-color: $accent;
+            font-size: 14px;
+        }
+    }
+}
+
+.woocommerce-product-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    font-size: 14px;
+
+    .woocommerce-review-link {
+        color: $muted;
+    }
+}
+
+// Review form picker: <p class="stars"><span><a class="star-1">1 of 5 stars</a>…
+.comment-form-rating {
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+    }
+}
+
+p.stars {
+    margin: 0 0 20px;
+    line-height: 1;
+
+    > span {
+        display: inline-flex;
+        gap: 4px;
+    }
+
+    a {
+        position: relative;
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        overflow: hidden;
+        border-radius: 6px;
+        color: transparent;
+        font-size: 0;
+        text-decoration: none;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background-color: $star-empty;
+            mask: $star-svg center / contain no-repeat;
+            transition: background-color 0.1s ease;
+        }
+
+        &:focus-visible {
+            outline: 2px solid $accent;
+            outline-offset: 2px;
+        }
+    }
+
+    // Selected value: fill up to the active star.
+    &.selected a::before {
+        background-color: $accent;
+    }
+
+    &.selected a.active ~ a::before {
+        background-color: $star-empty;
+    }
+
+    // Hover preview (wins over the selection while hovering).
+    > span:hover a::before {
+        background-color: $accent;
+    }
+
+    > span:hover a:hover ~ a::before {
+        background-color: $star-empty;
+    }
+}
+
+// Reviews tab content.
+#reviews {
+    .woocommerce-Reviews-title {
+        margin: 0 0 12px;
+        font-size: 1.375rem;
+    }
+
+    .woocommerce-noreviews {
+        color: $muted;
+    }
+
+    .comment-reply-title {
+        display: block;
+        margin: 24px 0 6px;
+        font-family: var(--font-family-heading);
+        font-size: 1.125rem;
+        font-weight: 700;
+    }
+
+    .comment-notes {
+        font-size: 14px;
+        color: $muted;
+    }
+
+    .commentlist {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            padding: 20px 0;
+            border-bottom: 1px solid $line;
+        }
+
+        .comment_container {
+            display: flex;
+            gap: 14px;
+        }
+
+        img.avatar {
+            flex: none;
+            width: 44px;
+            height: 44px;
+            border-radius: $pill;
+        }
+
+        .comment-text {
+            flex: 1;
+            min-width: 0;
+
+            .star-rating {
+                float: right;
+            }
+
+            .meta {
+                margin: 0 0 6px;
+                font-size: 14px;
+                color: $muted;
+
+                strong {
+                    color: $ink;
+                }
+            }
+        }
+    }
+
+    textarea,
+    input[type='text'],
+    input[type='email'] {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #dadde3;
+        border-radius: 12px;
+        font: inherit;
+        font-size: 16px;
+    }
+
+    .form-submit input[type='submit'] {
+        min-height: 48px;
+        padding: 0 28px;
+        border: 0;
+        border-radius: $pill;
+        background: $accent;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+    }
+}
